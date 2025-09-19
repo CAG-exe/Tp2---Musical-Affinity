@@ -1,0 +1,31 @@
+[{
+    "nombre": "Juan Pérez",
+    "interes_tango" : 3,
+    "interes_folklore" : 5,
+    "interes_rock_nacional" : 4,
+    "interes_genero_urbano" : 2
+},{
+    "nombre": "María Gómez",
+    "interes_tango" : 1,
+    "interes_folklore" : 3,
+    "interes_rock_nacional" : 5,
+    "interes_genero_urbano" : 1
+},{
+    "nombre": "Carlos Rodríguez",
+    "interes_tango" : 2,
+    "interes_folklore" : 4,
+    "interes_rock_nacional" : 1,
+    "interes_genero_urbano" : 5
+},{
+    "nombre": "Ana Fernández",
+    "interes_tango" : 5,
+    "interes_folklore" : 2,
+    "interes_rock_nacional" : 4,
+    "interes_genero_urbano" : 3
+},{
+    "nombre": "Luis Martínez",
+    "interes_tango" : 3,
+    "interes_folklore" : 5,
+    "interes_rock_nacional" : 2,
+    "interes_genero_urbano" : 4
+}]
