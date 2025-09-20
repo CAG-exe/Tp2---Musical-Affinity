@@ -13,7 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class AfinidadMusical {
 	List<Usuario> usuarios;
-	Matriz matrizDeRelacion;
+	Matriz matrizRelacion;
 	
 	public void guardarUsuariosDeLaBaseDeDatos() {
 		InputStream input = AfinidadMusical.class.getResourceAsStream("BaseDeDatosDeUsuarios.json");
@@ -30,6 +30,10 @@ public class AfinidadMusical {
     }
 	
 	public void generarMatrizDeRelacionDeUsuarios() {
-		
+		matrizRelacion = new Matriz(usuarios.size());
+	}
+	
+	public int calcularAfinidadEntreUsuarios(Usuario primerUsuario, Usuario segundoUsuario) {
+		int interesTango
 	}
 }
