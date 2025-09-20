@@ -34,6 +34,11 @@ public class AfinidadMusical {
 	}
 	
 	public int calcularAfinidadEntreUsuarios(Usuario primerUsuario, Usuario segundoUsuario) {
-		int interesTango
+		int interesTango = Math.abs(primerUsuario.getInteresTango() - segundoUsuario.getInteresTango());
+		int interesFolclore = Math.abs(primerUsuario.getInteresFolclore() - segundoUsuario.getInteresFolclore());
+		int interesRockNacional = Math.abs(primerUsuario.getInteresRockNacional() - segundoUsuario.getInteresRockNacional());
+		int interesGeneroUrbano = Math.abs(primerUsuario.getInteresGeneroUrbano() - segundoUsuario.getInteresGeneroUrbano());
+		
+		return interesTango + interesFolclore + interesRockNacional + interesGeneroUrbano;
 	}
 }
