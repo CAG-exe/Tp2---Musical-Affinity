@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Tp2---Musical-Affinity</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>usuarios.json</name>
+			<type>1</type>
+			<location>C:/Users/Usuario/Downloads/usuarios.json</location>
+		</link>
+	</linkedResources>
+</projectDescription>
