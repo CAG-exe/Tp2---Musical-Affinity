@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class AfinidadMusical {
 	List<Usuario> usuarios;
+	Matriz matrizDeRelacion;
 	
 	public void guardarUsuariosDeLaBaseDeDatos() {
 		InputStream input = AfinidadMusical.class.getResourceAsStream("BaseDeDatosDeUsuarios.json");
@@ -28,5 +29,7 @@ public class AfinidadMusical {
 		this.usuarios = gson.fromJson(reader, tipoLista);
     }
 	
-
+	public void generarMatrizDeRelacionDeUsuarios() {
+		
+	}
 }
