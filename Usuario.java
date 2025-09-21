@@ -49,6 +49,56 @@ public class Usuario {
         return gustos("urbano");
     }
 
+    public String comparacionTotalString (Usuario u){
+        String mensaje= "Esta es la comparacion total de los usuarios " + this.getNombre() + " y " 
+        + u.getNombre() + ": \n" + "Datos generales de " + this.getNombre() + " :" + "\n"
+         + this.toString() + "\n" + "Datos generales de " + u.getNombre() + ": \n" + u.toString() + 
+        }
+
+    public int compararNivelTango(Usuario u){
+        if(this.gustosPuntuales(this.nivelTango(), u.nivelTango()) == 0){
+            return 0;
+        }
+        else{
+            return gustosPuntuales(this.nivelTango(), u.nivelTango());
+        }
+
+    }
+
+    public int compararNivelFolclore(Usuario u){
+        if(this.gustosPuntuales(this.nivelFolclore(), u.nivelFolclore()) == 0){
+            return 0;
+        }
+        else{
+            return gustosPuntuales(this.nivelFolclore(), u.nivelFolclore());
+        }
+
+    }
+
+    public int compararNivelRock(Usuario u){ 
+        if(this.gustosPuntuales(this.nivelRock(), u.nivelRock()) == 0){
+            return 0;
+        }
+        else{
+            return gustosPuntuales(this.nivelRock(), u.nivelRock());
+        }
+
+    }
+
+    public int compararNivelUrbano(Usuario u){
+        if(this.gustosPuntuales(this.nivelUrbano(), u.nivelUrbano()) == 0){
+            return 0;
+        }
+        else{
+            return gustosPuntuales(this.nivelUrbano(), u.nivelUrbano());
+        }
+
+    }
+
+    private int gustosPuntuales(int gustoUno, int gustoDos) {
+        return (Math.abs(gustoUno - gustoDos));
+    }
+
     private int gustos(String gusto){
         if (gusto == "tango"){
             return this.tango;
