@@ -8,11 +8,4 @@
 	</buildSpec>
 	<natures>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>usuarios.json</name>
-			<type>1</type>
-			<location>C:/Users/Usuario/Downloads/usuarios.json</location>
-		</link>
-	</linkedResources>
 </projectDescription>
