@@ -1,11 +1,14 @@
 package Modelo;
 
+import java.util.ArrayList;
+
 public class Usuario {
 	String nombre;
 	int interesTango;
 	int interesFolclore;
 	int interesRockNacional;
 	int interesGeneroUrbano;
+	private ArrayList<Usuario> usuarios;
 	
 	
 	public Usuario(String nombre, int tango, int folclore, int rock, int urbano){
@@ -22,6 +25,8 @@ public class Usuario {
 		this.interesTango = tango;
 		this.interesRockNacional = rock;
 		this.interesGeneroUrbano = urbano;
+	
+		usuarios = new ArrayList<Usuario>();
 	}
 
 
@@ -30,6 +35,10 @@ public class Usuario {
 			throw new IllegalArgumentException("El rango de los intereses musicales se expresa como un entero entre 1 y 5, siendo 1 el menor interés y 5 el máximo interés en el género musical.");
 		}
 	}
+	public void agregarUsuario(String nombre,int t, int f, int r, int u) {
+		Usuario usuario=new Usuario(nombre, t, f, r, u);
+		usuarios.add(usuario);
+	} 	
 	
 	
 	public String getNombre() {
