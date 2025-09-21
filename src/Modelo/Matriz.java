@@ -1,10 +1,13 @@
 package Modelo;
 
 public class Matriz {
-	int[][] matriz;
-	int valorInvalido = -1;
+	protected int[][] matriz;
+	protected int valorInvalido = -1;
  	
 	public Matriz(int tamanio) {
+		if(tamanio <=0) {
+			throw new IllegalArgumentException("El tamaño de la matriz es invalido");
+		}
 		matriz = new int[tamanio][tamanio];
 		for(int fila= 0; fila<matriz.length; fila++) {
 			for(int columna = 0; columna<matriz.length; columna++) {
@@ -14,6 +17,10 @@ public class Matriz {
 	}
 	
 	public void setValor(int fila, int columna, int valor) {
+		if(valor >5 || valor <0) {
+			throw new IllegalArgumentException("El valor debe estar entre 0 y 5");
+		}
+		
 		try {
 			matriz[fila][columna] = valor;
 		}
