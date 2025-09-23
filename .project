@@ -14,16 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/img/icono.png</name>
-			<type>1</type>
-			<location>C:/Users/Usuario/Downloads/718339.png</location>
-		</link>
-		<link>
-			<name>src/img/imagennn.jpg</name>
-			<type>1</type>
-			<location>C:/Users/Usuario/Downloads/imagennn.jpg</location>
-		</link>
-	</linkedResources>
 </projectDescription>
