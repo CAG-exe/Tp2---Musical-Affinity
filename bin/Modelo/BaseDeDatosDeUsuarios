@@ -1,0 +1,31 @@
+[{
+    "nombre": "Juan Pérez",
+    "interesTango" : 3,
+    "interesFolklore" : 5,
+    "interesRockNacional" : 4,
+    "interesGeneroUrbano" : 1
+},{
+    "nombre": "María Gómez",
+    "interesTango" : 4,
+    "interesFolklore" : 2,
+    "interesRockNacional" : 5,
+    "interesGeneroUrbano" : 3
+},{
+    "nombre": "Carlos Rodríguez",
+    "interesTango" : 2,
+    "interesFolklore" : 4,
+    "interesRockNacional" : 3,
+    "interesGeneroUrbano" : 5
+},{
+    "nombre": "Ana Fernández",
+    "interesTango" : 5,
+    "interesFolklore" : 3,
+    "interesRockNacional" : 2,
+    "interesGeneroUrbano" : 4
+},{
+    "nombre": "Luis Martínez",
+    "interesTango" : 1,
+    "interesFolklore" : 5,
+    "interesRockNacional" : 4,
+    "interesGeneroUrbano" : 2
+}]
