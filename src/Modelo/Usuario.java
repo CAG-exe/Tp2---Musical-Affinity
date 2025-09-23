@@ -8,6 +8,8 @@ public class Usuario {
 	private int interesFolclore;
 	private int interesRockNacional;
 	private int interesGeneroUrbano;
+	private int MinInteres = 1;
+	private int MaxInteres = 5;
 	
 	
 	public Usuario(String nombre, int tango, int folclore, int rock, int urbano){
@@ -28,7 +30,7 @@ public class Usuario {
 
 	//Como el rango de interes debe ser entre 1 y 5, se verifica que estos son ingresados correctamente.
 	private void cumpleRangoDeInteres(Integer interes) {
-		if(interes<1 || interes >5) {
+		if(interes<MinInteres || interes >MaxInteres) {
 			throw new IllegalArgumentException("El rango de los intereses musicales se expresa como un entero entre 1 y 5, siendo 1 el menor interés y 5 el máximo interés en el género musical.");
 		}
 	}
