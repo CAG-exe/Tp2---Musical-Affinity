@@ -16,8 +16,6 @@ public class Matriz {
 		}
 	}
 	
-	
-	//guarda el valor ingresado en la fila-columna
 	public void setValor(int fila, int columna, int valor) {
 		if(valor >5 || valor <0) {
 			throw new IllegalArgumentException("El valor debe estar entre 0 y 5");
@@ -31,7 +29,6 @@ public class Matriz {
 		}
 	}
 	
-	//devuelve el valor de la fila-columna
 	public int getValor(int fila, int columna) {
 		try {
 			return matriz[fila][columna];
@@ -39,10 +36,5 @@ public class Matriz {
 		catch (Exception e) {
 			throw new IllegalArgumentException("La fila y columna no son validos.");
 		}
-	}
-
-
-	public boolean tieneValorInvalido(int i, int c) {
-		return matriz[i][c] == valorInvalido;
 	}
 }

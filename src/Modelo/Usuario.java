@@ -26,34 +26,12 @@ public class Usuario {
 		this.interesGeneroUrbano = urbano;
 	}
 
-	//Como el rango de interes debe ser entre 1 y 5, se verifica que estos son ingresados correctamente.
+
 	private void cumpleRangoDeInteres(Integer interes) {
 		if(interes<1 || interes >5) {
 			throw new IllegalArgumentException("El rango de los intereses musicales se expresa como un entero entre 1 y 5, siendo 1 el menor interés y 5 el máximo interés en el género musical.");
 		}
 	}
-	
-	//Metodos que comparan el interes sobre un genero entre usuarios.
-    public int compararInteresTango(Usuario u){
-        return interesesPuntuales(this.getInteresTango(), u.getInteresTango());
-    }
-    
-    public int compararInteresFolclore(Usuario u){
-        return interesesPuntuales(this.getInteresFolclore(), u.getInteresFolclore());
-    }
-    
-    public int compararInteresRock(Usuario u){ 
-        return interesesPuntuales(this.getInteresRockNacional(), u.getInteresRockNacional());
-    }
-    
-    public int compararInteresUrbano(Usuario u){
-        return interesesPuntuales(this.getInteresGeneroUrbano(), u.getInteresGeneroUrbano());
-    }
-    
-  //Obtiene el valor absoluto de la resta de los dos niveles, y te devuelve la diferencia
-    private int interesesPuntuales(int gustoUno, int gustoDos) {
-        return (Math.abs(gustoUno - gustoDos));
-    }
 	
 	public String getNombre() {
 		return nombre;
