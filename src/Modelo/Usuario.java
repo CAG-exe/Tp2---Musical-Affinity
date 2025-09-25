@@ -68,6 +68,11 @@ public class Usuario {
 	private int interesesPuntuales(int gustoUno, int gustoDos) {
 		return (Math.abs(gustoUno - gustoDos));
 	}
+	
+	public String toString() {
+		return "Persona [nombre=" + nombre + "]";
+	}
+	
 
 	public String getNombre() {
 		return nombre;
