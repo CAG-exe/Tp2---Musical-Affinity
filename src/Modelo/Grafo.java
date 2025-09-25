@@ -75,7 +75,7 @@ public class Grafo {
 	}
 
 	// Agregado de aristas
-	private void agregarArista(int i, int j, int indiceDeSimilitud) {
+	public void agregarArista(int i, int j, int indiceDeSimilitud) {
 		verificarVertice(i);
 		verificarVertice(j);
 		verificarDistintos(i, j);
@@ -134,6 +134,16 @@ public class Grafo {
 			matriz[mayorPeso.getDestino()][mayorPeso.getOrigen()] = valorInvalido;
 			listaAristas.remove(mayorPeso);
 		}
+	}
+	
+	public void eliminarArista( int i, int j ) 
+	{
+		verificarVertice( i );
+		verificarVertice( j );
+		verificarDistintos( i, j );
+
+		matriz[ i ][ j ] = -1;  
+		matriz[ j ][ i ] = -1;
 	}
 	
 	private void redimensionMatriz() {
