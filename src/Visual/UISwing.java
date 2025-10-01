@@ -1,6 +1,7 @@
 package Visual;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Image;
 
 import javax.swing.JFrame;
@@ -24,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 
 public class UISwing extends JFrame {
@@ -141,6 +143,51 @@ public class UISwing extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(236, 225, 195));
+		
+		
+		//JButton btnCrear = new JButton("Crear Usuario");
+		JButton btnBuscar = new JButton("Buscar Usuario");
+		JButton btnEditar = new JButton("Editar Usuario");
+		JButton btnEliminar = new JButton("Eliminar Usuario");
+
+		// Le da un estilo a los botones
+		Font botonFont = new Font("Tahoma", Font.PLAIN, 15);
+		//btnCrear.setFont(botonFont);
+		btnBuscar.setFont(botonFont);
+		btnEditar.setFont(botonFont);
+		btnEliminar.setFont(botonFont);
+
+		// Cambia la imagen del Cursor
+		//btnCrear.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnBuscar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnEditar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnEliminar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+		// Quitar bordes a los botones
+		//btnCrear.setBorderPainted(false);
+		btnBuscar.setBorderPainted(false);
+		btnEditar.setBorderPainted(false);
+		btnEliminar.setBorderPainted(false);
+
+		// Layout simple para el panel_2
+		// Layout tipo Flow para que no se estiren
+		panel_2.setLayout(new java.awt.FlowLayout(FlowLayout.LEFT, 10, 10));
+
+		// Dar tamaño preferido a los botones
+		Dimension buttonSize = new Dimension(150, 40); // ancho 150px, alto 40px
+		//btnCrear.setPreferredSize(buttonSize);
+		btnBuscar.setPreferredSize(buttonSize);
+		btnEditar.setPreferredSize(buttonSize);
+		btnEliminar.setPreferredSize(buttonSize);
+
+		// Agregar botones al panel
+		//panel_2.add(btnCrear);
+		panel_2.add(btnBuscar);
+		panel_2.add(btnEditar);
+		panel_2.add(btnEliminar);
+
+
+		
 		GroupLayout gl_background = new GroupLayout(background);
 		gl_background.setHorizontalGroup(
 			gl_background.createParallelGroup(Alignment.LEADING)
