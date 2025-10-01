@@ -8,5 +8,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry exported="true" kind="lib" path="lib/gson-2.8.9.jar" sourcepath="lib/gson-2.8.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/Downloads/flatlaf-demo-3.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diego/Downloads/flatlaf-intellij-themes-3.2.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
