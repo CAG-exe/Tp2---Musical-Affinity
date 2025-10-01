@@ -17,26 +17,38 @@ public class AfinidadMusical {
 	HashMap<String, Usuario> usuariosRegistrados = new HashMap<String, Usuario>();
 	List<Usuario> usuariosSelecionadosParaElGrafo;
 	Grafo matrizRelacion;
+	
+	public AfinidadMusical() {
+		guardarUsuariosDeLaBaseDeDatos();
+		generarMatrizDeRelacionDeUsuarios();
+		usuariosSelecionadosParaElGrafo = new ArrayList<Usuario>();
+	}
 
 	public void guardarUsuariosDeLaBaseDeDatos() {
-		// traer el archivo json
-		InputStream input = AfinidadMusical.class.getResourceAsStream("BaseDeDatosDeUsuarios.json");
+			// traer el archivo json
+			InputStream input = AfinidadMusical.class.getResourceAsStream("BaseDeDatosDeUsuarios.json");
 
-		if (input == null) {
-			System.out.println("No se encontró el archivo");
-			return;
+			if (input == null) {
+				System.out.println("No se encontró el archivo");
+				return;
+			}
+			// Convierte al imput en un reader para que java pueda leer el JSON
+			InputStreamReader reader = new InputStreamReader(input);
+			Gson gson = new Gson(); // librería Gson, que permite convertir entre JSON y objetos Java
+
+			Type tipoLista = new TypeToken<List<Usuario>>() {
+			}.getType(); // Define que el JSON representa una lista de Usuarios
+			this.usuariosJson = gson.fromJson(reader, tipoLista); // Convierte el contenido del JSON en una lista de Usuarios.
+			
+		for (Usuario u : usuariosJson) { 
+			usuariosRegistrados.put(u.getNombre(), u);
+			matrizRelacion.agregarUsuario(u);
 		}
-		// Convierte al imput en un reader para que java pueda leer el JSON
-		InputStreamReader reader = new InputStreamReader(input);
-		Gson gson = new Gson(); // librería Gson, que permite convertir entre JSON y objetos Java
-
-		Type tipoLista = new TypeToken<List<Usuario>>() {
-		}.getType(); // Define que el JSON representa una lista de Usuarios
-		this.usuariosJson = gson.fromJson(reader, tipoLista); // Convierte el contenido del JSON en una lista de Usuarios.
+		
 	}
 
 	public void generarMatrizDeRelacionDeUsuarios() {
-		matrizRelacion = new Grafo(usuariosJson.size()); // Genera y guarda la matriz que contendra la relaciones de
+		matrizRelacion = new Grafo(16); // Genera y guarda la matriz que contendra la relaciones de
 														// intereses entre usuarios
 	}
 	
@@ -47,5 +59,10 @@ public class AfinidadMusical {
 		}
 		Usuario nuevoUsuario = new Usuario(nombre,tango,folclore,rock,urbano);
 		usuariosRegistrados.put(nombre, nuevoUsuario);
+		matrizRelacion.agregarUsuario(nuevoUsuario);
+	}
+
+	public boolean usuarioYaRegistrado(String text) {
+		return usuariosRegistrados.containsKey(text);
 	}
 }

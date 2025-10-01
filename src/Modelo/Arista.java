@@ -1,6 +1,7 @@
 package Modelo;
 
 public class Arista {
+
    private  int origen, destino, peso;
 
 	public Arista(int o, int d, int p) {
@@ -20,5 +21,9 @@ public class Arista {
    public int getPeso() {
 	return peso;
    }
+   @Override
+	public String toString() {
+		return "origen" + origen + ",destino=" + destino + ",peso=" + peso + "]";
+	}
 
 }

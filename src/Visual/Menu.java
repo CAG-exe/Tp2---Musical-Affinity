@@ -23,6 +23,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+
+import Modelo.AfinidadMusical;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -39,6 +42,7 @@ public class Menu {
 	private JLabel aviso;
 	private JTable tabla;
 	private DefaultTableModel modelo;
+	private AfinidadMusical afinidadMusical;
 
 	public static void main(String[] args) {
 		try {
@@ -59,7 +63,8 @@ public class Menu {
 	}
 
 	private void inicializar() {
-
+		
+		afinidadMusical = new AfinidadMusical();
 		ventanaInicio = new JFrame();
 		ventanaInicio.setTitle("Afinidad-musical");
 		ventanaInicio.setResizable(true);
@@ -270,7 +275,11 @@ public class Menu {
 			public void actionPerformed(ActionEvent arg0) {
 				if (nombre.getText().length() < 3) {
 					aviso.setText("Tu nombre no puede tener menos de 3 letras");
-				} else {
+				}
+				else if(afinidadMusical.usuarioYaRegistrado(nombre.getText())) {
+					aviso.setText("Ya hay un usuario con ese nombre, prueba con otro.");
+				}
+				else {
 					aviso.setText("");
 					
 					Object[] fila = new Object[5];
@@ -281,6 +290,8 @@ public class Menu {
 					fila[4] = urbano.getValue();
 					
 					modelo.addRow(fila);
+					System.out.println("Usuario registrado: " + nombre.getText() + ", intereses: " + tango.getValue() + ", " + folclore.getValue() + ", " + rock.getValue() + ", " + urbano.getValue());
+					afinidadMusical.registrarUsuario(nombre.getText(), tango.getValue(), folclore.getValue(), rock.getValue(), urbano.getValue());
 				}
 			}
 		});

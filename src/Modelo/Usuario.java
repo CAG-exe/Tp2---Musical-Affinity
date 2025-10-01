@@ -27,8 +27,6 @@ public class Usuario {
 		this.interesGeneroUrbano = urbano;
 	}
 
-	// Como el rango de interes debe ser entre 1 y 5, se verifica que estos son
-	// ingresados correctamente.
 	private void cumpleRangoDeInteres(Integer interes) {
 		if (interes < MinInteres || interes > MaxInteres) {
 			throw new IllegalArgumentException(
@@ -46,7 +44,6 @@ public class Usuario {
 		return diferenciaTotal;
 	}
 
-	// Metodos que comparan el interes sobre un genero entre usuarios.
 	public int compararInteresTango(Usuario u) {
 		return interesesPuntuales(this.getInteresTango(), u.getInteresTango());
 	}
@@ -63,8 +60,6 @@ public class Usuario {
 		return interesesPuntuales(this.getInteresGeneroUrbano(), u.getInteresGeneroUrbano());
 	}
 
-	// Obtiene el valor absoluto de la resta de los dos niveles, y te devuelve la
-	// diferencia
 	private int interesesPuntuales(int gustoUno, int gustoDos) {
 		return (Math.abs(gustoUno - gustoDos));
 	}
