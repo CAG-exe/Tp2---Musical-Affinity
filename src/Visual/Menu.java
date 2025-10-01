@@ -195,6 +195,7 @@ public class Menu {
 		num4.setBounds(450, 434, 70, 22);
 		ventanaInicio.getContentPane().add(num4);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(500, 158, 257, 222);
@@ -215,6 +216,8 @@ public class Menu {
 		modelo.addColumn("iU");
 		
 
+=======
+>>>>>>> parent of bd97b0b (datos guardados en una mini-tabla)
 =======
 >>>>>>> parent of bd97b0b (datos guardados en una mini-tabla)
 
