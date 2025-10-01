@@ -102,6 +102,8 @@ public class prueba extends JFrame {
 		JButton btnNewButton_2 = new JButton("Generar");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				grupos ventanaGrupos = new grupos();
+		        ventanaGrupos.mostrarVentana();
 			}
 		});
 		btnNewButton_2.setBounds(495, 399, 129, 46);

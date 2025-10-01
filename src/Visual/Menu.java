@@ -217,6 +217,7 @@ public class Menu {
 		modelo.addColumn("iF");
 		modelo.addColumn("iR");
 		modelo.addColumn("iU");
+		
 
 
 		tango.addChangeListener(new ChangeListener() {
