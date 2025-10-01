@@ -13,16 +13,13 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -37,8 +34,6 @@ public class Menu {
 	private JSlider urbano;
 	private JTextField nombre;
 	private JLabel aviso;
-	private JTable tabla;
-	private DefaultTableModel modelo;
 
 	public static void main(String[] args) {
 		try {
@@ -200,26 +195,8 @@ public class Menu {
 		num4.setBounds(450, 434, 70, 22);
 		ventanaInicio.getContentPane().add(num4);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(500, 158, 257, 222);
-		ventanaInicio.add(scrollPane);
-		
-		
-		tabla = new JTable();
-		tabla.setFocusable(false);
-		scrollPane.setViewportView(tabla);
-		
-		modelo = new DefaultTableModel();
-		tabla.setModel(modelo);
-		
-		modelo.addColumn("nombre");
-		modelo.addColumn("iT");
-		modelo.addColumn("iF");
-		modelo.addColumn("iR");
-		modelo.addColumn("iU");
-		
 
-
+		
 		tango.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
@@ -273,15 +250,6 @@ public class Menu {
 					aviso.setText("Tu nombre no puede tener menos de 3 letras");
 				} else {
 					aviso.setText("");
-					
-					Object[] fila = new Object[5];
-					fila[0] = nombre.getText();
-					fila[1] = tango.getValue();
-					fila[2] = folclore.getValue();
-					fila[3] = rock.getValue();
-					fila[4] = urbano.getValue();
-					
-					modelo.addRow(fila);
 				}
 			}
 		});
