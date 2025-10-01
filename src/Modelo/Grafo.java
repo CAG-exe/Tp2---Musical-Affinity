@@ -59,12 +59,8 @@ public class Grafo {
 	//
 	//
 	public void agregarUsuario(Usuario u) {
-		if (usuarios == null) {
-			usuarios = new HashMap<Integer, Usuario>();
-		}
 		usuarios.put(usuarios.size(), u);
-		if (usuarios.size() < 2)
-			agregarUsuarioAGrafo(usuarios.size() - 1);
+		agregarUsuarioAGrafo(usuarios.size()-1);
 	}
 
 	private void agregarUsuarioAGrafo(int PosicionDelUsuario) {
