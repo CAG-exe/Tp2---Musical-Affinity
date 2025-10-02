@@ -23,6 +23,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
 
+import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
+
+import Controlador.Controlador;
 import Modelo.AfinidadMusical;
 
 import javax.swing.event.ChangeListener;
@@ -43,24 +46,17 @@ public class Menu {
 	private JTable tabla;
 	private DefaultTableModel modelo;
 	private AfinidadMusical afinidadMusical;
+	private Controlador controlador;
 
-	public static void main(String[] args) {
-		try {
-			AfinidadMusical afinidadMusical = new AfinidadMusical();
-			Menu window = new Menu(afinidadMusical);
-			window.ventanaInicio.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
-	public Menu(AfinidadMusical afinidadMusical) {
+	public Menu(AfinidadMusical afinidadMusical, Controlador controlador) {
 		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+			UIManager.setLookAndFeel(new FlatCarbonIJTheme());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		this.afinidadMusical = afinidadMusical;
+		this.controlador = controlador;
 		inicializar();
 	}
 
@@ -114,16 +110,6 @@ public class Menu {
 		tango.setMajorTickSpacing(1);
 		ventanaInicio.getContentPane().add(tango);
 
-		JLabel valorTango = new JLabel("Tango: ");
-		valorTango.setFont(new Font("Arial", Font.BOLD, 13));
-		valorTango.setBounds(400, 164, 70, 22);
-		ventanaInicio.getContentPane().add(valorTango);
-
-		JLabel num = new JLabel("1");
-		num.setFont(new Font("Arial", Font.BOLD, 13));
-		num.setBounds(450, 164, 70, 22);
-		ventanaInicio.getContentPane().add(num);
-
 		JLabel Folclore = new JLabel("Folclore");
 		Folclore.setFont(new Font("Arial", Font.BOLD, 13));
 		Folclore.setBounds(21, 254, 70, 22);
@@ -140,16 +126,6 @@ public class Menu {
 		folclore.setPaintTicks(true);
 		folclore.setMajorTickSpacing(1);
 		ventanaInicio.getContentPane().add(folclore);
-
-		JLabel valorFolclore = new JLabel("Folclore: ");
-		valorFolclore.setFont(new Font("Arial", Font.BOLD, 13));
-		valorFolclore.setBounds(400, 254, 70, 22);
-		ventanaInicio.getContentPane().add(valorFolclore);
-
-		JLabel num2 = new JLabel("1");
-		num2.setFont(new Font("Arial", Font.BOLD, 13));
-		num2.setBounds(460, 254, 70, 22);
-		ventanaInicio.getContentPane().add(num2);
 
 		JLabel Rock = new JLabel("Rock");
 		Rock.setFont(new Font("Arial", Font.BOLD, 13));
@@ -168,16 +144,6 @@ public class Menu {
 		rock.setMajorTickSpacing(1);
 		ventanaInicio.getContentPane().add(rock);
 
-		JLabel valorRock = new JLabel("Rock: ");
-		valorRock.setFont(new Font("Arial", Font.BOLD, 13));
-		valorRock.setBounds(400, 344, 70, 22);
-		ventanaInicio.getContentPane().add(valorRock);
-
-		JLabel num3 = new JLabel("1");
-		num3.setFont(new Font("Arial", Font.BOLD, 13));
-		num3.setBounds(450, 344, 70, 22);
-		ventanaInicio.getContentPane().add(num3);
-
 		JLabel Urbano = new JLabel("Urbano");
 		Urbano.setFont(new Font("Arial", Font.BOLD, 13));
 		Urbano.setBounds(21, 434, 70, 22);
@@ -193,18 +159,7 @@ public class Menu {
 		urbano.setPaintLabels(true);
 		urbano.setPaintTicks(true);
 		urbano.setMajorTickSpacing(1);
-		urbano.setOpaque(true);
 		ventanaInicio.getContentPane().add(urbano);
-
-		JLabel valorUrbano = new JLabel("Rock: ");
-		valorUrbano.setFont(new Font("Arial", Font.BOLD, 13));
-		valorUrbano.setBounds(400, 434, 70, 22);
-		ventanaInicio.getContentPane().add(valorUrbano);
-
-		JLabel num4 = new JLabel("1");
-		num4.setFont(new Font("Arial", Font.BOLD, 13));
-		num4.setBounds(450, 434, 70, 22);
-		ventanaInicio.getContentPane().add(num4);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(500, 158, 257, 222);
@@ -224,84 +179,46 @@ public class Menu {
 		modelo.addColumn("iU");
 
 		
-
-		
-		tango.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				int valor = tango.getValue();
-				num.setText(String.valueOf(valor));
-
-			}
-		});
-
-		folclore.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				int valor = folclore.getValue();
-				num2.setText(String.valueOf(valor));
-
-			}
-		});
-
-		rock.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				int valor = rock.getValue();
-				num3.setText(String.valueOf(valor));
-
-			}
-		});
-
-		urbano.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				int valor = urbano.getValue();
-				num4.setText(String.valueOf(valor));
-
-			}
-		});
 		JButton guardarPersona = new JButton("Guardar Datos");
 		guardarPersona.setFocusable(false);
-		guardarPersona.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-		});
 		guardarPersona.setFont(new Font("Arial", Font.BOLD, 14));
-		guardarPersona.addActionListener(new ActionListener() {
-			 public void actionPerformed(ActionEvent arg0) {
-	                if (nombre.getText().length() < 3) {
-	                    aviso.setText("Tu nombre no puede tener menos de 3 letras");
-	                }
-	                else if(afinidadMusical.usuarioYaRegistrado(nombre.getText())) {
-	                    aviso.setText("Ya hay un usuario con ese nombre, prueba con otro.");
-	                }
-	                else {
-	                    aviso.setText("");
-	                    
-	                    Object[] fila = new Object[5];
-	                    fila[0] = nombre.getText();
-	                    fila[1] = tango.getValue();
-	                    fila[2] = folclore.getValue();
-	                    fila[3] = rock.getValue();
-	                    fila[4] = urbano.getValue();
-	                    
-	                    modelo.addRow(fila);
-	                    //
-	                    System.out.println("Usuario registrado: " + nombre.getText() + ", intereses: " + tango.getValue() + ", " + folclore.getValue() + ", " + rock.getValue() + ", " + urbano.getValue());
-	                    //
-	                    afinidadMusical.registrarUsuario(nombre.getText(), tango.getValue(), folclore.getValue(), rock.getValue(), urbano.getValue());
-	                }
-	            }
-	        });
+		guardarPersona.addActionListener(e ->{
+			NuevoUsuarioDatos dto = NuevoUsuarioDatos.builder()
+		            .nombre(nombre.getText())
+		            .tango(tango.getValue())
+		            .folclore(folclore.getValue())
+		            .rock(rock.getValue())
+		            .urbano(urbano.getValue())
+		            .build();
+
+            controlador.guardarNuevoUsuario(dto);
+		});
+		
+		
 		guardarPersona.setBounds(300, 500, 150, 50);
 		ventanaInicio.getContentPane().add(guardarPersona);
 	}
+	
+	
+	public void avisoNombreCorto() {
+		aviso.setText("Tu nombre no puede tener menos de 3 letras");
+	}
+	
+	public void avisoNombreRegistrado() {
+		aviso.setText("Ya hay un usuario con ese nombre, prueba con otro.");
+	}
+	
+	public void añadirUsuarioAFila() {
+		 Object[] fila = new Object[5];
+         fila[0] = nombre.getText();
+         fila[1] = tango.getValue();
+         fila[2] = folclore.getValue();
+         fila[3] = rock.getValue();
+         fila[4] = urbano.getValue();
+         
+         modelo.addRow(fila);	
+   }
+	
 
 	public void favIcon(Image image) {
 		ventanaInicio.setIconImage(image);

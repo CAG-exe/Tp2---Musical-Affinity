@@ -15,6 +15,7 @@ import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
 
+import Controlador.Controlador;
 import Modelo.AfinidadMusical;
 
 import javax.swing.JButton;
@@ -42,28 +43,14 @@ public class UISwing extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		try {
-		    UIManager.setLookAndFeel( new FlatCarbonIJTheme() );
-		} catch( Exception ex ) {
-		    System.err.println( "Failed to initialize LaF" );
-		}
-		UIManager.put("Button.arc", 0);
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UISwing frame = new UISwing();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public UISwing() {
+	public UISwing(Controlador controlador, AfinidadMusical afinidadMusical) {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1050, 700);
 		background = new JPanel();
@@ -76,11 +63,10 @@ public class UISwing extends JFrame {
 		JSeparator separator = new JSeparator();
 		
 		JButton UsuariosBoton = new JButton("Usuarios");
-		UsuariosBoton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mostrarPanel("Usuarios");
-			}
-		});
+		
+		UsuariosBoton.addActionListener(
+				e -> controlador.mostrarPanelUsuarios());
+		
 		UsuariosBoton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		UsuariosBoton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		UsuariosBoton.setBorderPainted(false);
@@ -91,21 +77,22 @@ public class UISwing extends JFrame {
 		GrafoButton.setBorderPainted(false);
 		GrafoButton.setBorder(null);
 		GrafoButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		GrafoButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mostrarPanel("Grafo");
-			}
-		});
+		GrafoButton.addActionListener(
+				e -> controlador.mostrarPanelGrafo());
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(25, 94, 99));
 		
 		JButton RegistroUsuariosButton = new JButton("Registrar Usuario");
 		RegistroUsuariosButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		
+		// Debe cambiarse, pero como aun no esta implementado el Panel Del menu de Crear Usuario, entonces no lo toco.
 		RegistroUsuariosButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AfinidadMusical afinidadMusical = new AfinidadMusical();
-				Menu menuVentana = new Menu(afinidadMusical);
+				Menu menuVentana = new Menu(afinidadMusical, controlador);
+				controlador.añadirMenuAlControlador(menuVentana);
 				menuVentana.setVisible(true);
 			}
 		});
@@ -234,7 +221,7 @@ public class UISwing extends JFrame {
 		background.setLayout(gl_background);
 		
 	}
-    private void mostrarPanel(String nombre) {
+    public void mostrarPanel(String nombre) {
         CardLayout cl = (CardLayout) Contenedor.getLayout();
         cl.show(Contenedor, nombre);
     }
