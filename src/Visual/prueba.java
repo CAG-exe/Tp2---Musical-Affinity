@@ -17,12 +17,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Font;
 
 public class prueba extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
+	private JLabel aviso;
 
 	/**
 	 * Launch the application.
@@ -60,6 +63,12 @@ public class prueba extends JFrame {
 		lblNewLabel.setBounds(394, 413, 64, 18);
 		contentPane.add(lblNewLabel);
 		
+		aviso = new JLabel("");
+		aviso.setForeground(Color.BLUE);
+		aviso.setFont(new Font("Arial", Font.BOLD, 12));
+		aviso.setBounds(50, 200, 271, 18);
+		contentPane.add(aviso);
+		
 		textField = new JTextField();
 		textField.setBounds(10, 181, 149, 20);
 		contentPane.add(textField);
@@ -72,6 +81,11 @@ public class prueba extends JFrame {
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (textField.getText().length() < 3) {
+					aviso.setText("No puede tener menos de 3 letras");
+				} else {
+					aviso.setText("");
+				}
 			}
 		});
 		btnNewButton.setBounds(169, 180, 105, 22);
