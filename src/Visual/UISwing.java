@@ -15,6 +15,8 @@ import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
 
+import Modelo.AfinidadMusical;
+
 import javax.swing.JButton;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -102,7 +104,8 @@ public class UISwing extends JFrame {
 		RegistroUsuariosButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		RegistroUsuariosButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Menu menuVentana = new Menu();
+				AfinidadMusical afinidadMusical = new AfinidadMusical();
+				Menu menuVentana = new Menu(afinidadMusical);
 				menuVentana.setVisible(true);
 			}
 		});
