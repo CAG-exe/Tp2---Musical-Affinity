@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -150,5 +151,9 @@ public class Grafo {
 			}
 		}
 		matriz = nuevaMatriz;
+	}
+
+	public Map<Integer,Usuario> getUsuarios() {
+		return usuarios;
 	}
 }

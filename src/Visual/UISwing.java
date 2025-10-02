@@ -7,13 +7,18 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
+
+import Modelo.AfinidadMusical;
+import Modelo.Usuario;
 
 import javax.swing.JButton;
 import javax.swing.GroupLayout;
@@ -21,11 +26,15 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.Map.Entry;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
+
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -35,6 +44,7 @@ public class UISwing extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel background;
 	private JPanel Contenedor;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -63,7 +73,7 @@ public class UISwing extends JFrame {
 	 */
 	public UISwing() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1050, 700);
+		setBounds(100, 100, 1050, 720);
 		background = new JPanel();
 		background.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(background);
@@ -194,7 +204,33 @@ public class UISwing extends JFrame {
 		panel_2.add(btnEliminar);
 		
 		JPanel panel_3 = new JPanel();
+		panel_3.setLayout(new BorderLayout());
 		panel_3.setBackground(new Color(220, 225, 195));
+		
+		scrollPane = new JScrollPane();
+		JTable UsuariosTabla = new JTable();
+		scrollPane.setViewportView(UsuariosTabla);
+		panel_3.add(scrollPane,BorderLayout.WEST);
+		scrollPane.setPreferredSize(new Dimension(200,0));
+		
+		
+		UsuariosTabla.setFocusable(false);
+		DefaultTableModel tablaModel = new DefaultTableModel();
+		UsuariosTabla.setModel(tablaModel);
+		tablaModel.addColumn("ID");
+		tablaModel.addColumn("Nombre");
+		UsuariosTabla.getColumnModel().getColumn(0).setPreferredWidth(5);
+		
+		
+		///test de datos en la tabla
+		tablaModel.addRow(new Object[] {0,"Juan"});
+		tablaModel.addRow(new Object[] {1,"Maria"});	
+		tablaModel.addRow(new Object[] {2,"Pedro"});
+		tablaModel.addRow(new Object[] {3,"Luisa"});
+		tablaModel.addRow(new Object[] {4,"Ana"});
+		tablaModel.addRow(new Object[] {5,"Luis"});
+		
+		///
 		
 		Contenedor = new JPanel(new CardLayout());
 		Contenedor.add(panel_2,"Usuarios");
@@ -231,7 +267,9 @@ public class UISwing extends JFrame {
 		background.setLayout(gl_background);
 		
 	}
-    private void mostrarPanel(String nombre) {
+
+
+	private void mostrarPanel(String nombre) {
         CardLayout cl = (CardLayout) Contenedor.getLayout();
         cl.show(Contenedor, nombre);
     }
