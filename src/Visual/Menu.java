@@ -64,7 +64,7 @@ public class Menu {
 		ventanaInicio.setTitle("Afinidad-musical");
 		ventanaInicio.setResizable(true);
 		ventanaInicio.setBounds(100, 100, 800, 600);
-		ventanaInicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventanaInicio.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		ventanaInicio.getContentPane().setLayout(null);
 
 		icono = new ImageIcon(getClass().getResource("/img/icono.png"));
@@ -293,4 +293,7 @@ public class Menu {
 	public void favIcon(Image image) {
 		ventanaInicio.setIconImage(image);
 	}
+    public void setVisible(boolean a) {
+        ventanaInicio.setVisible(a);
+    }
 }

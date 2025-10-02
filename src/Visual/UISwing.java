@@ -97,6 +97,8 @@ public class UISwing extends JFrame {
 		RegistroUsuariosButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		RegistroUsuariosButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Menu menuVentana = new Menu();
+				menuVentana.setVisible(true);
 			}
 		});
 		RegistroUsuariosButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
