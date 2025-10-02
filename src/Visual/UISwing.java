@@ -236,14 +236,14 @@ public class UISwing extends JFrame {
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
 						.addComponent(Contenedor, GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
-						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 766, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)))
 		);
 		gl_background.setVerticalGroup(
 			gl_background.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_background.createSequentialGroup()
 					.addGap(16)
 					.addComponent(LogoLabel))
-				.addComponent(panel, GroupLayout.PREFERRED_SIZE, 672, GroupLayout.PREFERRED_SIZE)
+				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
 				.addGroup(gl_background.createSequentialGroup()
 					.addGap(43)
 					.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
