@@ -204,7 +204,6 @@ public class Menu {
 		scrollPane.setBounds(500, 158, 257, 222);
 		ventanaInicio.add(scrollPane);
 		
-		
 		tabla = new JTable();
 		tabla.setFocusable(false);
 		scrollPane.setViewportView(tabla);
