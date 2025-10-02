@@ -20,6 +20,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -32,6 +34,7 @@ public class UISwing extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel background;
+	private JPanel Contenedor;
 
 	/**
 	 * Launch the application.
@@ -73,6 +76,7 @@ public class UISwing extends JFrame {
 		JButton UsuariosBoton = new JButton("Usuarios");
 		UsuariosBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				mostrarPanel("Usuarios");
 			}
 		});
 		UsuariosBoton.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -87,6 +91,7 @@ public class UISwing extends JFrame {
 		GrafoButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GrafoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				mostrarPanel("Grafo");
 			}
 		});
 		
@@ -144,7 +149,7 @@ public class UISwing extends JFrame {
 		panel.setLayout(gl_panel);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(236, 225, 195));
+		panel_2.setBackground(new Color(220, 225, 195));
 		
 		
 		//JButton btnCrear = new JButton("Crear Usuario");
@@ -187,9 +192,15 @@ public class UISwing extends JFrame {
 		panel_2.add(btnBuscar);
 		panel_2.add(btnEditar);
 		panel_2.add(btnEliminar);
-
-
 		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(220, 225, 195));
+		
+		Contenedor = new JPanel(new CardLayout());
+		Contenedor.add(panel_2,"Usuarios");
+		Contenedor.add(panel_3,"Grafo");
+		mostrarPanel("Usuarios");
+
 		GroupLayout gl_background = new GroupLayout(background);
 		gl_background.setHorizontalGroup(
 			gl_background.createParallelGroup(Alignment.LEADING)
@@ -200,7 +211,7 @@ public class UISwing extends JFrame {
 							.addComponent(LogoLabel, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
+						.addComponent(Contenedor, GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
 						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 766, GroupLayout.PREFERRED_SIZE)))
 		);
 		gl_background.setVerticalGroup(
@@ -214,10 +225,14 @@ public class UISwing extends JFrame {
 					.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_background.createSequentialGroup()
 							.addGap(124)
-							.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE))
+							.addComponent(Contenedor, GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE))
 						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)))
 		);
 		background.setLayout(gl_background);
 		
 	}
+    private void mostrarPanel(String nombre) {
+        CardLayout cl = (CardLayout) Contenedor.getLayout();
+        cl.show(Contenedor, nombre);
+    }
 }
