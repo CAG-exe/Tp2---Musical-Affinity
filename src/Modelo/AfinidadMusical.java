@@ -8,6 +8,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -16,7 +17,7 @@ public class AfinidadMusical {
 	List<Usuario> usuariosJson;
 	HashMap<String, Usuario> usuariosRegistrados = new HashMap<String, Usuario>();
 	List<Usuario> usuariosSelecionadosParaElGrafo;
-	Grafo matrizRelacion;
+	static Grafo matrizRelacion;   /// modificar despues de la implementacion del main
 	
 	public AfinidadMusical() {
 		guardarUsuariosDeLaBaseDeDatos();
@@ -64,5 +65,9 @@ public class AfinidadMusical {
 
 	public boolean usuarioYaRegistrado(String text) {
 		return usuariosRegistrados.containsKey(text);
+	}
+
+	public static Map<Integer,Usuario> getUsuarios() {
+		return matrizRelacion.getUsuarios();
 	}
 }
