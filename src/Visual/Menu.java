@@ -22,6 +22,9 @@ import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
+
+import Modelo.AfinidadMusical;
+
 import javax.swing.event.ChangeListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -39,22 +42,25 @@ public class Menu {
 	private JLabel aviso;
 	private JTable tabla;
 	private DefaultTableModel modelo;
+	private AfinidadMusical afinidadMusical;
 
 	public static void main(String[] args) {
 		try {
-			Menu window = new Menu();
+			AfinidadMusical afinidadMusical = new AfinidadMusical();
+			Menu window = new Menu(afinidadMusical);
 			window.ventanaInicio.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public Menu() {
+	public Menu(AfinidadMusical afinidadMusical) {
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		this.afinidadMusical = afinidadMusical;
 		inicializar();
 	}
 
@@ -268,23 +274,31 @@ public class Menu {
 		});
 		guardarPersona.setFont(new Font("Arial", Font.BOLD, 14));
 		guardarPersona.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (nombre.getText().length() < 3) {
-					aviso.setText("Tu nombre no puede tener menos de 3 letras");
-				} else {
-					aviso.setText("");
-					
-					Object[] fila = new Object[5];
-					fila[0] = nombre.getText();
-					fila[1] = tango.getValue();
-					fila[2] = folclore.getValue();
-					fila[3] = rock.getValue();
-					fila[4] = urbano.getValue();
-					
-					modelo.addRow(fila);
-				}
-			}
-		});
+			 public void actionPerformed(ActionEvent arg0) {
+	                if (nombre.getText().length() < 3) {
+	                    aviso.setText("Tu nombre no puede tener menos de 3 letras");
+	                }
+	                else if(afinidadMusical.usuarioYaRegistrado(nombre.getText())) {
+	                    aviso.setText("Ya hay un usuario con ese nombre, prueba con otro.");
+	                }
+	                else {
+	                    aviso.setText("");
+	                    
+	                    Object[] fila = new Object[5];
+	                    fila[0] = nombre.getText();
+	                    fila[1] = tango.getValue();
+	                    fila[2] = folclore.getValue();
+	                    fila[3] = rock.getValue();
+	                    fila[4] = urbano.getValue();
+	                    
+	                    modelo.addRow(fila);
+	                    //
+	                    System.out.println("Usuario registrado: " + nombre.getText() + ", intereses: " + tango.getValue() + ", " + folclore.getValue() + ", " + rock.getValue() + ", " + urbano.getValue());
+	                    //
+	                    afinidadMusical.registrarUsuario(nombre.getText(), tango.getValue(), folclore.getValue(), rock.getValue(), urbano.getValue());
+	                }
+	            }
+	        });
 		guardarPersona.setBounds(300, 500, 150, 50);
 		ventanaInicio.getContentPane().add(guardarPersona);
 	}
