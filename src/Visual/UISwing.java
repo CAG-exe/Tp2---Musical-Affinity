@@ -94,6 +94,7 @@ public class UISwing extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(25, 94, 99));
 		
+		
 		JButton RegistroUsuariosButton = new JButton("Crear Usuario");
 		RegistroUsuariosButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
@@ -102,16 +103,11 @@ public class UISwing extends JFrame {
 			cambiarTituloDePaginaCrearUsuario();
 		});
 		
+		Menu panelCrearUsuario = new Menu(afinidadMusical, controlador); 
+
+		controlador.añadirMenuAlControlador(panelCrearUsuario);
 		
-		// Debe cambiarse, pero como aun no esta implementado el Panel Del menu de Crear Usuario, entonces no lo toco.
-		RegistroUsuariosButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AfinidadMusical afinidadMusical = new AfinidadMusical();
-				Menu menuVentana = new Menu(afinidadMusical, controlador);
-				controlador.añadirMenuAlControlador(menuVentana);
-				menuVentana.setVisible(true);
-			}
-		});
+
 		RegistroUsuariosButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		RegistroUsuariosButton.setBorderPainted(false);
 		RegistroUsuariosButton.setBorder(null);
@@ -233,7 +229,6 @@ public class UISwing extends JFrame {
 		Contenedor.add(panel_3,"Grafo");
 		mostrarPanel("Usuarios");
 		
-		Menu panelCrearUsuario = new Menu(afinidadMusical, controlador);
 		Contenedor.add(panelCrearUsuario, "CrearUsuario");
 
 		GroupLayout gl_background = new GroupLayout(background);
