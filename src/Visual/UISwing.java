@@ -22,7 +22,6 @@ import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighte
 import Controlador.Controlador;
 import Modelo.AfinidadMusical;
 import Modelo.Usuario;
-import Visual.UISwing.RowHeaderRenderer;
 
 import javax.swing.JButton;
 import javax.swing.GroupLayout;
@@ -55,6 +54,8 @@ public class UISwing extends JFrame {
 	private JScrollPane scrollPane;
 	private JScrollPane scrollMatrizAdyacencia;
 	private JLabel _TituloDePagina;
+	private PanelGrafo panelGrafo;
+	private PanelUsuarios panelUsuario;
 
 	/**
 	 * Launch the application.
@@ -157,70 +158,14 @@ public class UISwing extends JFrame {
 		);
 		panelLateralDeSolapas.setLayout(gl_panelLateralDeSolapas);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(220, 225, 195));
+		this.panelUsuario = new PanelUsuarios();
 		
-		
-		//JButton btnCrear = new JButton("Crear Usuario");
-		JButton btnBuscar = new JButton("Buscar Usuario");
-		JButton btnEditar = new JButton("Editar Usuario");
-		JButton btnEliminar = new JButton("Eliminar Usuario");
-
-		// Le da un estilo a los botones
-		Font botonFont = new Font("Tahoma", Font.PLAIN, 15);
-		//btnCrear.setFont(botonFont);
-		btnBuscar.setFont(botonFont);
-		btnEditar.setFont(botonFont);
-		btnEliminar.setFont(botonFont);
-
-		// Cambia la imagen del Cursor
-		//btnCrear.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnBuscar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnEditar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnEliminar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-		// Quitar bordes a los botones
-		//btnCrear.setBorderPainted(false);
-		btnBuscar.setBorderPainted(false);
-		btnEditar.setBorderPainted(false);
-		btnEliminar.setBorderPainted(false);
-
-		// Layout simple para el panel_2
-		// Layout tipo Flow para que no se estiren
-		panel_2.setLayout(new java.awt.FlowLayout(FlowLayout.LEFT, 10, 10));
-
-		// Dar tamaño preferido a los botones
-		Dimension buttonSize = new Dimension(150, 40); // ancho 150px, alto 40px
-		//btnCrear.setPreferredSize(buttonSize);
-		btnBuscar.setPreferredSize(buttonSize);
-		btnEditar.setPreferredSize(buttonSize);
-		btnEliminar.setPreferredSize(buttonSize);
-
-		// Agregar botones al panel
-		//panel_2.add(btnCrear);
-		panel_2.add(btnBuscar);
-		panel_2.add(btnEditar);
-		panel_2.add(btnEliminar);
-		
-		JPanel panel_3 = new JPanel();
-		panel_3.setLayout(new BorderLayout());
-		panel_3.setBackground(new Color(220, 225, 195));
-		
-		scrollPane = new JScrollPane();
-		panel_3.add(scrollPane,BorderLayout.WEST);
-		
-		generarListaUsuariosVisual(afinidadMusical);
-
-		///
-		scrollMatrizAdyacencia = new JScrollPane();
-		panel_3.add(scrollMatrizAdyacencia,BorderLayout.CENTER);
-		
-		generarMatrizGrafoVisual(afinidadMusical);
+		this.panelGrafo = new PanelGrafo(afinidadMusical, controlador);
 		
 		
 		Contenedor = new JPanel(new CardLayout());
-		Contenedor.add(panel_2,"Usuarios");
-		Contenedor.add(panel_3,"Grafo");
+		Contenedor.add(panelUsuario,"Usuarios");
+		Contenedor.add(panelGrafo,"Grafo");
 		mostrarPanel("Usuarios");
 		
 		Contenedor.add(panelCrearUsuario, "CrearUsuario");
@@ -293,75 +238,10 @@ public class UISwing extends JFrame {
 	public void cambiarTituloDePaginaCrearUsuario() {
 		_TituloDePagina.setText("CREAR USUARIO");
 	}
-	
-	private void generarMatrizGrafoVisual(AfinidadMusical afinidadMusical) {
-		int cantidadDeUsuarios = afinidadMusical.getCantidadDeUsuarios();
-		String[][] matrizTexto=afinidadMusical.getGrafoMatrizString(cantidadDeUsuarios);
-		String[] columnas = generarHeaders(cantidadDeUsuarios);
-		DefaultTableModel MatrizModel = new DefaultTableModel(matrizTexto,columnas);
 
-		JTable MatrizAdyacenciaTabla = new JTable(MatrizModel);
-		MatrizAdyacenciaTabla.setRowHeight(30);
-		scrollMatrizAdyacencia.setViewportView(MatrizAdyacenciaTabla);
-		scrollMatrizAdyacencia.setPreferredSize(new Dimension(500,0));
-		
-		
-		JList<String> rowHeader = new JList<>(columnas);
-        rowHeader.setFixedCellWidth(30);
-        rowHeader.setFixedCellHeight(MatrizAdyacenciaTabla.getRowHeight());
-        rowHeader.setCellRenderer(new RowHeaderRenderer(MatrizAdyacenciaTabla));
-        
-        
-        scrollMatrizAdyacencia.setRowHeaderView(rowHeader);
+	public void recargarGrafo(AfinidadMusical modelo) {
+		this.panelGrafo.recargarGrafo(modelo);
 	}
-	
-	private String[] generarHeaders(int cantidadDeUsuarios) {
-		String[] headers = new String[cantidadDeUsuarios];
-		for(int i=0;i<cantidadDeUsuarios;i++) {
-			headers[i]=String.valueOf(i);
-		}
-		return headers;
-	}
-
-	public void recargarGrafo(AfinidadMusical afinidadMusical) {
-		generarMatrizGrafoVisual(afinidadMusical);
-		generarListaUsuariosVisual(afinidadMusical);
-		revalidate();
-		repaint();
-	}
-	
-	private void generarListaUsuariosVisual(AfinidadMusical afinidadMusical) {
-		String[][] listaUsuarios= afinidadMusical.getListaUsuariosMatrizString();
-		String[] columnas = {"ID","Nombre"};
-		DefaultTableModel tablaModel = new DefaultTableModel(listaUsuarios,columnas);
-		
-		JTable UsuariosTabla = new JTable(tablaModel);
-		scrollPane.setViewportView(UsuariosTabla);
-		scrollPane.setPreferredSize(new Dimension(200,0));
-		
-	}
-
-	// Renderizador para que las filas se vean como encabezados
-	static class RowHeaderRenderer extends JLabel implements ListCellRenderer<String> {
-	    private static final long serialVersionUID = 1L;
-
-		RowHeaderRenderer(JTable table) {
-	        JTableHeader header = table.getTableHeader();
-	        setOpaque(true);
-	        setBorder(UIManager.getBorder("TableHeader.cellBorder"));
-	        setHorizontalAlignment(CENTER);
-	        setForeground(header.getForeground());
-	        setBackground(header.getBackground());
-	        setFont(header.getFont());
-	    }
-
-	    @Override
-	    public Component getListCellRendererComponent(JList<? extends String> list,String value, int index,boolean isSelected, boolean cellHasFocus) {
-	        setText(value);
-	        return this;
-	    }
-	}
-
 	
 }
 
