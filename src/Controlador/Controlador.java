@@ -25,6 +25,7 @@ public class Controlador {
 
 	public void mostrarPanelGrafo() {
 		visual.mostrarPanel("Grafo");
+		visual.recargarGrafo(modelo);
 		visual.cambiarTituloDePaginaGrafo();
 	}
 	

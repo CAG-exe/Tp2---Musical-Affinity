@@ -22,6 +22,7 @@ import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighte
 import Controlador.Controlador;
 import Modelo.AfinidadMusical;
 import Modelo.Usuario;
+import Visual.UISwing.RowHeaderRenderer;
 
 import javax.swing.JButton;
 import javax.swing.GroupLayout;
@@ -228,24 +229,11 @@ public class UISwing extends JFrame {
 		tablaModel.addRow(new Object[] {5,"Luis"});
 		
 		///
-		String[][] matrizTexto=afinidadMusical.getGrafoMatrizString();
-		String[] columnas = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"};
-		DefaultTableModel MatrizModel = new DefaultTableModel(matrizTexto,columnas);
 		scrollMatrizAdyacencia = new JScrollPane();
-		JTable MatrizAdyacenciaTabla = new JTable(MatrizModel);
-		MatrizAdyacenciaTabla.setRowHeight(30);
-		scrollMatrizAdyacencia.setViewportView(MatrizAdyacenciaTabla);
-		panel_3.add(scrollMatrizAdyacencia,BorderLayout.EAST);
-		scrollMatrizAdyacencia.setPreferredSize(new Dimension(500,0));
+		panel_3.add(scrollMatrizAdyacencia,BorderLayout.CENTER);
 		
+		generarMatrizGrafoVisual(afinidadMusical);
 		
-		JList<String> rowHeader = new JList<>(columnas);
-        rowHeader.setFixedCellWidth(30);
-        rowHeader.setFixedCellHeight(MatrizAdyacenciaTabla.getRowHeight());
-        rowHeader.setCellRenderer(new RowHeaderRenderer(MatrizAdyacenciaTabla));
-        
-        
-        scrollMatrizAdyacencia.setRowHeaderView(rowHeader);
 		
 		Contenedor = new JPanel(new CardLayout());
 		Contenedor.add(panel_2,"Usuarios");
@@ -323,9 +311,46 @@ public class UISwing extends JFrame {
 		_TituloDePagina.setText("CREAR USUARIO");
 	}
 	
+	private void generarMatrizGrafoVisual(AfinidadMusical afinidadMusical) {
+		int cantidadDeUsuarios = afinidadMusical.getCantidadDeUsuarios();
+		String[][] matrizTexto=afinidadMusical.getGrafoMatrizString(cantidadDeUsuarios);
+		String[] columnas = generarHeaders(cantidadDeUsuarios);
+		DefaultTableModel MatrizModel = new DefaultTableModel(matrizTexto,columnas);
+
+		JTable MatrizAdyacenciaTabla = new JTable(MatrizModel);
+		MatrizAdyacenciaTabla.setRowHeight(30);
+		scrollMatrizAdyacencia.setViewportView(MatrizAdyacenciaTabla);
+		scrollMatrizAdyacencia.setPreferredSize(new Dimension(500,0));
+		
+		
+		JList<String> rowHeader = new JList<>(columnas);
+        rowHeader.setFixedCellWidth(30);
+        rowHeader.setFixedCellHeight(MatrizAdyacenciaTabla.getRowHeight());
+        rowHeader.setCellRenderer(new RowHeaderRenderer(MatrizAdyacenciaTabla));
+        
+        
+        scrollMatrizAdyacencia.setRowHeaderView(rowHeader);
+	}
+	
+	private String[] generarHeaders(int cantidadDeUsuarios) {
+		String[] headers = new String[cantidadDeUsuarios];
+		for(int i=0;i<cantidadDeUsuarios;i++) {
+			headers[i]=String.valueOf(i);
+		}
+		return headers;
+	}
+
+	public void recargarGrafo(AfinidadMusical afinidadMusical) {
+		generarMatrizGrafoVisual(afinidadMusical);
+		revalidate();
+		repaint();
+	}
+
 	// Renderizador para que las filas se vean como encabezados
 	static class RowHeaderRenderer extends JLabel implements ListCellRenderer<String> {
-	    RowHeaderRenderer(JTable table) {
+	    private static final long serialVersionUID = 1L;
+
+		RowHeaderRenderer(JTable table) {
 	        JTableHeader header = table.getTableHeader();
 	        setOpaque(true);
 	        setBorder(UIManager.getBorder("TableHeader.cellBorder"));

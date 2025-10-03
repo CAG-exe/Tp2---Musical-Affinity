@@ -71,7 +71,11 @@ public class AfinidadMusical {
 		return matrizRelacion.getUsuarios();
 	}
 
-	public String[][] getGrafoMatrizString() {
-		return matrizRelacion.matrizString();
+	public String[][] getGrafoMatrizString(int cantidadDeUsuarios) {
+		return matrizRelacion.matrizString(cantidadDeUsuarios);
+	}
+
+	public int getCantidadDeUsuarios() {
+		return usuariosRegistrados.size();
 	}
 }

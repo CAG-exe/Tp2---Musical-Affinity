@@ -157,20 +157,15 @@ public class Grafo {
 		return usuarios;
 	}
 	
-	public String[][] matrizString(){
-		String[][] matrizString = new String[matriz.length][matriz.length];
-		matrizString[0][0] = " ";
-		//for(int i=1; i<matrizString.length; i++) {
-		//	matrizString[0][i] = Integer.toString(i-1);
-		//	matrizString[i][0] = Integer.toString(i-1);
-		///}
-		for(int f=0; f<matrizString.length; f++) {
-			for(int c=0; c<matrizString.length; c++) {
+	public String[][] matrizString(int cantidadDeUsuarios){
+		String[][] matrizString = new String[cantidadDeUsuarios][cantidadDeUsuarios];
+		for(int f=0; f<cantidadDeUsuarios; f++) {
+			for(int c=0; c<cantidadDeUsuarios; c++) {
 				if(matriz[f][c] == -1) {
 					matrizString[f][c] = "∞";
 				}
 				else {
-					matrizString[f][c] = Integer.toString(matriz[f-1][c-1]);
+					matrizString[f][c] = Integer.toString(matriz[f][c]);
 				}
 			}
 		}
