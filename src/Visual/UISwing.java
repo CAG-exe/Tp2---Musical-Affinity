@@ -36,6 +36,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.Map.Entry;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
@@ -206,28 +207,10 @@ public class UISwing extends JFrame {
 		panel_3.setBackground(new Color(220, 225, 195));
 		
 		scrollPane = new JScrollPane();
-		JTable UsuariosTabla = new JTable();
-		scrollPane.setViewportView(UsuariosTabla);
 		panel_3.add(scrollPane,BorderLayout.WEST);
-		scrollPane.setPreferredSize(new Dimension(200,0));
 		
-		
-		UsuariosTabla.setFocusable(false);
-		DefaultTableModel tablaModel = new DefaultTableModel();
-		UsuariosTabla.setModel(tablaModel);
-		tablaModel.addColumn("ID");
-		tablaModel.addColumn("Nombre");
-		UsuariosTabla.getColumnModel().getColumn(0).setPreferredWidth(5);
-		
-		
-		///test de datos en la tabla
-		tablaModel.addRow(new Object[] {0,"Juan"});
-		tablaModel.addRow(new Object[] {1,"Maria"});	
-		tablaModel.addRow(new Object[] {2,"Pedro"});
-		tablaModel.addRow(new Object[] {3,"Luisa"});
-		tablaModel.addRow(new Object[] {4,"Ana"});
-		tablaModel.addRow(new Object[] {5,"Luis"});
-		
+		generarListaUsuariosVisual(afinidadMusical);
+
 		///
 		scrollMatrizAdyacencia = new JScrollPane();
 		panel_3.add(scrollMatrizAdyacencia,BorderLayout.CENTER);
@@ -342,8 +325,20 @@ public class UISwing extends JFrame {
 
 	public void recargarGrafo(AfinidadMusical afinidadMusical) {
 		generarMatrizGrafoVisual(afinidadMusical);
+		generarListaUsuariosVisual(afinidadMusical);
 		revalidate();
 		repaint();
+	}
+	
+	private void generarListaUsuariosVisual(AfinidadMusical afinidadMusical) {
+		String[][] listaUsuarios= afinidadMusical.getListaUsuariosMatrizString();
+		String[] columnas = {"ID","Nombre"};
+		DefaultTableModel tablaModel = new DefaultTableModel(listaUsuarios,columnas);
+		
+		JTable UsuariosTabla = new JTable(tablaModel);
+		scrollPane.setViewportView(UsuariosTabla);
+		scrollPane.setPreferredSize(new Dimension(200,0));
+		
 	}
 
 	// Renderizador para que las filas se vean como encabezados
