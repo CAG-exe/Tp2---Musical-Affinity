@@ -20,10 +20,12 @@ public class Controlador {
 
 	public void mostrarPanelUsuarios() {
 		visual.mostrarPanel("Usuarios");
+		visual.cambiarTituloDePaginaUsuario();
 	}
 
 	public void mostrarPanelGrafo() {
 		visual.mostrarPanel("Grafo");
+		visual.cambiarTituloDePaginaGrafo();
 	}
 	
 	public void mostrarPanelMenu() {

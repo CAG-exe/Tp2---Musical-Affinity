@@ -39,6 +39,7 @@ import javax.swing.JTable;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class UISwing extends JFrame {
 
@@ -46,6 +47,7 @@ public class UISwing extends JFrame {
 	private JPanel background;
 	private JPanel Contenedor;
 	private JScrollPane scrollPane;
+	private JLabel _TituloDePagina;
 
 	/**
 	 * Launch the application.
@@ -58,6 +60,7 @@ public class UISwing extends JFrame {
 	 * Create the frame.
 	 */
 	public UISwing(Controlador controlador, AfinidadMusical afinidadMusical) {
+		setMinimumSize(new Dimension(1050, 720));
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1050, 720);
@@ -91,7 +94,7 @@ public class UISwing extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(25, 94, 99));
 		
-		JButton RegistroUsuariosButton = new JButton("Registrar Usuario");
+		JButton RegistroUsuariosButton = new JButton("Crear Usuario");
 		RegistroUsuariosButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		
@@ -250,14 +253,44 @@ public class UISwing extends JFrame {
 						.addGroup(gl_background.createSequentialGroup()
 							.addGap(124)
 							.addComponent(Contenedor, GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE))
-						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_background.createSequentialGroup()
+							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(504, Short.MAX_VALUE))))
 		);
+				
+		JLabel TituloDePagina = new JLabel("USUARIOS");
+		this._TituloDePagina = TituloDePagina;
+		TituloDePagina.setForeground(new Color(255, 255, 255));
+		TituloDePagina.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(332)
+					.addComponent(TituloDePagina, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(321))
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(5)
+					.addComponent(TituloDePagina, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE))
+		);
+		panel_1.setLayout(gl_panel_1);
 		background.setLayout(gl_background);
 		
 	}
-
+	
 	public void mostrarPanel(String nombre) {
         CardLayout cl = (CardLayout) Contenedor.getLayout();
         cl.show(Contenedor, nombre);
     }
+	
+	public void cambiarTituloDePaginaUsuario() {
+		_TituloDePagina.setText("USUARIOS");
+	}
+	
+	public void cambiarTituloDePaginaGrafo() {
+		_TituloDePagina.setText("GRAFO");
+	}
 }
