@@ -175,13 +175,6 @@ public class Menu extends JPanel {
 		guardarPersona.setFont(new Font("Arial", Font.BOLD, 14));
 		guardarPersona.addActionListener(e ->{
 			
-			if (nombre.getText().length() < 3) {
-			    avisoNombreCorto();
-			}
-			else if (afinidadMusical.usuarioYaRegistrado(nombre.getText())) {
-			    avisoNombreRegistrado();
-			}
-			else {	
 			
 			NuevoUsuarioDatos dto = NuevoUsuarioDatos.builder()
 		            .nombre(nombre.getText())
@@ -192,8 +185,6 @@ public class Menu extends JPanel {
 		            .build();
 
             controlador.guardarNuevoUsuario(dto);
-            añadirUsuarioAFila();
-			}
 
 		});
 		
