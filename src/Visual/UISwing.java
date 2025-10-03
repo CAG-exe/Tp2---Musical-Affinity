@@ -6,11 +6,13 @@ import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
@@ -26,10 +28,12 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListCellRenderer;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.util.Map.Entry;
 import java.awt.event.ActionEvent;
@@ -47,6 +51,7 @@ public class UISwing extends JFrame {
 	private JPanel background;
 	private JPanel Contenedor;
 	private JScrollPane scrollPane;
+	private JScrollPane scrollMatrizAdyacencia;
 	private JLabel _TituloDePagina;
 
 	/**
@@ -227,6 +232,24 @@ public class UISwing extends JFrame {
 		tablaModel.addRow(new Object[] {5,"Luis"});
 		
 		///
+		String[][] matrizTexto=afinidadMusical.getGrafoMatrizString();
+		String[] columnas = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"};
+		DefaultTableModel MatrizModel = new DefaultTableModel(matrizTexto,columnas);
+		scrollMatrizAdyacencia = new JScrollPane();
+		JTable MatrizAdyacenciaTabla = new JTable(MatrizModel);
+		MatrizAdyacenciaTabla.setRowHeight(30);
+		scrollMatrizAdyacencia.setViewportView(MatrizAdyacenciaTabla);
+		panel_3.add(scrollMatrizAdyacencia,BorderLayout.EAST);
+		scrollMatrizAdyacencia.setPreferredSize(new Dimension(500,0));
+		
+		
+		JList<String> rowHeader = new JList<>(columnas);
+        rowHeader.setFixedCellWidth(30);
+        rowHeader.setFixedCellHeight(MatrizAdyacenciaTabla.getRowHeight());
+        rowHeader.setCellRenderer(new RowHeaderRenderer(MatrizAdyacenciaTabla));
+        
+        
+        scrollMatrizAdyacencia.setRowHeaderView(rowHeader);
 		
 		Contenedor = new JPanel(new CardLayout());
 		Contenedor.add(panel_2,"Usuarios");
@@ -305,4 +328,25 @@ public class UISwing extends JFrame {
 		_TituloDePagina.setText("CREAR USUARIO");
 	}
 	
+	// Renderizador para que las filas se vean como encabezados
+	static class RowHeaderRenderer extends JLabel implements ListCellRenderer<String> {
+	    RowHeaderRenderer(JTable table) {
+	        JTableHeader header = table.getTableHeader();
+	        setOpaque(true);
+	        setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+	        setHorizontalAlignment(CENTER);
+	        setForeground(header.getForeground());
+	        setBackground(header.getBackground());
+	        setFont(header.getFont());
+	    }
+
+	    @Override
+	    public Component getListCellRendererComponent(JList<? extends String> list,String value, int index,boolean isSelected, boolean cellHasFocus) {
+	        setText(value);
+	        return this;
+	    }
+	}
+
+	
 }
+

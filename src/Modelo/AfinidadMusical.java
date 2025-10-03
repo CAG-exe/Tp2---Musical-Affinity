@@ -70,4 +70,8 @@ public class AfinidadMusical {
 	public static Map<Integer,Usuario> getUsuarios() {
 		return matrizRelacion.getUsuarios();
 	}
+
+	public String[][] getGrafoMatrizString() {
+		return matrizRelacion.matrizString();
+	}
 }
