@@ -73,7 +73,7 @@ public class Menu extends JPanel {
 		aviso = new JLabel("");
 		aviso.setForeground(Color.BLUE);
 		aviso.setFont(new Font("Arial", Font.BOLD, 12));
-		aviso.setBounds(67, 99, 271, 18);
+		aviso.setBounds(67, 91, 310, 18);
 		this.add(aviso);
 
 		JLabel Tango = new JLabel("Tango");
@@ -174,6 +174,15 @@ public class Menu extends JPanel {
 		guardarPersona.setFocusable(false);
 		guardarPersona.setFont(new Font("Arial", Font.BOLD, 14));
 		guardarPersona.addActionListener(e ->{
+			
+			if (nombre.getText().length() < 3) {
+			    avisoNombreCorto();
+			}
+			else if (afinidadMusical.usuarioYaRegistrado(nombre.getText())) {
+			    avisoNombreRegistrado();
+			}
+			else {	
+			
 			NuevoUsuarioDatos dto = NuevoUsuarioDatos.builder()
 		            .nombre(nombre.getText())
 		            .tango(tango.getValue())
@@ -183,7 +192,9 @@ public class Menu extends JPanel {
 		            .build();
 
             controlador.guardarNuevoUsuario(dto);
-            añadirUsuarioAFila(); 
+            añadirUsuarioAFila();
+			}
+
 		});
 		
 		
