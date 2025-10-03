@@ -1,14 +1,14 @@
 package Controlador;
 
 import Modelo.AfinidadMusical;
-import Visual.Menu;
+import Visual.CrearUsuario;
 import Visual.NuevoUsuarioDatos;
 import Visual.UISwing;
 
 public class Controlador {
 	private UISwing visual;
 	private AfinidadMusical modelo;
-	private Menu menu;
+	private CrearUsuario crearUsuario;
 	
 	public Controlador() {
 	}
@@ -32,19 +32,19 @@ public class Controlador {
 		visual.mostrarPanel("CrearUsuario");
 	}
 	
-	public void añadirMenuAlControlador(Menu menu) {
-		this.menu = menu;
+	public void añadirMenuAlControlador(CrearUsuario CrearUsuario) {
+		this.crearUsuario = CrearUsuario;
 	}
 	
 	public void guardarNuevoUsuario(NuevoUsuarioDatos dto) {
 		 if (dto.getNombre().length() < 3) {
-            menu.avisoNombreCorto();
+			 crearUsuario.avisoNombreCorto();
          }
          else if(modelo.usuarioYaRegistrado(dto.getNombre())) {
-        	 menu.avisoNombreRegistrado();
+        	 crearUsuario.avisoNombreRegistrado();
          }
          else {
-        	 menu.añadirUsuarioAFila();
+        	 crearUsuario.añadirUsuarioAFila();
              modelo.registrarUsuario(dto.getNombre(), dto.getTango(), dto.getFolclore(),dto.getRock(), dto.getUrbano());
          }
 		

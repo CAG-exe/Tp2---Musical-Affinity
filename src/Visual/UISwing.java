@@ -73,8 +73,8 @@ public class UISwing extends JFrame {
 		background.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(background);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(06, 57, 64));
+		JPanel panelLateralDeSolapas = new JPanel();
+		panelLateralDeSolapas.setBackground(new Color(06, 57, 64));
 		
 		JSeparator separator = new JSeparator();
 		
@@ -96,8 +96,8 @@ public class UISwing extends JFrame {
 		GrafoButton.addActionListener(
 				e -> controlador.mostrarPanelGrafo());
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(25, 94, 99));
+		JPanel panelTituloDePagina = new JPanel();
+		panelTituloDePagina.setBackground(new Color(25, 94, 99));
 		
 		
 		JButton RegistroUsuariosButton = new JButton("Crear Usuario");
@@ -108,7 +108,7 @@ public class UISwing extends JFrame {
 			cambiarTituloDePaginaCrearUsuario();
 		});
 		
-		Menu panelCrearUsuario = new Menu(afinidadMusical, controlador); 
+		CrearUsuario panelCrearUsuario = new CrearUsuario(afinidadMusical, controlador); 
 
 		controlador.añadirMenuAlControlador(panelCrearUsuario);
 		
@@ -123,37 +123,37 @@ public class UISwing extends JFrame {
 		JLabel LogoLabel = new JLabel();
 		LogoLabel.setIcon(scaledIcon);
 		getContentPane().add(LogoLabel);
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
+		GroupLayout gl_panelLateralDeSolapas = new GroupLayout(panelLateralDeSolapas);
+		gl_panelLateralDeSolapas.setHorizontalGroup(
+			gl_panelLateralDeSolapas.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelLateralDeSolapas.createSequentialGroup()
 					.addGap(21)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE))
 				.addComponent(GrafoButton, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
 				.addComponent(UsuariosBoton, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
 				.addComponent(RegistroUsuariosButton, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
-				.addGroup(gl_panel.createSequentialGroup()
+				.addGroup(gl_panelLateralDeSolapas.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(LogoLabel, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))
 		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
+		gl_panelLateralDeSolapas.setVerticalGroup(
+			gl_panelLateralDeSolapas.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelLateralDeSolapas.createSequentialGroup()
 					.addGap(21)
 					.addComponent(LogoLabel)
 					.addGap(18)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
 					.addGap(51)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panelLateralDeSolapas.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelLateralDeSolapas.createSequentialGroup()
 							.addGap(51)
 							.addComponent(GrafoButton, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
 						.addComponent(UsuariosBoton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_panelLateralDeSolapas.createSequentialGroup()
 							.addGap(100)
 							.addComponent(RegistroUsuariosButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))))
 		);
-		panel.setLayout(gl_panel);
+		panelLateralDeSolapas.setLayout(gl_panelLateralDeSolapas);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(220, 225, 195));
@@ -262,17 +262,17 @@ public class UISwing extends JFrame {
 						.addGroup(gl_background.createSequentialGroup()
 							.addGap(5)
 							.addComponent(LogoLabel, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panelLateralDeSolapas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
 						.addComponent(Contenedor, GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)))
+						.addComponent(panelTituloDePagina, GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)))
 		);
 		gl_background.setVerticalGroup(
 			gl_background.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_background.createSequentialGroup()
 					.addGap(16)
 					.addComponent(LogoLabel))
-				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
+				.addComponent(panelLateralDeSolapas, GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
 				.addGroup(gl_background.createSequentialGroup()
 					.addGap(43)
 					.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
@@ -280,7 +280,7 @@ public class UISwing extends JFrame {
 							.addGap(124)
 							.addComponent(Contenedor, GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE))
 						.addGroup(gl_background.createSequentialGroup()
-							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panelTituloDePagina, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap(504, Short.MAX_VALUE))))
 		);
 				
@@ -288,21 +288,21 @@ public class UISwing extends JFrame {
 		this._TituloDePagina = TituloDePagina;
 		TituloDePagina.setForeground(new Color(255, 255, 255));
 		TituloDePagina.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
+		GroupLayout gl_panelTituloDePagina = new GroupLayout(panelTituloDePagina);
+		gl_panelTituloDePagina.setHorizontalGroup(
+			gl_panelTituloDePagina.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelTituloDePagina.createSequentialGroup()
 					.addGap(332)
 					.addComponent(TituloDePagina, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(321))
 		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
+		gl_panelTituloDePagina.setVerticalGroup(
+			gl_panelTituloDePagina.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelTituloDePagina.createSequentialGroup()
 					.addGap(5)
 					.addComponent(TituloDePagina, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE))
 		);
-		panel_1.setLayout(gl_panel_1);
+		panelTituloDePagina.setLayout(gl_panelTituloDePagina);
 		background.setLayout(gl_background);
 		
 	}

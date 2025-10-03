@@ -33,9 +33,10 @@ import javax.swing.event.ChangeListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import Visual.Menu;
+import Visual.CrearUsuario;
+import javax.swing.JSeparator;
 
-public class Menu extends JPanel {
+public class CrearUsuario extends JPanel {
 	private JSlider tango;
 	private JSlider folclore;
 	private JSlider rock;
@@ -48,7 +49,7 @@ public class Menu extends JPanel {
 	private Controlador controlador;
 
 
-	public Menu(AfinidadMusical afinidadMusical, Controlador controlador) {
+	public CrearUsuario(AfinidadMusical afinidadMusical, Controlador controlador) {
 		this.afinidadMusical = afinidadMusical;
 		this.controlador = controlador;
 		inicializar();
@@ -59,15 +60,27 @@ public class Menu extends JPanel {
 		this.setLayout(null);
 		this.setBackground(new Color(220, 225, 195));
 
-		JLabel ingreseNombre = new JLabel("Ingrese nombre:");
-		ingreseNombre.setFont(new Font("Arial", Font.BOLD, 13));
+		JLabel ingreseNombre = new JLabel("Usuario");
+		ingreseNombre.setFont(new Font("Arial", Font.BOLD, 19));
 		ingreseNombre.setForeground(Color.black);
-		ingreseNombre.setBounds(10, 31, 109, 33);
+		ingreseNombre.setBounds(20, 11, 150, 33);
 		this.add(ingreseNombre);
 
 		nombre = new JTextField();
+		nombre.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if(nombre.getText().equals("Ingrese su nombre de usuario")) {
+					nombre.setText("");
+					nombre.setForeground(Color.black);
+				};
+			}
+		});
+		nombre.setForeground(Color.GRAY);
+		nombre.setText("Ingrese su nombre de usuario");
+		nombre.setBackground(new Color(220, 225, 195));
+		nombre.setBorder(null);
 		nombre.setFont(new Font("Arial", Font.BOLD, 14));
-		nombre.setBounds(129, 31, 250, 33);
+		nombre.setBounds(20, 49, 379, 22);
 		this.add(nombre);
 
 		aviso = new JLabel("");
@@ -191,6 +204,11 @@ public class Menu extends JPanel {
 		
 		guardarPersona.setBounds(300, 454, 150, 50);
 		this.add(guardarPersona);
+		
+		JSeparator separator = new JSeparator();
+		separator.setForeground(new Color(0, 0, 0));
+		separator.setBounds(20, 71, 379, 9);
+		add(separator);
 	}
 	
 	
@@ -212,5 +230,4 @@ public class Menu extends JPanel {
          
          modelo.addRow(fila);	
    }
-	
 }
