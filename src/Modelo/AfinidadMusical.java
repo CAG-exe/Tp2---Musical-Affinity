@@ -18,6 +18,7 @@ public class AfinidadMusical {
 	HashMap<String, Usuario> usuariosRegistrados = new HashMap<String, Usuario>();
 	List<Usuario> usuariosSelecionadosParaElGrafo;
 	static Grafo matrizRelacion;   /// modificar despues de la implementacion del main
+	private int cantidadDeGrupos;
 	
 	public AfinidadMusical() {
 		guardarUsuariosDeLaBaseDeDatos();
@@ -71,8 +72,8 @@ public class AfinidadMusical {
 		return matrizRelacion.getUsuarios();
 	}
 
-	public String[][] getGrafoMatrizString(int cantidadDeUsuarios, int cantGrupos) {
-		return matrizRelacion.matrizString(cantidadDeUsuarios, cantGrupos);
+	public String[][] getGrafoMatrizString(int cantidadDeUsuarios) {
+		return matrizRelacion.matrizString(cantidadDeUsuarios, cantidadDeGrupos);
 	}
 
 	public int getCantidadDeUsuarios() {
@@ -86,5 +87,9 @@ public class AfinidadMusical {
 			listaUsuarios[i][1] = matrizRelacion.getUsuarios().get(i).getNombre();
 		}
 		return listaUsuarios;
+	}
+	
+	public void setCantidadDeGrupos(int cant) {
+		cantidadDeGrupos = cant;
 	}
 }

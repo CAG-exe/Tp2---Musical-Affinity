@@ -56,6 +56,7 @@ public class UISwing extends JFrame {
 	private JLabel _TituloDePagina;
 	private PanelGrafo panelGrafo;
 	private PanelUsuarios panelUsuario;
+	private CrearUsuario panelCrearUsuario;
 
 	/**
 	 * Launch the application.
@@ -113,7 +114,7 @@ public class UISwing extends JFrame {
 			cambiarTituloDePaginaCrearUsuario();
 		});
 		
-		CrearUsuario panelCrearUsuario = new CrearUsuario(afinidadMusical, controlador); 
+		panelCrearUsuario = new CrearUsuario(afinidadMusical, controlador); 
 
 		controlador.añadirMenuAlControlador(panelCrearUsuario);
 		
@@ -241,6 +242,10 @@ public class UISwing extends JFrame {
 
 	public void recargarGrafo(AfinidadMusical modelo) {
 		this.panelGrafo.recargarGrafo(modelo);
+	}
+	
+	public String getComboBoxCantidadGrupos() {
+		return this.panelCrearUsuario.getComboBoxGrupos();
 	}
 	
 }

@@ -30,11 +30,13 @@ import Controlador.Controlador;
 import Modelo.AfinidadMusical;
 
 import javax.swing.event.ChangeListener;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import Visual.CrearUsuario;
 import javax.swing.JSeparator;
+import javax.swing.JComboBox;
 
 public class CrearUsuario extends JPanel {
 	private JSlider tango;
@@ -47,6 +49,7 @@ public class CrearUsuario extends JPanel {
 	private DefaultTableModel modelo;
 	private AfinidadMusical afinidadMusical;
 	private Controlador controlador;
+	private JComboBox comboBoxGrupos;
 
 
 	public CrearUsuario(AfinidadMusical afinidadMusical, Controlador controlador) {
@@ -209,8 +212,22 @@ public class CrearUsuario extends JPanel {
 		separator.setForeground(new Color(0, 0, 0));
 		separator.setBounds(20, 71, 379, 9);
 		add(separator);
+		
+		comboBoxGrupos = new JComboBox();
+		comboBoxGrupos.setBounds(686, 391, 51, 28);
+		add(comboBoxGrupos);
+		comboBoxGrupos.setModel(new DefaultComboBoxModel(new String[] {"2","3","4","5"}));
+		
+		JLabel textCantidadGrupos = new JLabel("Cantidad de Grupos:");
+		textCantidadGrupos.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textCantidadGrupos.setBounds(537, 396, 139, 14);
+		textCantidadGrupos.setForeground(Color.black);
+		add(textCantidadGrupos);
 	}
 	
+	public String getComboBoxGrupos() {
+		return (String) comboBoxGrupos.getSelectedItem();
+	}
 	
 	public void avisoNombreCorto() {
 		aviso.setText("Tu nombre no puede tener menos de 3 letras");

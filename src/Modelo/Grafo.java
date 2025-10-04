@@ -144,6 +144,11 @@ public class Grafo {
 	}
 	
 	public List<Arista> eliminarAristaMayorPeso(List<Arista> listaDeAristas, int cantGrupos) {
+		if(cantGrupos > listaDeAristas.size()) {
+			System.out.println("LA CANTIDAD DE GRUPOS CONEXOS SUPERAN LA CANTIDAD DE USUARIOS. SE ESTABLECERÁ GRUPOS = 2.");
+			cantGrupos = 2;
+		}
+		
 		for(int i = 1; i<cantGrupos; i++) {
 			Arista mayorPeso = listaDeAristas.stream().
 					max(Comparator.comparing(Arista::getPeso))

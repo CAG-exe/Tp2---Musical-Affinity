@@ -23,7 +23,6 @@ public class PanelGrafo extends JPanel {
 	private JScrollPane scrollMatrizAdyacencia;
 	private static final long serialVersionUID = 1L;
 	private JTable table_1;
-	private int cantidadDeGrupos = 2;
 
 	/**
 	 * Create the panel.
@@ -51,7 +50,7 @@ public class PanelGrafo extends JPanel {
 	
 	private void generarMatrizGrafoVisual(AfinidadMusical afinidadMusical) {
 		int cantidadDeUsuarios = afinidadMusical.getCantidadDeUsuarios();
-		String[][] matrizTexto=afinidadMusical.getGrafoMatrizString(cantidadDeUsuarios, cantidadDeGrupos );
+		String[][] matrizTexto=afinidadMusical.getGrafoMatrizString(cantidadDeUsuarios);
 		String[] columnas = generarHeaders(cantidadDeUsuarios);
 		DefaultTableModel MatrizModel = new DefaultTableModel(matrizTexto,columnas);
 

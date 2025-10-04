@@ -24,11 +24,19 @@ public class Controlador {
 	}
 
 	public void mostrarPanelGrafo() {
+		guardarCantidadDeGruposActual();
+		
 		visual.mostrarPanel("Grafo");
 		visual.recargarGrafo(modelo);
 		visual.cambiarTituloDePaginaGrafo();
 	}
 	
+	private void guardarCantidadDeGruposActual() {
+		String cantGruposString = visual.getComboBoxCantidadGrupos();
+		int cantidadDeGrupos = Integer.parseInt(cantGruposString);
+		modelo.setCantidadDeGrupos(cantidadDeGrupos);
+	}
+
 	public void mostrarPanelMenu() {
 		visual.mostrarPanel("CrearUsuario");
 	}
