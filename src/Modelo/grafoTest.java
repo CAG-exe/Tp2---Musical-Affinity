@@ -10,6 +10,16 @@ public class grafoTest {
 		Grafo grafo = new Grafo( 5 );
 		grafo.agregarArista( -1, 3, 5 ); 
 	}
+	@Test(expected = IllegalArgumentException.class)
+	public void crearMatrizFueraDeRangoTest() {
+		Grafo matriz = new Grafo(-1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void crearMatrizTamaño0Test() {
+		Grafo matriz = new Grafo(0);
+	}
+
 	
 	@Test ( expected = IllegalArgumentException.class )
 	public void primerVerticeExcedidoTest() 
@@ -61,6 +71,15 @@ public class grafoTest {
 		Grafo grafo = new Grafo( 5 );
 		grafo.eliminarArista( 2, 4 );
 		assertFalse( grafo.existeArista( 2, 4 ) );
+	}
+	
+	@Test
+	public void getValorBordeTest() {
+		Grafo matriz = new Grafo(5);
+
+		matriz.setValor(4, 4, 5);
+
+		assertEquals(matriz.getValor(4, 4), 5);
 	}
 	
 }

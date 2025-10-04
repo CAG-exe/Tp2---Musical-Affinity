@@ -68,8 +68,10 @@ public class UISwing extends JFrame {
 	 * Create the frame.
 	 */
 	public UISwing(Controlador controlador, AfinidadMusical afinidadMusical) {
-		setMinimumSize(new Dimension(1050, 720));
+		this.panelUsuario = new PanelUsuarios();
+		this.panelGrafo = new PanelGrafo(afinidadMusical, controlador);
 		
+		setMinimumSize(new Dimension(1050, 720));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1050, 720);
 		background = new JPanel();
@@ -158,9 +160,7 @@ public class UISwing extends JFrame {
 		);
 		panelLateralDeSolapas.setLayout(gl_panelLateralDeSolapas);
 		
-		this.panelUsuario = new PanelUsuarios();
 		
-		this.panelGrafo = new PanelGrafo(afinidadMusical, controlador);
 		
 		
 		Contenedor = new JPanel(new CardLayout());
