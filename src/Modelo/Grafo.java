@@ -111,11 +111,21 @@ public class Grafo {
 				.sorted(Comparator.comparing(Arista::getPeso))
 				.collect(Collectors.toList());
 		
+		int e = 0; // Index variable for result[]
+        int i = 0; // Index variable for sorted edges
+        
 		aristasOrdenadas = (ArrayList<Arista>) aristasOrdenadas;
 		UnionFind uf = new UnionFind(usuarios.size());
-		for(Arista arista : aristasOrdenadas){
-			if(uf.Union(arista.getOrigen(), arista.getDestino())) {
+		while(e<usuarios.size()-1) {
+			Arista arista = aristasOrdenadas.get(i++);
+			
+			int V1 = uf.find(arista.getOrigen());
+			int V2 = uf.find(arista.getDestino());
+			
+			if(V1 != V2) {
+				e++;
 				resultado.add(arista);
+				uf.Union(arista.getOrigen(), arista.getDestino());
 			}
 		}
 		return resultado;
@@ -131,6 +141,16 @@ public class Grafo {
 			matriz[mayorPeso.getDestino()][mayorPeso.getOrigen()] = valorInvalido;
 			listaAristas.remove(mayorPeso);
 		}
+	}
+	
+	public List<Arista> eliminarAristaMayorPeso(List<Arista> listaDeAristas) {
+		Arista mayorPeso = listaDeAristas.stream().
+				max(Comparator.comparing(Arista::getPeso))
+				.orElse(null);
+		if(mayorPeso != null) {
+			listaDeAristas.remove(mayorPeso);
+		}
+		return listaDeAristas;
 	}
 	
 	public void eliminarArista( int i, int j ) 
@@ -159,16 +179,20 @@ public class Grafo {
 	
 	public String[][] matrizString(int cantidadDeUsuarios){
 		String[][] matrizString = new String[cantidadDeUsuarios][cantidadDeUsuarios];
-		for(int f=0; f<cantidadDeUsuarios; f++) {
-			for(int c=0; c<cantidadDeUsuarios; c++) {
-				if(matriz[f][c] == -1) {
-					matrizString[f][c] = "∞";
-				}
-				else {
-					matrizString[f][c] = Integer.toString(matriz[f][c]);
-				}
+		for (int fila = 0; fila < matrizString.length; fila++) {
+			for (int columna = 0; columna < matrizString.length; columna++) {
+				matrizString[fila][columna] = "∞";
 			}
 		}
+		
+		ArrayList<Arista> listaAriastaKruskal = Kruskal();
+		listaAriastaKruskal = (ArrayList<Arista>) eliminarAristaMayorPeso(listaAriastaKruskal);
+		for(Arista arista: listaAriastaKruskal) {
+			int i = arista.getOrigen();
+			int j = arista.getDestino();
+			matrizString[i][j] = Integer.toString(arista.getPeso());
+			matrizString[j][i] = Integer.toString(arista.getPeso());
+			}
 		return matrizString;
 		
 	}

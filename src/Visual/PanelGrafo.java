@@ -22,6 +22,7 @@ public class PanelGrafo extends JPanel {
 	private JScrollPane scrollPane;
 	private JScrollPane scrollMatrizAdyacencia;
 	private static final long serialVersionUID = 1L;
+	private JTable table_1;
 
 	/**
 	 * Create the panel.
@@ -38,6 +39,8 @@ public class PanelGrafo extends JPanel {
 		///
 		scrollMatrizAdyacencia = new JScrollPane();
 		add(scrollMatrizAdyacencia,BorderLayout.CENTER);
+		
+		
 		
 		generarMatrizGrafoVisual(afinidadMusical);
 		
@@ -88,7 +91,7 @@ public class PanelGrafo extends JPanel {
 		
 		JTable UsuariosTabla = new JTable(tablaModel);
 		scrollPane.setViewportView(UsuariosTabla);
-		scrollPane.setPreferredSize(new Dimension(200,0));
+		scrollPane.setPreferredSize(new Dimension(200,100));
 		
 	}
 
