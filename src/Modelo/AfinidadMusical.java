@@ -27,7 +27,7 @@ public class AfinidadMusical {
 
 	public void guardarUsuariosDeLaBaseDeDatos() {
 			// traer el archivo json
-			InputStream input = AfinidadMusical.class.getResourceAsStream("BaseDeDatosDeUsuarios.json");
+			InputStream input = AfinidadMusical.class.getResourceAsStream("/BaseDeDatosDeUsuarios.json");
 
 			if (input == null) {
 				System.out.println("No se encontró el archivo");
@@ -71,8 +71,8 @@ public class AfinidadMusical {
 		return matrizRelacion.getUsuarios();
 	}
 
-	public String[][] getGrafoMatrizString(int cantidadDeUsuarios) {
-		return matrizRelacion.matrizString(cantidadDeUsuarios);
+	public String[][] getGrafoMatrizString(int cantidadDeUsuarios, int cantGrupos) {
+		return matrizRelacion.matrizString(cantidadDeUsuarios, cantGrupos);
 	}
 
 	public int getCantidadDeUsuarios() {

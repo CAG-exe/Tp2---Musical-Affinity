@@ -143,12 +143,14 @@ public class Grafo {
 		}
 	}
 	
-	public List<Arista> eliminarAristaMayorPeso(List<Arista> listaDeAristas) {
-		Arista mayorPeso = listaDeAristas.stream().
-				max(Comparator.comparing(Arista::getPeso))
-				.orElse(null);
-		if(mayorPeso != null) {
-			listaDeAristas.remove(mayorPeso);
+	public List<Arista> eliminarAristaMayorPeso(List<Arista> listaDeAristas, int cantGrupos) {
+		for(int i = 1; i<cantGrupos; i++) {
+			Arista mayorPeso = listaDeAristas.stream().
+					max(Comparator.comparing(Arista::getPeso))
+					.orElse(null);
+			if(mayorPeso != null) {
+				listaDeAristas.remove(mayorPeso);
+			}
 		}
 		return listaDeAristas;
 	}
@@ -177,7 +179,7 @@ public class Grafo {
 		return usuarios;
 	}
 	
-	public String[][] matrizString(int cantidadDeUsuarios){
+	public String[][] matrizString(int cantidadDeUsuarios, int cantGrupos){
 		String[][] matrizString = new String[cantidadDeUsuarios][cantidadDeUsuarios];
 		for (int fila = 0; fila < matrizString.length; fila++) {
 			for (int columna = 0; columna < matrizString.length; columna++) {
@@ -186,7 +188,7 @@ public class Grafo {
 		}
 		
 		ArrayList<Arista> listaAriastaKruskal = Kruskal();
-		listaAriastaKruskal = (ArrayList<Arista>) eliminarAristaMayorPeso(listaAriastaKruskal);
+		listaAriastaKruskal = (ArrayList<Arista>) eliminarAristaMayorPeso(listaAriastaKruskal, cantGrupos);
 		for(Arista arista: listaAriastaKruskal) {
 			int i = arista.getOrigen();
 			int j = arista.getDestino();
