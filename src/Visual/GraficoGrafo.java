@@ -8,14 +8,14 @@ public class GraficoGrafo {
 	private Graph grafo;
 
 
-	public GraficoGrafo(int[][] matriz) {
+	public GraficoGrafo(String[][] matriz) {
 
 		generarGrafo(matriz);
         grafo.display();
 		
 	}
 
-	private void generarGrafo(int[][] matriz) {
+	private void generarGrafo(String[][] matriz) {
 		System.setProperty("org.graphstream.ui", "swing");
         Graph Nuevo_grafo = new SingleGraph("Grafo desde matriz");
         
@@ -28,7 +28,7 @@ public class GraficoGrafo {
         // Crear aristas
         for (int i = 0; i < matriz.length; i++) {
             for (int j = i + 1; j < matriz[i].length; j++) {
-                if (matriz[i][j] > -1) {
+                if (matriz[i][j] != "∞") {
                     String edgeId = i + "-" + j;
                     Nuevo_grafo.addEdge(edgeId, String.valueOf(i), String.valueOf(j));
                 }
