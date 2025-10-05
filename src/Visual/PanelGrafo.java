@@ -38,6 +38,11 @@ public class PanelGrafo extends JPanel {
 		scrollPane = new JScrollPane();
 		add(scrollPane,BorderLayout.WEST);
 		btnMostrarGraficoGrafo = new JButton("Mostrar Gráfico del Grafo");
+		if(afinidadMusical.getCantidadDeUsuarios() < 2) {
+			btnMostrarGraficoGrafo.setEnabled(false);
+			btnMostrarGraficoGrafo.setToolTipText("Se necesitan al menos 3 usuarios para mostrar el grafo");
+		}
+		else {btnMostrarGraficoGrafo.setEnabled(true);}
 		configuracionDelBoton(afinidadMusical);
 		add(btnMostrarGraficoGrafo,BorderLayout.SOUTH);
 
