@@ -45,6 +45,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import java.awt.Rectangle;
 
 public class UISwing extends JFrame {
 
@@ -204,19 +205,20 @@ public class UISwing extends JFrame {
 		JLabel TituloDePagina = new JLabel("CREAR USUARIOS");
 		this._TituloDePagina = TituloDePagina;
 		TituloDePagina.setForeground(new Color(255, 255, 255));
+		TituloDePagina.setBorder(new EmptyBorder(0, 300, 0, 0));
 		TituloDePagina.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		GroupLayout gl_panelTituloDePagina = new GroupLayout(panelTituloDePagina);
 		gl_panelTituloDePagina.setHorizontalGroup(
-			gl_panelTituloDePagina.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelTituloDePagina.createSequentialGroup()
-					.addGap(318)
-					.addComponent(TituloDePagina, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(321, Short.MAX_VALUE))
+			gl_panelTituloDePagina.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_panelTituloDePagina.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(TituloDePagina, GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_panelTituloDePagina.setVerticalGroup(
 			gl_panelTituloDePagina.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelTituloDePagina.createSequentialGroup()
-					.addGap(5)
+					.addContainerGap()
 					.addComponent(TituloDePagina, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
@@ -232,13 +234,16 @@ public class UISwing extends JFrame {
 	
 	public void cambiarTituloDePaginaEstadisticas() {
 		_TituloDePagina.setText("ESTADISTICAS");
+		_TituloDePagina.setBorder(new EmptyBorder(0, 300, 0, 0));
 	}
 	
 	public void cambiarTituloDePaginaGrafo() {
 		_TituloDePagina.setText("GRAFO");
+		_TituloDePagina.setBorder(new EmptyBorder(0, 330, 0, 0));
 	}
 	public void cambiarTituloDePaginaCrearUsuario() {
 		_TituloDePagina.setText("CREAR USUARIOS");
+		_TituloDePagina.setBorder(new EmptyBorder(0, 280, 0, 0));
 	}
 
 	public void recargarGrafo(AfinidadMusical modelo) {
