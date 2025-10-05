@@ -10,5 +10,8 @@
 	<classpathentry exported="true" kind="lib" path="lib/gson-2.8.9.jar" sourcepath="lib/gson-2.8.9.jar"/>
 	<classpathentry kind="lib" path="lib/flatlaf-demo-3.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/flatlaf-intellij-themes-3.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Andres/Downloads/gs-core-2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Andres/Downloads/gs-algo-2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Andres/Downloads/gs-ui-swing-2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

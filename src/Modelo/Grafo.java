@@ -203,4 +203,14 @@ public class Grafo {
 		return matrizString;
 		
 	}
+
+	public int[][] getLimitadaMatrizDeUsuarios(int cantidadDeUsuarios) {
+		int[][] limitadaMatriz = new int[cantidadDeUsuarios][cantidadDeUsuarios];
+		for(int fila=0;fila<cantidadDeUsuarios;fila++) {
+			for(int columna=0;columna<cantidadDeUsuarios;columna++) {
+				limitadaMatriz[fila][columna] = matriz[fila][columna];
+			}
+		}
+		return limitadaMatriz;
+	}
 }

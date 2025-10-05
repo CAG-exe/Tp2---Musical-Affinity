@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -21,8 +24,9 @@ import Modelo.AfinidadMusical;
 public class PanelGrafo extends JPanel {
 	private JScrollPane scrollPane;
 	private JScrollPane scrollMatrizAdyacencia;
+	private JButton btnMostrarGraficoGrafo;
+	private GraficoGrafo graficoGrafo;
 	private static final long serialVersionUID = 1L;
-	private JTable table_1;
 
 	/**
 	 * Create the panel.
@@ -33,9 +37,12 @@ public class PanelGrafo extends JPanel {
 		
 		scrollPane = new JScrollPane();
 		add(scrollPane,BorderLayout.WEST);
+		btnMostrarGraficoGrafo = new JButton("Mostrar Gráfico del Grafo");
+		configuracionDelBoton(afinidadMusical);
+		add(btnMostrarGraficoGrafo,BorderLayout.SOUTH);
+
 		
 		generarListaUsuariosVisual(afinidadMusical);
-
 		///
 		scrollMatrizAdyacencia = new JScrollPane();
 		add(scrollMatrizAdyacencia,BorderLayout.CENTER);
@@ -48,6 +55,46 @@ public class PanelGrafo extends JPanel {
 	
 	
 	
+	private void configuracionDelBoton(AfinidadMusical afinidadMusical)	{
+		if(afinidadMusical.getCantidadDeUsuarios() < 2) {
+			btnMostrarGraficoGrafo.setEnabled(false);
+			btnMostrarGraficoGrafo.setToolTipText("Se necesitan al menos 3 usuarios para mostrar el grafo");
+		}
+		else {btnMostrarGraficoGrafo.setEnabled(true);}
+		btnMostrarGraficoGrafo.setBackground(new Color(9, 61, 39));
+		btnMostrarGraficoGrafo.setPreferredSize(new Dimension(200,40));
+		btnMostrarGraficoGrafo.setForeground(new Color(255, 255, 255));
+		btnMostrarGraficoGrafo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(afinidadMusical.getCantidadDeUsuarios() < 3) {
+					btnMostrarGraficoGrafo.setEnabled(false);
+				}
+				else {
+				int[][] matrizUsuarios= afinidadMusical.getLimitadaMatrizDeUsuarios();
+				graficoGrafo = new GraficoGrafo(matrizUsuarios);
+				}
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+			
+		});
+			
+		
+	}
+
+
+
 	private void generarMatrizGrafoVisual(AfinidadMusical afinidadMusical) {
 		int cantidadDeUsuarios = afinidadMusical.getCantidadDeUsuarios();
 		String[][] matrizTexto=afinidadMusical.getGrafoMatrizString(cantidadDeUsuarios);
