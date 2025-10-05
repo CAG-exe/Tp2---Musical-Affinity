@@ -226,6 +226,10 @@ public class CrearUsuario extends JPanel {
 		add(textCantidadGrupos);
 	}
 	
+	public void ingreseNombre() {
+		aviso.setText("Por favor ingrese su nombre");
+	}
+	
 	public String getComboBoxGrupos() {
 		return (String) comboBoxGrupos.getSelectedItem();
 	}

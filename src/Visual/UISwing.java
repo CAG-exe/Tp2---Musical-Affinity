@@ -243,7 +243,7 @@ public class UISwing extends JFrame {
 	}
 	public void cambiarTituloDePaginaCrearUsuario() {
 		_TituloDePagina.setText("CREAR USUARIOS");
-		_TituloDePagina.setBorder(new EmptyBorder(0, 280, 0, 0));
+		_TituloDePagina.setBorder(new EmptyBorder(0, 300, 0, 0));
 	}
 
 	public void recargarGrafo(AfinidadMusical modelo) {

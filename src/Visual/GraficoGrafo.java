@@ -2,6 +2,7 @@ package Visual;
 
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
+import org.graphstream.ui.view.Viewer;
 
 public class GraficoGrafo {
 
@@ -11,7 +12,8 @@ public class GraficoGrafo {
 	public GraficoGrafo(String[][] matriz) {
 
 		generarGrafo(matriz);
-        grafo.display();
+        Viewer viewer = grafo.display();
+        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER); 
 		
 	}
 

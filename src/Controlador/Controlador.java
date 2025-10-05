@@ -47,7 +47,12 @@ public class Controlador {
 	}
 	
 	public void guardarNuevoUsuario(NuevoUsuarioDatos dto) {
-		 if (dto.getNombre().length() < 3) {
+		
+		if (dto.getNombre().equals("Ingrese su nombre de usuario")) {
+			crearUsuario.ingreseNombre();
+		}
+		
+		else if (dto.getNombre().length() < 3) {
 			 crearUsuario.avisoNombreCorto();
          }
          else if(modelo.usuarioYaRegistrado(dto.getNombre())) {
