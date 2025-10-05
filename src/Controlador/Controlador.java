@@ -18,9 +18,9 @@ public class Controlador {
 		this.modelo = modelo;
 	}
 
-	public void mostrarPanelUsuarios() {
-		visual.mostrarPanel("Usuarios");
-		visual.cambiarTituloDePaginaUsuario();
+	public void mostrarPanelEstadisticas() {
+		visual.mostrarPanel("Estadisticas");
+		visual.cambiarTituloDePaginaEstadisticas();
 	}
 
 	public void mostrarPanelGrafo() {
@@ -39,6 +39,7 @@ public class Controlador {
 
 	public void mostrarPanelMenu() {
 		visual.mostrarPanel("CrearUsuario");
+		visual.cambiarTituloDePaginaCrearUsuario();
 	}
 	
 	public void añadirMenuAlControlador(CrearUsuario CrearUsuario) {

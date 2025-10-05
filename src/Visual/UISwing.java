@@ -84,10 +84,10 @@ public class UISwing extends JFrame {
 		
 		JSeparator separator = new JSeparator();
 		
-		JButton UsuariosBoton = new JButton("Usuarios");
+		JButton UsuariosBoton = new JButton("Crear Usuarios");
 		
 		UsuariosBoton.addActionListener(
-				e -> controlador.mostrarPanelUsuarios());
+				e -> controlador.mostrarPanelMenu());
 		
 		UsuariosBoton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		UsuariosBoton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -106,12 +106,11 @@ public class UISwing extends JFrame {
 		panelTituloDePagina.setBackground(new Color(25, 94, 99));
 		
 		
-		JButton RegistroUsuariosButton = new JButton("Crear Usuario");
-		RegistroUsuariosButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		JButton EstadisticasButton = new JButton("Estadisticas");
+		EstadisticasButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		RegistroUsuariosButton.addActionListener(e -> {
-			mostrarPanel("CrearUsuario");
-			cambiarTituloDePaginaCrearUsuario();
+		EstadisticasButton.addActionListener(e -> {
+			controlador.mostrarPanelEstadisticas();
 		});
 		
 		panelCrearUsuario = new CrearUsuario(afinidadMusical, controlador); 
@@ -119,9 +118,9 @@ public class UISwing extends JFrame {
 		controlador.añadirMenuAlControlador(panelCrearUsuario);
 		
 
-		RegistroUsuariosButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		RegistroUsuariosButton.setBorderPainted(false);
-		RegistroUsuariosButton.setBorder(null);
+		EstadisticasButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		EstadisticasButton.setBorderPainted(false);
+		EstadisticasButton.setBorder(null);
 		ImageIcon originalIcon = new ImageIcon(getClass().getResource("/img/logo.png"));
 
 		Image scaledImage = originalIcon.getImage().getScaledInstance(220, 75, Image.SCALE_SMOOTH);
@@ -137,7 +136,7 @@ public class UISwing extends JFrame {
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE))
 				.addComponent(GrafoButton, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
 				.addComponent(UsuariosBoton, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
-				.addComponent(RegistroUsuariosButton, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
+				.addComponent(EstadisticasButton, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
 				.addGroup(gl_panelLateralDeSolapas.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(LogoLabel, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))
@@ -157,7 +156,7 @@ public class UISwing extends JFrame {
 						.addComponent(UsuariosBoton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panelLateralDeSolapas.createSequentialGroup()
 							.addGap(100)
-							.addComponent(RegistroUsuariosButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))))
+							.addComponent(EstadisticasButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))))
 		);
 		panelLateralDeSolapas.setLayout(gl_panelLateralDeSolapas);
 		
@@ -165,11 +164,12 @@ public class UISwing extends JFrame {
 		
 		
 		Contenedor = new JPanel(new CardLayout());
-		Contenedor.add(panelUsuario,"Usuarios");
-		Contenedor.add(panelGrafo,"Grafo");
-		mostrarPanel("Usuarios");
-		
 		Contenedor.add(panelCrearUsuario, "CrearUsuario");
+		Contenedor.add(panelUsuario,"Estadisticas");
+		Contenedor.add(panelGrafo,"Grafo");
+		mostrarPanel("CrearUsuario");
+		
+		
 
 		GroupLayout gl_background = new GroupLayout(background);
 		gl_background.setHorizontalGroup(
@@ -201,7 +201,7 @@ public class UISwing extends JFrame {
 							.addContainerGap(504, Short.MAX_VALUE))))
 		);
 				
-		JLabel TituloDePagina = new JLabel("USUARIOS");
+		JLabel TituloDePagina = new JLabel("CREAR USUARIOS");
 		this._TituloDePagina = TituloDePagina;
 		TituloDePagina.setForeground(new Color(255, 255, 255));
 		TituloDePagina.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -209,15 +209,16 @@ public class UISwing extends JFrame {
 		gl_panelTituloDePagina.setHorizontalGroup(
 			gl_panelTituloDePagina.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelTituloDePagina.createSequentialGroup()
-					.addGap(332)
-					.addComponent(TituloDePagina, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(321))
+					.addGap(318)
+					.addComponent(TituloDePagina, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(321, Short.MAX_VALUE))
 		);
 		gl_panelTituloDePagina.setVerticalGroup(
 			gl_panelTituloDePagina.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelTituloDePagina.createSequentialGroup()
 					.addGap(5)
-					.addComponent(TituloDePagina, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE))
+					.addComponent(TituloDePagina, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panelTituloDePagina.setLayout(gl_panelTituloDePagina);
 		background.setLayout(gl_background);
@@ -229,15 +230,15 @@ public class UISwing extends JFrame {
         cl.show(Contenedor, nombre);
     }
 	
-	public void cambiarTituloDePaginaUsuario() {
-		_TituloDePagina.setText("USUARIOS");
+	public void cambiarTituloDePaginaEstadisticas() {
+		_TituloDePagina.setText("ESTADISTICAS");
 	}
 	
 	public void cambiarTituloDePaginaGrafo() {
 		_TituloDePagina.setText("GRAFO");
 	}
 	public void cambiarTituloDePaginaCrearUsuario() {
-		_TituloDePagina.setText("CREAR USUARIO");
+		_TituloDePagina.setText("CREAR USUARIOS");
 	}
 
 	public void recargarGrafo(AfinidadMusical modelo) {
