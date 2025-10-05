@@ -201,6 +201,7 @@ public class CrearUsuario extends JPanel {
 		            .build();
 
             controlador.guardarNuevoUsuario(dto);
+            controlador.habilitarBotonGrafo();
 
 		});
 		

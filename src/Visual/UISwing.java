@@ -253,6 +253,11 @@ public class UISwing extends JFrame {
 	public String getComboBoxCantidadGrupos() {
 		return this.panelCrearUsuario.getComboBoxGrupos();
 	}
+
+	public void habilitarBotonGrafo() {
+		panelGrafo.habilitarBotonGrafo();
+		
+	}
 	
 }
 

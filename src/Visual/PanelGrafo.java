@@ -37,12 +37,8 @@ public class PanelGrafo extends JPanel {
 		
 		scrollPane = new JScrollPane();
 		add(scrollPane,BorderLayout.WEST);
-		btnMostrarGraficoGrafo = new JButton("Mostrar Gráfico del Grafo");
-		if(afinidadMusical.getCantidadDeUsuarios() < 2) {
-			btnMostrarGraficoGrafo.setEnabled(false);
-			btnMostrarGraficoGrafo.setToolTipText("Se necesitan al menos 3 usuarios para mostrar el grafo");
-		}
-		else {btnMostrarGraficoGrafo.setEnabled(true);}
+		btnMostrarGraficoGrafo = new JButton("Mostrar Gráfico del Grafo");	
+		btnMostrarGraficoGrafo.setEnabled(false);
 		configuracionDelBoton(afinidadMusical);
 		add(btnMostrarGraficoGrafo,BorderLayout.SOUTH);
 
@@ -61,24 +57,17 @@ public class PanelGrafo extends JPanel {
 	
 	
 	private void configuracionDelBoton(AfinidadMusical afinidadMusical)	{
-		if(afinidadMusical.getCantidadDeUsuarios() < 2) {
-			btnMostrarGraficoGrafo.setEnabled(false);
-			btnMostrarGraficoGrafo.setToolTipText("Se necesitan al menos 3 usuarios para mostrar el grafo");
-		}
-		else {btnMostrarGraficoGrafo.setEnabled(true);}
+
+		btnMostrarGraficoGrafo.setContentAreaFilled(true);
+		btnMostrarGraficoGrafo.setOpaque(true);
 		btnMostrarGraficoGrafo.setBackground(new Color(9, 61, 39));
 		btnMostrarGraficoGrafo.setPreferredSize(new Dimension(200,40));
 		btnMostrarGraficoGrafo.setForeground(new Color(255, 255, 255));
 		btnMostrarGraficoGrafo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(afinidadMusical.getCantidadDeUsuarios() < 3) {
-					btnMostrarGraficoGrafo.setEnabled(false);
-				}
-				else {
 				int[][] matrizUsuarios= afinidadMusical.getLimitadaMatrizDeUsuarios();
 				graficoGrafo = new GraficoGrafo(matrizUsuarios);
-				}
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -166,5 +155,12 @@ public class PanelGrafo extends JPanel {
 	        setText(value);
 	        return this;
 	    }
+	}
+
+	public void habilitarBotonGrafo() {
+		btnMostrarGraficoGrafo.setEnabled(true);
+		repaint();
+		revalidate();
+		
 	}
 }
