@@ -3,6 +3,7 @@ package Modelo;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -90,6 +91,121 @@ public class Grafo {
 
 		return matriz[i][j] != valorInvalido;
 	}
+	
+	// Métodos de búsqueda y verificación
+
+	public int indiceDeUsuario(Usuario u) {
+	    if (u == null) return -1;
+	    for (Map.Entry<Integer, Usuario> e : usuarios.entrySet()) {
+	        Usuario val = e.getValue();
+	        if (val != null && val.equals(u)) { // usa equals() de Usuario
+	            return e.getKey();
+	        }
+	    }
+	    return -1;
+	}
+
+	public boolean existeUsuario(Usuario u) {
+	    return indiceDeUsuario(u) != -1;
+	}
+
+	public boolean existeUsuarioPorNombre(String nombre) {
+	    if (nombre == null) return false;
+	    for (Usuario val : usuarios.values()) {
+	        if (val != null && nombre.equalsIgnoreCase(val.getNombre())) return true;
+	    }
+	    return false;
+	}
+
+	public boolean sonVecinos(Usuario a, Usuario b) {
+	    int ia = indiceDeUsuario(a);
+	    int ib = indiceDeUsuario(b);
+	    if (ia == -1 || ib == -1) return false;
+	    return existeArista(ia, ib);
+	}
+
+	public boolean sonVecinos(int i, int j) {
+	    return existeArista(i, j);
+	}
+
+	public int[] componentesConexos() {
+	    int n = usuarios.size();
+	    int[] comp = new int[n];
+	    Arrays.fill(comp, -1);
+	    int id = 0;
+	    for (int i = 0; i < n; i++) {
+	        if (comp[i] == -1) {
+	            dfsComponentes(i, id, comp);
+	            id++;
+	        }
+	    }
+	    return comp;
+	}
+
+	private void dfsComponentes(int v, int id, int[] comp) {
+	    comp[v] = id;
+	    int n = usuarios.size();
+	    for (int u = 0; u < n; u++) {
+	        if (u != v && matriz[v][u] != valorInvalido && comp[u] == -1) {
+	            dfsComponentes(u, id, comp);
+	        }
+	    }
+	}
+
+	public boolean pertenecenMismoGrupo(Usuario a, Usuario b) {
+	    int ia = indiceDeUsuario(a);
+	    int ib = indiceDeUsuario(b);
+	    if (ia == -1 || ib == -1) return false;
+	    int[] comp = componentesConexos();
+	    return comp[ia] == comp[ib];
+	}
+
+	public boolean pertenecenMismoGrupoKruskal(Usuario a, Usuario b, int cantGrupos) {
+	    int ia = indiceDeUsuario(a);
+	    int ib = indiceDeUsuario(b);
+	    if (ia == -1 || ib == -1) return false;
+
+	    ArrayList<Arista> lista = Kruskal();
+	    lista = (ArrayList<Arista>) eliminarAristaMayorPeso(lista, cantGrupos);
+
+	    int n = usuarios.size();
+	    int[][] temp = new int[n][n];
+	    for (int i = 0; i < n; i++) {
+	        Arrays.fill(temp[i], valorInvalido);
+	    }
+	    for (Arista ar : lista) {
+	        temp[ar.getOrigen()][ar.getDestino()] = ar.getPeso();
+	        temp[ar.getDestino()][ar.getOrigen()] = ar.getPeso();
+	    }
+
+	    int[] comp = componentesDesdeMatriz(temp);
+	    return comp[ia] == comp[ib];
+	}
+
+	private int[] componentesDesdeMatriz(int[][] mat) {
+	    int n = mat.length;
+	    int[] comp = new int[n];
+	    Arrays.fill(comp, -1);
+	    int id = 0;
+	    for (int i = 0; i < n; i++) {
+	        if (comp[i] == -1) {
+	            dfsComponentesMatriz(i, id, comp, mat);
+	            id++;
+	        }
+	    }
+	    return comp;
+	}
+
+	private void dfsComponentesMatriz(int v, int id, int[] comp, int[][] mat) {
+	    comp[v] = id;
+	    int n = mat.length;
+	    for (int u = 0; u < n; u++) {
+	        if (u != v && mat[v][u] != valorInvalido && comp[u] == -1) {
+	            dfsComponentesMatriz(u, id, comp, mat);
+	        }
+	    }
+	}
+
 
 	private void verificarVertice(int i) {
 		if (i < 0)
