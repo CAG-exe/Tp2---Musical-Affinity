@@ -66,9 +66,11 @@ public class PanelGrafo extends JPanel {
 		btnMostrarGraficoGrafo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int cantidadDeUsuarios = afinidadMusical.getCantidadDeUsuarios();
-				String[][] matrizUsuarios= afinidadMusical.getGrafoMatrizString(cantidadDeUsuarios);
-				graficoGrafo = new GraficoGrafo(matrizUsuarios);
+				if(btnMostrarGraficoGrafo.isEnabled()){
+					int cantidadDeUsuarios = afinidadMusical.getCantidadDeUsuarios();
+					String[][] matrizUsuarios= afinidadMusical.getGrafoMatrizString(cantidadDeUsuarios);
+					graficoGrafo = new GraficoGrafo(matrizUsuarios);
+				}
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
