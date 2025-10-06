@@ -94,7 +94,13 @@ public class PanelGrafo extends JPanel {
 		int cantidadDeUsuarios = afinidadMusical.getCantidadDeUsuarios();
 		String[][] matrizTexto=afinidadMusical.getGrafoMatrizString(cantidadDeUsuarios);
 		String[] columnas = generarHeaders(cantidadDeUsuarios);
-		DefaultTableModel MatrizModel = new DefaultTableModel(matrizTexto,columnas);
+		DefaultTableModel MatrizModel = new DefaultTableModel(matrizTexto,columnas) {
+		    private static final long serialVersionUID = 1L;
+
+            public boolean isCellEditable(int filas, int columnas) {
+                return false; 
+            }
+        };
 
 		JTable MatrizAdyacenciaTabla = new JTable(MatrizModel);
 		MatrizAdyacenciaTabla.setRowHeight(30);
@@ -106,6 +112,7 @@ public class PanelGrafo extends JPanel {
         rowHeader.setFixedCellWidth(30);
         rowHeader.setFixedCellHeight(MatrizAdyacenciaTabla.getRowHeight());
         rowHeader.setCellRenderer(new RowHeaderRenderer(MatrizAdyacenciaTabla));
+
         
         
         scrollMatrizAdyacencia.setRowHeaderView(rowHeader);
@@ -129,7 +136,13 @@ public class PanelGrafo extends JPanel {
 	private void generarListaUsuariosVisual(AfinidadMusical afinidadMusical) {
 		String[][] listaUsuarios= afinidadMusical.getListaUsuariosMatrizString();
 		String[] columnas = {"ID","Nombre"};
-		DefaultTableModel tablaModel = new DefaultTableModel(listaUsuarios,columnas);
+		DefaultTableModel tablaModel = new DefaultTableModel(listaUsuarios,columnas) {
+		    private static final long serialVersionUID = 1L;
+
+            public boolean isCellEditable(int filas, int columnas) {
+                return false; 
+            }
+		};
 		
 		JTable UsuariosTabla = new JTable(tablaModel);
 		scrollPane.setViewportView(UsuariosTabla);

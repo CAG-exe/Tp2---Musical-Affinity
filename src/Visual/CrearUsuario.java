@@ -176,7 +176,14 @@ public class CrearUsuario extends JPanel {
 		tabla.setFocusable(false);
 		scrollPane.setViewportView(tabla);
 		
-		modelo = new DefaultTableModel();
+		modelo = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {
+				return false;
+			}
+		};
 		tabla.setModel(modelo);
 		
 		modelo.addColumn("nombre");
