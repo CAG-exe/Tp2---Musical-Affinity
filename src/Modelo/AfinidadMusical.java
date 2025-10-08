@@ -96,4 +96,8 @@ public class AfinidadMusical {
 	public int[][] getLimitadaMatrizDeUsuarios() {
 		return matrizRelacion.getLimitadaMatrizDeUsuarios(getCantidadDeUsuarios());
 	}
+
+	public Grafo getGrafo() {
+		return matrizRelacion;
+	}
 }

@@ -70,7 +70,7 @@ public class UISwing extends JFrame {
 	 * Create the frame.
 	 */
 	public UISwing(Controlador controlador, AfinidadMusical afinidadMusical) {
-		this.panelUsuario = new PanelUsuarios();
+		this.panelUsuario = new PanelUsuarios(afinidadMusical.getGrafo());
 		this.panelGrafo = new PanelGrafo(afinidadMusical, controlador);
 		
 		setMinimumSize(new Dimension(1050, 720));
