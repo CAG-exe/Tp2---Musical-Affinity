@@ -203,8 +203,6 @@ public class CrearUsuario extends JPanel {
 				int filaSeleccionada = tabla.getSelectedRow();
 				if (filaSeleccionada != -1) {
 					modelo.removeRow(filaSeleccionada);
-					afinidadMusical.eliminarUsuario(nombreUsuario);
-					uiswing.recargarGrafo(afinidadMusical);
 					
 				}
 			}
