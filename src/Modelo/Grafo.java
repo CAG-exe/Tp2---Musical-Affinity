@@ -285,6 +285,26 @@ public class Grafo {
 		matriz[ i ][ j ] = -1;  
 		matriz[ j ][ i ] = -1;
 	}
+	public void removerUsuario(Usuario usuario) {
+		//Si el usuario no existe en el grafo, no se hace nada.
+		if (!existeUsuario(usuario)) {
+			return;
+		}
+
+		//Se crea una lista con todos los usuarios actuales, excepto el que se va a eliminar.
+		List<Usuario> usuariosRestantes = new ArrayList<>();
+		for (Usuario usuarioActual : usuarios.values()) {
+			if (!usuarioActual.equals(usuario)) {
+				usuariosRestantes.add(usuarioActual);
+			}
+		}
+
+
+		//Se reconstruye el grafo desde cero con los usuarios restantes.
+		for (Usuario usuarioRestante : usuariosRestantes) {
+			agregarUsuario(usuarioRestante);
+		}
+	}
 	
 	private void redimensionMatriz() {
 		int[][] nuevaMatriz = new int[matriz.length*2][matriz.length*2];

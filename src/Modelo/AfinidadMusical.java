@@ -79,6 +79,14 @@ public class AfinidadMusical {
 	public int getCantidadDeUsuarios() {
 		return usuariosRegistrados.size();
 	}
+	public void eliminarUsuario(String nombre) {
+	    Usuario usuarioAEliminar = usuariosRegistrados.get(nombre);
+
+	    if (usuarioAEliminar != null) {
+	        usuariosRegistrados.remove(nombre);
+	        matrizRelacion.removerUsuario(usuarioAEliminar);
+	    }
+	}
 
 	public String[][] getListaUsuariosMatrizString() {
 		String[][] listaUsuarios = new String[getCantidadDeUsuarios()][2];

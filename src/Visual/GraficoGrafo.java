@@ -39,7 +39,7 @@ public class GraficoGrafo {
         
         // Estilo visual
         Nuevo_grafo.setAttribute("ui.stylesheet", 
-            "node { fill-color: #ED2C07; size: 30px; text-size: 14px; }" +
+            "node { fill-color: #D6EFFF; size: 60px; text-size: 35px; }" +
             "edge { fill-color: #6D239E; }"
         );
         Nuevo_grafo.setAttribute("ui.quality");

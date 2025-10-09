@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTable;
@@ -50,6 +51,7 @@ public class CrearUsuario extends JPanel {
 	private AfinidadMusical afinidadMusical;
 	private Controlador controlador;
 	private JComboBox comboBoxGrupos;
+	private UISwing uiswing;
 
 
 	public CrearUsuario(AfinidadMusical afinidadMusical, Controlador controlador) {
@@ -196,6 +198,17 @@ public class CrearUsuario extends JPanel {
 		eliminarPersona.setFocusable(false);
 		eliminarPersona.setFont(new Font("Arial", Font.BOLD, 14));
 		eliminarPersona.setBounds(600, 454, 150, 50);
+		eliminarPersona.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int filaSeleccionada = tabla.getSelectedRow();
+				if (filaSeleccionada != -1) {
+					modelo.removeRow(filaSeleccionada);
+					afinidadMusical.eliminarUsuario(nombreUsuario);
+					uiswing.recargarGrafo(afinidadMusical);
+					
+				}
+			}
+		});
 		this.add(eliminarPersona);
 
 		
