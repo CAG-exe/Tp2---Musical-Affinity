@@ -1,9 +1,11 @@
 package Controlador;
 
 import Modelo.AfinidadMusical;
+import Modelo.EstadisticasGrupo;
 import Visual.CrearUsuario;
 import Visual.NuevoUsuarioDatos;
 import Visual.UISwing;
+import java.util.Collection;
 
 public class Controlador {
 	private UISwing visual;
@@ -19,8 +21,39 @@ public class Controlador {
 	}
 
 	public void mostrarPanelEstadisticas() {
-		visual.mostrarPanel("Estadisticas");
-		visual.cambiarTituloDePaginaEstadisticas();
+		if (modelo.getCantidadDeUsuarios() < 2) {
+			System.out.println("No hay suficientes usuarios para generar estadísticas.");
+			// Opcional: podrías usar un JOptionPane para mostrar un error en la UI.
+			return;
+		}
+
+		try {
+			// 1. Obtiene la cantidad de grupos desde la UI.
+			String valorComboBox = visual.getComboBoxCantidadGrupos();
+			int cantGrupos = Integer.parseInt(valorComboBox);
+			
+			System.out.println("Controlador: Solicitando cálculo de estadísticas para " + cantGrupos + " grupos.");
+
+			// 2. Pide al modelo que realice el cálculo.
+			Collection<EstadisticasGrupo> estadisticasCalculadas = modelo.calcularEstadisticas(cantGrupos);
+			
+			if (estadisticasCalculadas.isEmpty()) {
+				System.out.println("Controlador: El cálculo no devolvió resultados.");
+			} else {
+				System.out.println("Controlador: Se recibieron " + estadisticasCalculadas.size() + " grupos de estadísticas.");
+			}
+
+			// 3. Pasa los resultados al panel visual.
+			visual.getPanelUsuarios().mostrarEstadisticas(estadisticasCalculadas);
+			
+			// 4. Muestra el panel y actualiza el título.
+			visual.mostrarPanel("Estadisticas");
+			visual.cambiarTituloDePaginaEstadisticas();
+
+		} catch (Exception e) {
+			System.err.println("Ocurrió un error al generar las estadísticas:");
+			e.printStackTrace();
+		}
 	}
 
 	public void mostrarPanelGrafo() {
@@ -47,11 +80,9 @@ public class Controlador {
 	}
 	
 	public void guardarNuevoUsuario(NuevoUsuarioDatos dto) {
-		
 		if (dto.getNombre().equals("Ingrese su nombre de usuario")) {
 			crearUsuario.ingreseNombre();
 		}
-		
 		else if (dto.getNombre().length() < 3) {
 			 crearUsuario.avisoNombreCorto();
          }
@@ -62,7 +93,6 @@ public class Controlador {
         	 crearUsuario.añadirUsuarioAFila();
              modelo.registrarUsuario(dto.getNombre(), dto.getTango(), dto.getFolclore(),dto.getRock(), dto.getUrbano());
          }
-		
 	}
 
 	public int[][] getMatrizDeUsuarios() {
@@ -73,6 +103,5 @@ public class Controlador {
 		if(modelo.getCantidadDeUsuarios() > 2) {
 			visual.habilitarBotonGrafo();
 		}
-		
 	}
 }

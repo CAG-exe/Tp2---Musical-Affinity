@@ -1,100 +1,138 @@
 package Visual;
 
-import javax.swing.JPanel;
+import Modelo.EstadisticasGrupo;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.Map;
-import Modelo.Grafo;
-import Modelo.Usuario;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import javax.swing.JPanel;
+import javax.swing.Scrollable;
 
-public class PanelUsuarios extends JPanel {
+public class PanelUsuarios extends JPanel implements Scrollable {
 
     private static final long serialVersionUID = 1L;
-    private Grafo grafo;
+    private List<EstadisticasGrupo> estadisticas;
+    
+    private final int MARGEN_SUPERIOR = 50;
+    private final int ALTURA_POR_GRUPO = 350;
 
-    public PanelUsuarios(Grafo grafo) {
-        this.grafo = grafo;
+    public PanelUsuarios() {
         setBackground(new Color(220, 225, 195));
+        this.estadisticas = new ArrayList<>();
+    }
+    
+    public void mostrarEstadisticas(Collection<EstadisticasGrupo> stats) {
+        this.estadisticas = new ArrayList<>(stats);
+        this.estadisticas.sort(Comparator.comparingInt(EstadisticasGrupo::getIdGrupo));
+        this.revalidate();
+        this.repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        if (grafo == null || grafo.getUsuarios().isEmpty()) {
+        if (estadisticas == null || estadisticas.isEmpty()) {
             g.setColor(Color.DARK_GRAY);
             g.setFont(new Font("Tahoma", Font.BOLD, 18));
-            g.drawString("No hay usuarios cargados.", 50, 100);
+            g.drawString("No hay estadísticas para mostrar. Genera un grafo primero.", 50, 100);
             return;
         }
-
-        // Acumular intereses
-        int totalUsuarios = grafo.getUsuarios().size();
-        double sumaTango = 0, sumaFolclore = 0, sumaRock = 0, sumaUrbano = 0;
-
-        for (Map.Entry<Integer, Usuario> entry : grafo.getUsuarios().entrySet()) {
-            Usuario u = entry.getValue();
-            if (u == null) continue;
-
-            sumaTango += u.getInteresTango();
-            sumaFolclore += u.getInteresFolclore();
-            sumaRock += u.getInteresRockNacional();
-            sumaUrbano += u.getInteresGeneroUrbano();
-        }
-
-        // Promedios
-        double promTango = sumaTango / totalUsuarios;
-        double promFolclore = sumaFolclore / totalUsuarios;
-        double promRock = sumaRock / totalUsuarios;
-        double promUrbano = sumaUrbano / totalUsuarios;
-
-        double[] valores = {promTango, promFolclore, promRock, promUrbano};
-        String[] etiquetas = {"Tango", "Folclore", "Rock", "Urbano"};
-        Color[] colores = {Color.RED, new Color(255, 200, 0), Color.BLUE, Color.MAGENTA};
-
-        int anchoBarra = 80;
-        int espacio = 50;
-        int x = 100;
-        int baseY = getHeight() - 100;
-        int alturaMax = 200; // escala visual
-        double valorMax = 5.0; // máximo posible según la clase Usuario
-
-        g.setFont(new Font("Tahoma", Font.BOLD, 16));
-        g.setColor(Color.BLACK);
-        g.drawString("Promedio de interés por género musical", 80, 50);
-
-        // Ejes
-        g.drawLine(80, baseY, getWidth() - 50, baseY);
-        g.drawLine(80, baseY - alturaMax, 80, baseY);
-
-        for (int i = 0; i < valores.length; i++) {
-            int altura = (int) ((valores[i] / valorMax) * alturaMax);
-            int y = baseY - altura;
-
-            g.setColor(colores[i]);
-            g.fillRect(x, y, anchoBarra, altura);
-
-            g.setColor(Color.BLACK);
-            g.drawRect(x, y, anchoBarra, altura);
-
-            g.drawString(etiquetas[i], x + 10, baseY + 20);
-            g.drawString(String.format("%.1f", valores[i]), x + 25, y - 10);
-
-            x += anchoBarra + espacio;
-        }
-
-        // Escala de referencia
-        g.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        for (int i = 0; i <= 5; i++) {
-            int y = baseY - (int) ((i / valorMax) * alturaMax);
-            g.drawLine(75, y, 85, y);
-            g.drawString(String.valueOf(i), 60, y + 5);
+        int y_posicion = MARGEN_SUPERIOR;
+        for (EstadisticasGrupo grupo : estadisticas) {
+            y_posicion = dibujarEstadisticasDeUnGrupo(g, grupo, y_posicion);
+            y_posicion += 60; 
         }
     }
+    
+    private int dibujarEstadisticasDeUnGrupo(Graphics g, EstadisticasGrupo grupo, int y_actual) {
+        g.setColor(new Color(0, 80, 85));
+        g.setFont(new Font("Tahoma", Font.BOLD, 20));
+        g.drawString("Análisis del Grupo " + (grupo.getIdGrupo() + 1), 50, y_actual);
+        y_actual += 35;
 
-    public void setGrafo(Grafo grafo) {
-        this.grafo = grafo;
-        repaint();
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        g.drawString("• Cantidad de Miembros: " + grupo.getCantidadMiembros(), 60, y_actual);
+        y_actual += 25;
+        g.drawString(String.format("• Afinidad Promedio (peso interno): %.2f", grupo.getAfinidadPromedio()), 60, y_actual);
+        y_actual += 40;
+
+        g.setFont(new Font("Tahoma", Font.BOLD, 16));
+        g.drawString("Promedio de Intereses Musicales del Grupo:", 60, y_actual);
+        y_actual += 30;
+
+        double[] valores = {
+            grupo.getPromedioTango(),
+            grupo.getPromedioFolclore(),
+            grupo.getPromedioRock(),
+            grupo.getPromedioUrbano()
+        };
+        String[] etiquetas = {"Tango", "Folclore", "Rock", "Urbano"};
+        Color[] colores = {new Color(200, 50, 50), new Color(50, 150, 50), new Color(50, 50, 200), new Color(150, 50, 150)};
+
+        int anchoBarra = 60;
+        int espacio = 40;
+        int x_barra = 100;
+        int alturaMaxGrafico = 150;
+        double valorMaxInteres = 5.0;
+
+        g.setColor(Color.GRAY);
+        g.drawLine(x_barra - 10, y_actual, x_barra - 10, y_actual + alturaMaxGrafico + 5);
+        g.drawLine(x_barra - 10, y_actual + alturaMaxGrafico + 5, x_barra + (anchoBarra + espacio) * 4, y_actual + alturaMaxGrafico + 5);
+
+        for (int i = 0; i < valores.length; i++) {
+            int alturaBarra = (int) ((valores[i] / valorMaxInteres) * alturaMaxGrafico);
+            int y_barra = y_actual + alturaMaxGrafico - alturaBarra;
+
+            g.setColor(colores[i]);
+            g.fillRect(x_barra, y_barra, anchoBarra, alturaBarra);
+            g.setColor(Color.BLACK);
+            g.drawRect(x_barra, y_barra, anchoBarra, alturaBarra);
+
+            g.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            g.drawString(etiquetas[i], x_barra + 5, y_actual + alturaMaxGrafico + 25);
+            g.drawString(String.format("%.1f", valores[i]), x_barra + 15, y_barra - 10);
+            x_barra += anchoBarra + espacio;
+        }
+        return y_actual + alturaMaxGrafico + 40;
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        int alturaPreferida = MARGEN_SUPERIOR;
+        if (estadisticas != null && !estadisticas.isEmpty()) {
+            alturaPreferida = (estadisticas.size() * ALTURA_POR_GRUPO) + MARGEN_SUPERIOR;
+        }
+        return new Dimension(800, alturaPreferida);
+    }
+    
+    @Override
+    public Dimension getPreferredScrollableViewportSize() {
+        return getPreferredSize();
+    }
+
+    @Override
+    public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
+        return 20;
+    }
+
+    @Override
+    public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
+        return 100;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportWidth() {
+        return true;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportHeight() {
+        return false;
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -232,7 +233,7 @@ public class Grafo {
         
 		aristasOrdenadas = (ArrayList<Arista>) aristasOrdenadas;
 		UnionFind uf = new UnionFind(usuarios.size());
-		while(e<usuarios.size()-1) {
+		while(e<usuarios.size()-1 && i < aristasOrdenadas.size()) { // Control para evitar IndexOutOfBounds
 			Arista arista = aristasOrdenadas.get(i++);
 			
 			int V1 = uf.find(arista.getOrigen());
@@ -260,12 +261,13 @@ public class Grafo {
 	}
 	
 	public List<Arista> eliminarAristaMayorPeso(List<Arista> listaDeAristas, int cantGrupos) {
-		if(cantGrupos > listaDeAristas.size()) {
-			System.out.println("LA CANTIDAD DE GRUPOS CONEXOS SUPERAN LA CANTIDAD DE USUARIOS. SE ESTABLECERÁ GRUPOS = 2.");
+		if(cantGrupos > listaDeAristas.size() + 1) { // Lógica corregida
+			System.out.println("LA CANTIDAD DE GRUPOS CONEXOS SUPERAN LA CANTIDAD DE ARISTAS. SE ESTABLECERÁ GRUPOS = 2.");
 			cantGrupos = 2;
 		}
 		
-		for(int i = 1; i<cantGrupos; i++) {
+		for(int i = 1; i < cantGrupos; i++) {
+			if (listaDeAristas.isEmpty()) break; // Si no hay más aristas, paramos
 			Arista mayorPeso = listaDeAristas.stream().
 					max(Comparator.comparing(Arista::getPeso))
 					.orElse(null);
@@ -349,4 +351,67 @@ public class Grafo {
 		}
 		return limitadaMatriz;
 	}
+    
+    // --- NUEVO MÉTODO ---
+    public Collection<EstadisticasGrupo> calcularEstadisticasPorGrupo(int cantGrupos) {
+        // 1. Generamos el grafo con la cantidad de grupos deseada
+        ArrayList<Arista> aristasDelGrafoAgrupado = Kruskal();
+        aristasDelGrafoAgrupado = (ArrayList<Arista>) eliminarAristaMayorPeso(aristasDelGrafoAgrupado, cantGrupos);
+
+        // 2. Creamos una matriz temporal solo con las aristas que quedaron
+        int n = usuarios.size();
+        int[][] matrizTemporal = new int[n][n];
+        for (int[] fila : matrizTemporal) {
+            Arrays.fill(fila, valorInvalido);
+        }
+        for (Arista ar : aristasDelGrafoAgrupado) {
+            matrizTemporal[ar.getOrigen()][ar.getDestino()] = ar.getPeso();
+            matrizTemporal[ar.getDestino()][ar.getOrigen()] = ar.getPeso();
+        }
+
+        // 3. Obtenemos los componentes conexos de esta matriz temporal
+        int[] componentes = componentesDesdeMatriz(matrizTemporal);
+        
+        // 4. Usamos un Map para organizar las estadísticas por ID de grupo
+        Map<Integer, EstadisticasGrupo> estadisticasMap = new HashMap<>();
+
+        // 5. Agrupamos usuarios en sus respectivos grupos
+        for (int i = 0; i < componentes.length; i++) {
+            int idGrupo = componentes[i];
+            Usuario usuario = usuarios.get(i);
+
+            estadisticasMap.putIfAbsent(idGrupo, new EstadisticasGrupo(idGrupo));
+            estadisticasMap.get(idGrupo).agregarMiembro(usuario);
+        }
+
+        // 6. Calculamos la afinidad promedio para cada grupo
+        for (EstadisticasGrupo stats : estadisticasMap.values()) {
+            double sumaPesos = 0;
+            int cantidadAristasInternas = 0;
+            List<Usuario> miembros = stats.getMiembros();
+            
+            // Recorremos las aristas del grafo agrupado
+            for (Arista arista : aristasDelGrafoAgrupado) {
+                // Verificamos si ambos extremos de la arista pertenecen a este grupo
+                Usuario origen = usuarios.get(arista.getOrigen());
+                Usuario destino = usuarios.get(arista.getDestino());
+                if (miembros.contains(origen) && miembros.contains(destino)) {
+                    sumaPesos += arista.getPeso();
+                    cantidadAristasInternas++;
+                }
+            }
+            
+            if (cantidadAristasInternas > 0) {
+                stats.setAfinidadPromedio(sumaPesos / cantidadAristasInternas);
+            }
+        }
+
+        // 7. Calculamos los promedios de intereses para cada grupo
+        for (EstadisticasGrupo stats : estadisticasMap.values()) {
+            stats.calcularPromediosDeIntereses();
+        }
+        
+        // 8. Devolvemos la colección de estadísticas
+        return estadisticasMap.values();
+    }
 }
