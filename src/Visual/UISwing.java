@@ -46,12 +46,14 @@ public class UISwing extends JFrame {
 		JSeparator separator = new JSeparator();
 		
 		JButton UsuariosBoton = new JButton("Crear Usuarios");
+		UsuariosBoton.setBorder(null);
 		UsuariosBoton.addActionListener(e -> controlador.mostrarPanelMenu());
 		UsuariosBoton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		UsuariosBoton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		UsuariosBoton.setBorderPainted(false);
 		
 		JButton GrafoButton = new JButton("Grafo");
+		GrafoButton.setBorder(null);
 		GrafoButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		GrafoButton.setBorderPainted(false);
 		GrafoButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -69,6 +71,7 @@ public class UISwing extends JFrame {
 		
 		EstadisticasButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		EstadisticasButton.setBorderPainted(false);
+		EstadisticasButton.setBorder(null);
 		
 		ImageIcon originalIcon = new ImageIcon(getClass().getResource("/img/logo.png"));
 		Image scaledImage = originalIcon.getImage().getScaledInstance(220, 75, Image.SCALE_SMOOTH);
