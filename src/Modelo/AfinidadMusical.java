@@ -1,28 +1,28 @@
 package Modelo;
 
-import java.io.FileReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.io.InputStream;
+
 
 public class AfinidadMusical {
 	List<Usuario> usuariosJson;
 	HashMap<String, Usuario> usuariosRegistrados = new HashMap<String, Usuario>();
 	List<Usuario> usuariosSelecionadosParaElGrafo;
-	static Grafo matrizRelacion;   /// modificar despues de la implementacion del main
+	static Grafo matrizRelacion;
 	private int cantidadDeGrupos;
 	
 	public AfinidadMusical() {
+        // La inicialización del grafo debe hacerse antes de usarlo
+        matrizRelacion = new Grafo(16); // Tamaño inicial, podría ser dinámico
 		guardarUsuariosDeLaBaseDeDatos();
-		generarMatrizDeRelacionDeUsuarios();
 		usuariosSelecionadosParaElGrafo = new ArrayList<Usuario>();
 	}
 
@@ -31,7 +31,7 @@ public class AfinidadMusical {
 			InputStream input = AfinidadMusical.class.getResourceAsStream("/BaseDeDatosDeUsuarios.json");
 
 			if (input == null) {
-				System.out.println("No se encontró el archivo");
+				System.out.println("No se encontró el archivo /BaseDeDatosDeUsuarios.json");
 				return;
 			}
 			// Convierte al imput en un reader para que java pueda leer el JSON
@@ -71,6 +71,10 @@ public class AfinidadMusical {
 	public static Map<Integer,Usuario> getUsuarios() {
 		return matrizRelacion.getUsuarios();
 	}
+    
+    public Grafo getGrafo() { // Getter para el grafo
+        return matrizRelacion;
+    }
 
 	public String[][] getGrafoMatrizString(int cantidadDeUsuarios) {
 		return matrizRelacion.matrizString(cantidadDeUsuarios, cantidadDeGrupos);
@@ -96,4 +100,12 @@ public class AfinidadMusical {
 	public int[][] getLimitadaMatrizDeUsuarios() {
 		return matrizRelacion.getLimitadaMatrizDeUsuarios(getCantidadDeUsuarios());
 	}
+    
+    // --- NUEVO MÉTODO ---
+    public Collection<EstadisticasGrupo> calcularEstadisticas(int cantGrupos) {
+        if (matrizRelacion != null) {
+            return matrizRelacion.calcularEstadisticasPorGrupo(cantGrupos);
+        }
+        return new ArrayList<>(); // Devuelve lista vacía si el grafo no existe
+    }
 }
