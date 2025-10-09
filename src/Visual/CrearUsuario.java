@@ -191,6 +191,12 @@ public class CrearUsuario extends JPanel {
 		modelo.addColumn("iF");
 		modelo.addColumn("iR");
 		modelo.addColumn("iU");
+		
+		JButton eliminarPersona = new JButton("Eliminar usuario");
+		eliminarPersona.setFocusable(false);
+		eliminarPersona.setFont(new Font("Arial", Font.BOLD, 14));
+		eliminarPersona.setBounds(600, 454, 150, 50);
+		this.add(eliminarPersona);
 
 		
 		JButton guardarPersona = new JButton("Guardar Datos");
