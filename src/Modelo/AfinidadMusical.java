@@ -13,17 +13,14 @@ import java.io.InputStream;
 
 
 public class AfinidadMusical {
-	List<Usuario> usuariosJson;
 	HashMap<String, Usuario> usuariosRegistrados = new HashMap<String, Usuario>();
-	List<Usuario> usuariosSelecionadosParaElGrafo;
 	static Grafo matrizRelacion;
 	private int cantidadDeGrupos;
 	
 	public AfinidadMusical() {
         // La inicialización del grafo debe hacerse antes de usarlo
-        matrizRelacion = new Grafo(16); // Tamaño inicial, podría ser dinámico
+		generarMatrizDeRelacionDeUsuarios();
 		guardarUsuariosDeLaBaseDeDatos();
-		usuariosSelecionadosParaElGrafo = new ArrayList<Usuario>();
 	}
 
 	public void guardarUsuariosDeLaBaseDeDatos() {
@@ -40,7 +37,7 @@ public class AfinidadMusical {
 
 			Type tipoLista = new TypeToken<List<Usuario>>() {
 			}.getType(); // Define que el JSON representa una lista de Usuarios
-			this.usuariosJson = gson.fromJson(reader, tipoLista); // Convierte el contenido del JSON en una lista de Usuarios.
+			List<Usuario> usuariosJson = gson.fromJson(reader, tipoLista); // Convierte el contenido del JSON en una lista de Usuarios.
 			
 		for (Usuario u : usuariosJson) { 
 			usuariosRegistrados.put(u.getNombre(), u);

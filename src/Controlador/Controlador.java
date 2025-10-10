@@ -60,7 +60,7 @@ public class Controlador {
 		guardarCantidadDeGruposActual();
 		
 		visual.mostrarPanel("Grafo");
-		visual.recargarGrafo(modelo);
+		visual.recargarGrafo();
 		visual.cambiarTituloDePaginaGrafo();
 	}
 	
@@ -73,13 +73,16 @@ public class Controlador {
 	public void mostrarPanelMenu() {
 		visual.mostrarPanel("CrearUsuario");
 		visual.cambiarTituloDePaginaCrearUsuario();
+		crearUsuario.recargarTextoEnTextFieldNombre();
 	}
 	
 	public void añadirMenuAlControlador(CrearUsuario CrearUsuario) {
 		this.crearUsuario = CrearUsuario;
 	}
 	
-	public void guardarNuevoUsuario(NuevoUsuarioDatos dto) {
+	public void guardarNuevoUsuario() {
+		NuevoUsuarioDatos dto = crearUsuario.generarNuevoUsuarioSegunDatosActuales();
+		
 		if (dto.getNombre().equals("Ingrese su nombre de usuario")) {
 			crearUsuario.ingreseNombre();
 		}
@@ -93,6 +96,7 @@ public class Controlador {
         	 crearUsuario.añadirUsuarioAFila();
              modelo.registrarUsuario(dto.getNombre(), dto.getTango(), dto.getFolclore(),dto.getRock(), dto.getUrbano());
          }
+		habilitarBotonGrafo();
 	}
 
 	public int[][] getMatrizDeUsuarios() {
@@ -103,5 +107,16 @@ public class Controlador {
 		if(modelo.getCantidadDeUsuarios() > 2) {
 			visual.habilitarBotonGrafo();
 		}
+	}
+	
+	public void clicEnTextFieldNombre() {
+		crearUsuario.clicEnTextField();
+	}
+	
+	public void eliminarUsuario() {
+		int indiceUsuario = crearUsuario.getIndiceDeUsuarioseleccionado();
+		String nombreUsuario = crearUsuario.getNombreDeUsaurioEnLaTabla(indiceUsuario);
+		crearUsuario.eliminarUsuarioDeLaTablaSegunIndex(indiceUsuario);
+		modelo.eliminarUsuario(nombreUsuario);
 	}
 }

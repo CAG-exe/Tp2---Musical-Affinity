@@ -26,12 +26,16 @@ public class PanelGrafo extends JPanel {
 	private JScrollPane scrollMatrizAdyacencia;
 	private JButton btnMostrarGraficoGrafo;
 	private GraficoGrafo graficoGrafo;
+	private Controlador controlador;
+	private AfinidadMusical afinidadMusical;
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelGrafo(AfinidadMusical afinidadMusical, Controlador controlador) {
+		this.controlador = controlador;
+		this.afinidadMusical = afinidadMusical;
 		setLayout(new BorderLayout());
 		setBackground(new Color(220, 225, 195));
 		
@@ -39,24 +43,24 @@ public class PanelGrafo extends JPanel {
 		add(scrollPane,BorderLayout.WEST);
 		btnMostrarGraficoGrafo = new JButton("Mostrar Gráfico del Grafo");	
 		btnMostrarGraficoGrafo.setEnabled(false);
-		configuracionDelBoton(afinidadMusical);
+		configuracionDelBoton();
 		add(btnMostrarGraficoGrafo,BorderLayout.SOUTH);
 
 		
-		generarListaUsuariosVisual(afinidadMusical);
+		generarListaUsuariosVisual();
 		///
 		scrollMatrizAdyacencia = new JScrollPane();
 		add(scrollMatrizAdyacencia,BorderLayout.CENTER);
 		
 		
 		
-		generarMatrizGrafoVisual(afinidadMusical);
+		generarMatrizGrafoVisual();
 		
 	}
 	
 	
 	
-	private void configuracionDelBoton(AfinidadMusical afinidadMusical)	{
+	private void configuracionDelBoton()	{
 
 		btnMostrarGraficoGrafo.setContentAreaFilled(true);
 		btnMostrarGraficoGrafo.setOpaque(true);
@@ -67,9 +71,7 @@ public class PanelGrafo extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(btnMostrarGraficoGrafo.isEnabled()){
-					int cantidadDeUsuarios = afinidadMusical.getCantidadDeUsuarios();
-					String[][] matrizUsuarios= afinidadMusical.getGrafoMatrizString(cantidadDeUsuarios);
-					graficoGrafo = new GraficoGrafo(matrizUsuarios);
+					mostrarGraficoGrafo();
 				}
 			}
 			@Override
@@ -89,10 +91,15 @@ public class PanelGrafo extends JPanel {
 			
 		
 	}
+	
+	public void mostrarGraficoGrafo() {
+		int cantidadDeUsuarios = afinidadMusical.getCantidadDeUsuarios();
+		String[][] matrizUsuarios= afinidadMusical.getGrafoMatrizString(cantidadDeUsuarios);
+		graficoGrafo = new GraficoGrafo(matrizUsuarios);
+	}
 
 
-
-	private void generarMatrizGrafoVisual(AfinidadMusical afinidadMusical) {
+	private void generarMatrizGrafoVisual() {
 		int cantidadDeUsuarios = afinidadMusical.getCantidadDeUsuarios();
 		String[][] matrizTexto=afinidadMusical.getGrafoMatrizString(cantidadDeUsuarios);
 		String[] columnas = generarHeaders(cantidadDeUsuarios);
@@ -128,14 +135,14 @@ public class PanelGrafo extends JPanel {
 		return headers;
 	}
 
-	public void recargarGrafo(AfinidadMusical afinidadMusical) {
-		generarMatrizGrafoVisual(afinidadMusical);
-		generarListaUsuariosVisual(afinidadMusical);
+	public void recargarGrafo() {
+		generarMatrizGrafoVisual();
+		generarListaUsuariosVisual();
 		revalidate();
 		repaint();
 	}
 	
-	private void generarListaUsuariosVisual(AfinidadMusical afinidadMusical) {
+	private void generarListaUsuariosVisual() {
 		String[][] listaUsuarios= afinidadMusical.getListaUsuariosMatrizString();
 		String[] columnas = {"ID","Nombre"};
 		DefaultTableModel tablaModel = new DefaultTableModel(listaUsuarios,columnas) {

@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 public class Grafo {
 
 	private HashMap<Integer, Usuario> usuarios;
-	
 	protected int[][] matriz;
 	private ArrayList<Arista> listaAristas;
 	
@@ -32,18 +31,6 @@ public class Grafo {
 		usuarios = new HashMap<Integer, Usuario>();
 	}
 
-	// guarda el valor ingresado en la fila-columna
-	public void setValor(int fila, int columna, int valor) {
-		if (valor > 5 || valor < 0) {
-			throw new IllegalArgumentException("El valor debe estar entre 0 y 5");
-		}
-
-		try {
-			matriz[fila][columna] = valor;
-		} catch (Exception e) {
-			throw new IllegalArgumentException("La fila y columna no son validos.");
-		}
-	}
 
 	// devuelve el valor de la fila-columna
 	public int getValor(int fila, int columna) {
@@ -300,8 +287,8 @@ public class Grafo {
 				usuariosRestantes.add(usuarioActual);
 			}
 		}
-
-
+		listaAristas = new ArrayList<Arista>();
+		usuarios = new HashMap<Integer, Usuario>(); 
 		//Se reconstruye el grafo desde cero con los usuarios restantes.
 		for (Usuario usuarioRestante : usuariosRestantes) {
 			agregarUsuario(usuarioRestante);

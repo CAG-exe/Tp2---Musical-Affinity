@@ -49,7 +49,7 @@ public class CrearUsuario extends JPanel {
 	private JTextField nombre;
 	private JLabel aviso;
 	private JTable tabla;
-	private DefaultTableModel modelo;
+	private DefaultTableModel modeloDeTabla;
 	private AfinidadMusical afinidadMusical;
 	private Controlador controlador;
 	private JComboBox comboBoxGrupos;
@@ -76,10 +76,7 @@ public class CrearUsuario extends JPanel {
 		nombre = new JTextField();
 		nombre.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				if(nombre.getText().equals("Ingrese su nombre de usuario")) {
-					nombre.setText("");
-					nombre.setForeground(Color.black);
-				};
+				controlador.clicEnTextFieldNombre();
 			}
 		});
 		nombre.setForeground(Color.GRAY);
@@ -180,7 +177,7 @@ public class CrearUsuario extends JPanel {
 		tabla.setFocusable(false);
 		scrollPane.setViewportView(tabla);
 		
-		modelo = new DefaultTableModel() {
+		modeloDeTabla = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
 			
 			@Override
@@ -188,26 +185,20 @@ public class CrearUsuario extends JPanel {
 				return false;
 			}
 		};
-		tabla.setModel(modelo);
+		tabla.setModel(modeloDeTabla);
 		
-		modelo.addColumn("nombre");
-		modelo.addColumn("iT");
-		modelo.addColumn("iF");
-		modelo.addColumn("iR");
-		modelo.addColumn("iU");
+		modeloDeTabla.addColumn("nombre");
+		modeloDeTabla.addColumn("iT");
+		modeloDeTabla.addColumn("iF");
+		modeloDeTabla.addColumn("iR");
+		modeloDeTabla.addColumn("iU");
 		
 		JButton eliminarPersona = new JButton("Eliminar usuario");
 		eliminarPersona.setFocusable(false);
 		eliminarPersona.setFont(new Font("Arial", Font.BOLD, 14));
 		eliminarPersona.setBounds(600, 454, 150, 50);
-		eliminarPersona.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int filaSeleccionada = tabla.getSelectedRow();
-				if (filaSeleccionada != -1) {
-					modelo.removeRow(filaSeleccionada);
-					
-				}
-			}
+		eliminarPersona.addActionListener(e ->{
+			controlador.eliminarUsuario();
 		});
 		this.add(eliminarPersona);
 
@@ -216,18 +207,7 @@ public class CrearUsuario extends JPanel {
 		guardarPersona.setFocusable(false);
 		guardarPersona.setFont(new Font("Arial", Font.BOLD, 14));
 		guardarPersona.addActionListener(e ->{
-			
-			
-			NuevoUsuarioDatos dto = NuevoUsuarioDatos.builder()
-		            .nombre(nombre.getText())
-		            .tango(tango.getValue())
-		            .folclore(folclore.getValue())
-		            .rock(rock.getValue())
-		            .urbano(urbano.getValue())
-		            .build();
-
-            controlador.guardarNuevoUsuario(dto);
-            controlador.habilitarBotonGrafo();
+            controlador.guardarNuevoUsuario();
 
 		});
 		
@@ -264,9 +244,21 @@ public class CrearUsuario extends JPanel {
             fila[3] = usuario.getInteresRockNacional();
             fila[4] = usuario.getInteresGeneroUrbano();
             
-            modelo.addRow(fila);
+            modeloDeTabla.addRow(fila);
         }
     }
+	
+	public NuevoUsuarioDatos generarNuevoUsuarioSegunDatosActuales() {
+		NuevoUsuarioDatos dto = NuevoUsuarioDatos.builder()
+	            .nombre(nombre.getText())
+	            .tango(tango.getValue())
+	            .folclore(folclore.getValue())
+	            .rock(rock.getValue())
+	            .urbano(urbano.getValue())
+	            .build();
+		
+		return dto;
+	}
 	
 	public void ingreseNombre() {
 		aviso.setText("Por favor ingrese su nombre");
@@ -292,6 +284,31 @@ public class CrearUsuario extends JPanel {
          fila[3] = rock.getValue();
          fila[4] = urbano.getValue();
          
-         modelo.addRow(fila);	
+         modeloDeTabla.addRow(fila);	
    }
+	
+	public int getIndiceDeUsuarioseleccionado() {
+		return tabla.getSelectedRow();
+	}
+	
+	public String getNombreDeUsaurioEnLaTabla(int fila) {
+		return (String) tabla.getValueAt(fila, 0);
+	}
+	
+	public void eliminarUsuarioDeLaTablaSegunIndex(int i) {
+		modeloDeTabla.removeRow(i);
+	}
+
+
+	public void clicEnTextField() {
+		if(nombre.getText().equals("Ingrese su nombre de usuario")) {
+			nombre.setText("");
+			nombre.setForeground(Color.black);
+		};
+	}
+	
+	public void recargarTextoEnTextFieldNombre() {
+		nombre.setText("Ingrese su nombre de usuario");
+		nombre.setForeground(Color.gray);
+	}
 }

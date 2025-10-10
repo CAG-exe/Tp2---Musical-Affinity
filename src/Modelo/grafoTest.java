@@ -73,13 +73,4 @@ public class grafoTest {
 		assertFalse( grafo.existeArista( 2, 4 ) );
 	}
 	
-	@Test
-	public void getValorBordeTest() {
-		Grafo matriz = new Grafo(5);
-
-		matriz.setValor(4, 4, 5);
-
-		assertEquals(matriz.getValor(4, 4), 5);
-	}
-	
 }

@@ -153,8 +153,8 @@ public class UISwing extends JFrame {
 		_TituloDePagina.setBorder(new EmptyBorder(0, 280, 0, 0));
 	}
 
-	public void recargarGrafo(AfinidadMusical modelo) {
-		this.panelGrafo.recargarGrafo(modelo);
+	public void recargarGrafo() {
+		this.panelGrafo.recargarGrafo();
 	}
 	
 	public String getComboBoxCantidadGrupos() {
