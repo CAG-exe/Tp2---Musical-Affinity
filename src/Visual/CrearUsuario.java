@@ -38,6 +38,8 @@ import javax.swing.JButton;
 import Visual.CrearUsuario;
 import javax.swing.JSeparator;
 import javax.swing.JComboBox;
+import java.util.Map;
+import Modelo.Usuario;
 
 public class CrearUsuario extends JPanel {
 	private JSlider tango;
@@ -171,7 +173,7 @@ public class CrearUsuario extends JPanel {
 		this.add(urbano);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(500, 158, 257, 222);
+		scrollPane.setBounds(450, 158, 298, 222);
 		this.add(scrollPane);
 		
 		tabla = new JTable();
@@ -248,7 +250,23 @@ public class CrearUsuario extends JPanel {
 		textCantidadGrupos.setBounds(537, 396, 139, 14);
 		textCantidadGrupos.setForeground(Color.black);
 		add(textCantidadGrupos);
+        cargarUsuariosDeLaBaseDeDatos();
 	}
+	
+	public void cargarUsuariosDeLaBaseDeDatos() {
+        Map<Integer, Usuario> usuarios = AfinidadMusical.getUsuarios();
+
+        for (Usuario usuario : usuarios.values()) {
+            Object[] fila = new Object[5];
+            fila[0] = usuario.getNombre();
+            fila[1] = usuario.getInteresTango();
+            fila[2] = usuario.getInteresFolclore();
+            fila[3] = usuario.getInteresRockNacional();
+            fila[4] = usuario.getInteresGeneroUrbano();
+            
+            modelo.addRow(fila);
+        }
+    }
 	
 	public void ingreseNombre() {
 		aviso.setText("Por favor ingrese su nombre");
