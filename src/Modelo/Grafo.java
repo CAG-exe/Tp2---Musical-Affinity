@@ -31,23 +31,10 @@ public class Grafo {
 		usuarios = new HashMap<Integer, Usuario>();
 	}
 
-
-	// devuelve el valor de la fila-columna
-	public int getValor(int fila, int columna) {
-		try {
-			return matriz[fila][columna];
-		} catch (Exception e) {
-			throw new IllegalArgumentException("La fila y columna no son validos.");
-		}
-	}
-
 	public boolean tieneValorInvalido(int i, int c) {
 		return matriz[i][c] == valorInvalido;
 	}
-
-	//
-	//
-	//
+	
 	public void agregarUsuario(Usuario u) {
 		usuarios.put(usuarios.size(), u);
 		agregarUsuarioAGrafo(usuarios.size()-1);
@@ -105,17 +92,6 @@ public class Grafo {
 	    return false;
 	}
 
-	public boolean sonVecinos(Usuario a, Usuario b) {
-	    int ia = indiceDeUsuario(a);
-	    int ib = indiceDeUsuario(b);
-	    if (ia == -1 || ib == -1) return false;
-	    return existeArista(ia, ib);
-	}
-
-	public boolean sonVecinos(int i, int j) {
-	    return existeArista(i, j);
-	}
-
 	public int[] componentesConexos() {
 	    int n = usuarios.size();
 	    int[] comp = new int[n];
@@ -145,28 +121,6 @@ public class Grafo {
 	    int ib = indiceDeUsuario(b);
 	    if (ia == -1 || ib == -1) return false;
 	    int[] comp = componentesConexos();
-	    return comp[ia] == comp[ib];
-	}
-
-	public boolean pertenecenMismoGrupoKruskal(Usuario a, Usuario b, int cantGrupos) {
-	    int ia = indiceDeUsuario(a);
-	    int ib = indiceDeUsuario(b);
-	    if (ia == -1 || ib == -1) return false;
-
-	    ArrayList<Arista> lista = Kruskal();
-	    lista = (ArrayList<Arista>) eliminarAristaMayorPeso(lista, cantGrupos);
-
-	    int n = usuarios.size();
-	    int[][] temp = new int[n][n];
-	    for (int i = 0; i < n; i++) {
-	        Arrays.fill(temp[i], valorInvalido);
-	    }
-	    for (Arista ar : lista) {
-	        temp[ar.getOrigen()][ar.getDestino()] = ar.getPeso();
-	        temp[ar.getDestino()][ar.getOrigen()] = ar.getPeso();
-	    }
-
-	    int[] comp = componentesDesdeMatriz(temp);
 	    return comp[ia] == comp[ib];
 	}
 
@@ -236,17 +190,6 @@ public class Grafo {
 		
 	}
 	
-	public void eliminarAristaMayorPeso() {
-		Arista mayorPeso = listaAristas.stream().
-				max(Comparator.comparing(Arista::getPeso))
-				.orElse(null);
-		if(mayorPeso != null) {
-			matriz[mayorPeso.getOrigen()][mayorPeso.getDestino()] = valorInvalido;
-			matriz[mayorPeso.getDestino()][mayorPeso.getOrigen()] = valorInvalido;
-			listaAristas.remove(mayorPeso);
-		}
-	}
-	
 	public List<Arista> eliminarAristaMayorPeso(List<Arista> listaDeAristas, int cantGrupos) {
 		if(cantGrupos > listaDeAristas.size() + 1) { // Lógica corregida
 			System.out.println("LA CANTIDAD DE GRUPOS CONEXOS SUPERAN LA CANTIDAD DE ARISTAS. SE ESTABLECERÁ GRUPOS = 2.");
@@ -274,6 +217,7 @@ public class Grafo {
 		matriz[ i ][ j ] = -1;  
 		matriz[ j ][ i ] = -1;
 	}
+	
 	public void removerUsuario(Usuario usuario) {
 		//Si el usuario no existe en el grafo, no se hace nada.
 		if (!existeUsuario(usuario)) {
@@ -358,6 +302,7 @@ public class Grafo {
 
         // 3. Obtenemos los componentes conexos de esta matriz temporal
         int[] componentes = componentesDesdeMatriz(matrizTemporal);
+ 
         
         // 4. Usamos un Map para organizar las estadísticas por ID de grupo
         Map<Integer, EstadisticasGrupo> estadisticasMap = new HashMap<>();

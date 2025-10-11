@@ -69,7 +69,7 @@ public class AfinidadMusical {
 		return matrizRelacion.getUsuarios();
 	}
     
-    public Grafo getGrafo() { // Getter para el grafo
+    public Grafo getGrafo() { 
         return matrizRelacion;
     }
 
