@@ -113,10 +113,14 @@ public class Controlador {
 		crearUsuario.clicEnTextField();
 	}
 	
-	public void eliminarUsuario() {
+	public void eliminarUsuario() throws ArrayIndexOutOfBoundsException{
 		int indiceUsuario = crearUsuario.getIndiceDeUsuarioseleccionado();
-		String nombreUsuario = crearUsuario.getNombreDeUsaurioEnLaTabla(indiceUsuario);
-		crearUsuario.eliminarUsuarioDeLaTablaSegunIndex(indiceUsuario);
-		modelo.eliminarUsuario(nombreUsuario);
+		if(indiceUsuario != -1) { //Se seleccionó algun usuario
+			String nombreUsuario = crearUsuario.getNombreDeUsaurioEnLaTabla(indiceUsuario);
+			crearUsuario.eliminarUsuarioDeLaTablaSegunIndex(indiceUsuario);
+			modelo.eliminarUsuario(nombreUsuario);
+		}
+		
+		
 	}
 }
