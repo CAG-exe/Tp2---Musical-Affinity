@@ -155,6 +155,7 @@ public class UISwing extends JFrame {
 
 	public void recargarGrafo() {
 		this.panelGrafo.recargarGrafo();
+		
 	}
 	
 	public String getComboBoxCantidadGrupos() {

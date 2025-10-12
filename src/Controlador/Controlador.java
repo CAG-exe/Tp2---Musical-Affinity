@@ -22,7 +22,6 @@ public class Controlador {
 
 	public void mostrarPanelEstadisticas() {
 		if (modelo.getCantidadDeUsuarios() < 2) {
-			System.out.println("No hay suficientes usuarios para generar estadísticas.");
 			// Opcional: podrías usar un JOptionPane para mostrar un error en la UI.
 			return;
 		}
@@ -31,10 +30,7 @@ public class Controlador {
 			// 1. Obtiene la cantidad de grupos desde la UI.
 			String valorComboBox = visual.getComboBoxCantidadGrupos();
 			int cantGrupos = Integer.parseInt(valorComboBox);
-			
-			System.out.println("Controlador: Solicitando cálculo de estadísticas para " + cantGrupos + " grupos.");
 
-			// 2. Pide al modelo que realice el cálculo.
 			Collection<EstadisticasGrupo> estadisticasCalculadas = modelo.calcularEstadisticas(cantGrupos);
 			
 			if (estadisticasCalculadas.isEmpty()) {
@@ -120,7 +116,18 @@ public class Controlador {
 			crearUsuario.eliminarUsuarioDeLaTablaSegunIndex(indiceUsuario);
 			modelo.eliminarUsuario(nombreUsuario);
 		}
-		
-		
+	}
+	public String getComboBoxCantidadGrupos() {
+		if(visual == null) {
+			return "2"; // Valor por defecto o manejo de error
+		}
+		return visual.getComboBoxCantidadGrupos();	
+	}
+
+	public Object[][] getMatrizGrupos() {
+		if(modelo == null) {
+			return new String[0][0];
+		}
+		return modelo.getMatrizGrupos(getComboBoxCantidadGrupos());
 	}
 }

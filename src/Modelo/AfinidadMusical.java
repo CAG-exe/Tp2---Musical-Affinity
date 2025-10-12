@@ -113,4 +113,8 @@ public class AfinidadMusical {
         }
         return new ArrayList<>(); // Devuelve lista vacía si el grafo no existe
     }
+
+	public Object[][] getMatrizGrupos(String comboBoxCantidadGrupos) {
+		return matrizRelacion.getListaDeGrupo(cantidadDeGrupos);
+	}
 }

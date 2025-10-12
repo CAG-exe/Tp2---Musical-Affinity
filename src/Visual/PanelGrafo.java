@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -17,49 +18,86 @@ import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
+
+import com.lowagie.text.Font;
 
 import Controlador.Controlador;
 import Modelo.AfinidadMusical;
 
 public class PanelGrafo extends JPanel {
-	private JScrollPane scrollPane;
+	private JScrollPane scrollPane , scrollGrupos;
 	private JScrollPane scrollMatrizAdyacencia;
 	private JButton btnMostrarGraficoGrafo;
 	private GraficoGrafo graficoGrafo;
-	private Controlador controlador;
 	private AfinidadMusical afinidadMusical;
+	private Controlador controlador;
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelGrafo(AfinidadMusical afinidadMusical, Controlador controlador) {
-		this.controlador = controlador;
 		this.afinidadMusical = afinidadMusical;
+		this.controlador = controlador;
 		setLayout(new BorderLayout());
 		setBackground(new Color(220, 225, 195));
 		
 		scrollPane = new JScrollPane();
 		add(scrollPane,BorderLayout.WEST);
+		scrollPane.setVisible(false);
+		
 		btnMostrarGraficoGrafo = new JButton("Mostrar Gráfico del Grafo");	
-		btnMostrarGraficoGrafo.setEnabled(false);
+		btnMostrarGraficoGrafo.setEnabled(true);
 		configuracionDelBoton();
 		add(btnMostrarGraficoGrafo,BorderLayout.SOUTH);
-
-		
 		generarListaUsuariosVisual();
-		///
+		
+		
 		scrollMatrizAdyacencia = new JScrollPane();
 		add(scrollMatrizAdyacencia,BorderLayout.CENTER);
-		
-		
-		
+		scrollMatrizAdyacencia.setVisible(true);
 		generarMatrizGrafoVisual();
 		
+		scrollGrupos = new JScrollPane();
+		add(scrollGrupos,BorderLayout.CENTER);
+		scrollGrupos.setVisible(true);
+		configurarScrollGrupos();
+		
+		
+	}
+
+
+	private void configurarScrollGrupos() {
+	   Object[][] data = controlador.getMatrizGrupos();
+       String[] columnNames = darHeaderDeGrupos(controlador.getComboBoxCantidadGrupos());
+
+        JTable table = new JTable(data, columnNames);
+
+        TableColumnModel columnModel = table.getColumnModel();
+        for (int i = 0; i < columnModel.getColumnCount(); i++) {
+            String grupo = "Grupo " + ((i / 2) + 1);
+            String sub = (i % 2 == 0) ? "ID" : "Nombre";
+            columnModel.getColumn(i).setHeaderRenderer(new MultiHeaderRenderer(grupo, sub));
+        }
+        scrollGrupos.setViewportView(table);
 	}
 	
-	
-	
+	private String[] darHeaderDeGrupos(String cantidadDeGrupos) {
+		switch (cantidadDeGrupos) {
+		case "2":
+			return new String[] {"ID1","Nombre1","ID2","Nombre2"};
+		case "3":
+			return new String[] {"ID1","Nombre1","ID2","Nombre2","ID3","Nombre3"};
+		case "4":
+			return new String[] {"ID1","Nombre1","ID2","Nombre2","ID3","Nombre3","ID4","Nombre4"};
+		case "5":
+			return new String[] {"ID1","Nombre1","ID2","Nombre2","ID3","Nombre3","ID4","Nombre4","ID5","Nombre5"};
+		}
+		return null;
+	}
+
 	private void configuracionDelBoton()	{
 
 		btnMostrarGraficoGrafo.setContentAreaFilled(true);
@@ -73,18 +111,6 @@ public class PanelGrafo extends JPanel {
 				if(btnMostrarGraficoGrafo.isEnabled()){
 					mostrarGraficoGrafo();
 				}
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
 			}
 			
 		});
@@ -138,6 +164,9 @@ public class PanelGrafo extends JPanel {
 	public void recargarGrafo() {
 		generarMatrizGrafoVisual();
 		generarListaUsuariosVisual();
+		configurarScrollGrupos();
+		controlador.habilitarBotonGrafo();
+		
 		revalidate();
 		repaint();
 	}
@@ -179,6 +208,23 @@ public class PanelGrafo extends JPanel {
 	        return this;
 	    }
 	}
+	
+    static class MultiHeaderRenderer extends JPanel implements TableCellRenderer {
+        private static final long serialVersionUID = 1L;
+
+		public MultiHeaderRenderer(String grupo, String subEncabezado) {
+            setLayout(new GridLayout(2, 1));
+            JLabel grupoLabel = new JLabel(grupo, JLabel.CENTER);
+            JLabel subLabel = new JLabel(subEncabezado, JLabel.CENTER);
+            grupoLabel.setFont(grupoLabel.getFont().deriveFont(Font.BOLD));
+            add(grupoLabel);
+            add(subLabel);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            return this;
+        }
+    }
 
 	public void habilitarBotonGrafo() {
 		btnMostrarGraficoGrafo.setEnabled(true);

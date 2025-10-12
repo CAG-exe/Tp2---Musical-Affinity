@@ -52,7 +52,8 @@ public class Grafo {
 		verificarVertice(i);
 		verificarVertice(j);
 		verificarDistintos(i, j);
-
+		
+		
 		matriz[i][j] = indiceDeSimilitud;
 		matriz[j][i] = indiceDeSimilitud;
 		listaAristas.add(new Arista(i, j, indiceDeSimilitud));
@@ -154,7 +155,7 @@ public class Grafo {
 			throw new IllegalArgumentException("El vertice no puede ser negativo: " + i);
 
 		if (i >= matriz.length)
-			throw new IllegalArgumentException("Los vertices deben estar entre 0 y |V|-1: " + i);
+			redimensionMatriz();
 	}
 
 	// Verifica que i y j sean distintos
@@ -261,8 +262,7 @@ public class Grafo {
 			}
 		}
 		
-		ArrayList<Arista> listaAriastaKruskal = Kruskal();
-		listaAriastaKruskal = (ArrayList<Arista>) eliminarAristaMayorPeso(listaAriastaKruskal, cantGrupos);
+		ArrayList<Arista>listaAriastaKruskal = (ArrayList<Arista>) extraerGruposDeArbol(cantGrupos);
 		for(Arista arista: listaAriastaKruskal) {
 			int i = arista.getOrigen();
 			int j = arista.getDestino();
@@ -286,22 +286,9 @@ public class Grafo {
     // --- NUEVO MÉTODO ---
     public Collection<EstadisticasGrupo> calcularEstadisticasPorGrupo(int cantGrupos) {
         // 1. Generamos el grafo con la cantidad de grupos deseada
-        ArrayList<Arista> aristasDelGrafoAgrupado = Kruskal();
-        aristasDelGrafoAgrupado = (ArrayList<Arista>) eliminarAristaMayorPeso(aristasDelGrafoAgrupado, cantGrupos);
+        ArrayList<Arista> aristasDelGrafoAgrupado = (ArrayList<Arista>)extraerGruposDeArbol(cantGrupos);
 
-        // 2. Creamos una matriz temporal solo con las aristas que quedaron
-        int n = usuarios.size();
-        int[][] matrizTemporal = new int[n][n];
-        for (int[] fila : matrizTemporal) {
-            Arrays.fill(fila, valorInvalido);
-        }
-        for (Arista ar : aristasDelGrafoAgrupado) {
-            matrizTemporal[ar.getOrigen()][ar.getDestino()] = ar.getPeso();
-            matrizTemporal[ar.getDestino()][ar.getOrigen()] = ar.getPeso();
-        }
-
-        // 3. Obtenemos los componentes conexos de esta matriz temporal
-        int[] componentes = componentesDesdeMatriz(matrizTemporal);
+        int[] componentes = componentesConexasDeGrupos(cantGrupos);
  
         
         // 4. Usamos un Map para organizar las estadísticas por ID de grupo
@@ -346,4 +333,57 @@ public class Grafo {
         // 8. Devolvemos la colección de estadísticas
         return estadisticasMap.values();
     }
+
+	private List<Arista> extraerGruposDeArbol(int cantGrupos) {
+		ArrayList<Arista> aristasDelGrafoAgrupado = Kruskal();
+        aristasDelGrafoAgrupado = (ArrayList<Arista>) eliminarAristaMayorPeso(aristasDelGrafoAgrupado, cantGrupos);
+		return aristasDelGrafoAgrupado;
+	}
+
+	private int[] componentesConexasDeGrupos(int cantGrupos) {
+		ArrayList<Arista> aristasDelGrafoAgrupado = (ArrayList<Arista>) extraerGruposDeArbol(cantGrupos);
+
+        int n = usuarios.size();
+        int[][] matrizTemporal = new int[n][n];
+        for (int[] fila : matrizTemporal) {
+            Arrays.fill(fila, valorInvalido);
+        }
+        for (Arista ar : aristasDelGrafoAgrupado) {
+            matrizTemporal[ar.getOrigen()][ar.getDestino()] = ar.getPeso();
+            matrizTemporal[ar.getDestino()][ar.getOrigen()] = ar.getPeso();
+        }
+
+        // 3. Obtenemos los componentes conexos de esta matriz temporal
+        int[] componentes = componentesDesdeMatriz(matrizTemporal);
+		return componentes;
+	}
+	
+	public String[][] getListaDeGrupo(int cantGrupos) {
+		int[] componentes = componentesConexasDeGrupos(cantGrupos);
+	    Map<Integer, List<Integer>> grupos = new HashMap<>();
+
+	    // Agrupar usuarios por componente
+	    for (int i = 0; i < componentes.length; i++) {
+	        grupos.putIfAbsent(componentes[i], new ArrayList<>());
+	        grupos.get(componentes[i]).add(i);
+	    }
+
+	    // Calcular cantidad máxima de filas necesarias
+	    int maxFilas = grupos.values().stream().mapToInt(List::size).max().orElse(0);
+	    String[][] ListaDeGrupos = new String[maxFilas][cantGrupos * 2];
+
+	    // Rellenar la matriz por grupo
+	    for (Map.Entry<Integer, List<Integer>> entry : grupos.entrySet()) {
+	        int grupo = entry.getKey();
+	        int col = grupo * 2;
+	        List<Integer> indices = entry.getValue();
+
+	        for (int fila = 0; fila < indices.size(); fila++) {
+	            int i = indices.get(fila);
+	            ListaDeGrupos[fila][col] = Integer.toString(i);
+	            ListaDeGrupos[fila][col + 1] = usuarios.get(i).getNombre();
+	        }
+	    }
+		return ListaDeGrupos;
+	}
 }
