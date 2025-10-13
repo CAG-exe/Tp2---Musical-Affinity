@@ -50,4 +50,20 @@ public class AristaTest {
 	
 		 assertEquals(esperado, resultado);
 	 }
+	 @Test
+	 public void testValoresCero() {
+		 Arista arista = new Arista(0, 0, 0);
+		 
+		 assertEquals(0, arista.getOrigen());
+		 assertEquals(0, arista.getDestino());
+		 assertEquals(0, arista.getPeso());
+	 }
+	 @Test
+	 public void testValoresNegativos() {
+		 Arista arista = new Arista(-1, -5, -100);
+		 
+		 assertEquals(-1, arista.getOrigen());
+		 assertEquals(-5, arista.getDestino());
+		 assertEquals(-100, arista.getPeso());
+	 }
 }

@@ -40,5 +40,14 @@ public class AfinidadMusicalTest {
 		
 		assertFalse(model.usuarioYaRegistrado("Paul"));
 	}
+    @Test
+    public void eliminarUsuarioExistenteTest() {
+		AfinidadMusical model = new AfinidadMusical();
+
+        model.eliminarUsuario("Juan Pérez");
+
+        assertFalse(model.usuarioYaRegistrado("Juan Pérez"));
+    }
+    
 
 }

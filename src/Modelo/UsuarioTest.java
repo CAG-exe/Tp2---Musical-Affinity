@@ -48,4 +48,9 @@ public class UsuarioTest {
 	public void interesGeneroUrbanoFueraDeRangoTest() {
 		usuario = new Usuario("Juan Pérez", 1, 2, 3, 0);
 	}
+	@Test(expected = IllegalArgumentException.class)
+	public void nombreVacioTest() 
+	{
+		usuario = new Usuario(" ",2, 1, 5, 2);
+	}
 }
