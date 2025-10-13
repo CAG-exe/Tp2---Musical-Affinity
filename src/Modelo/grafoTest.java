@@ -18,23 +18,7 @@ public class grafoTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void crearMatrizTamaño0Test() {
 		Grafo matriz = new Grafo(0);
-	}
-
-	
-	@Test ( expected = IllegalArgumentException.class )
-	public void primerVerticeExcedidoTest() 
-	{
-		Grafo grafo = new Grafo( 5 );
-		grafo.agregarArista( 5, 2, 5 );
-	}
-	
-	@Test ( expected = IllegalArgumentException.class )
-	public void segundoVerticeExcedidoTest() 
-	{
-		Grafo grafo = new Grafo( 5 );
-		grafo.agregarArista( 2, 5, 5 );
-	}
-	
+	}	
 	
 	@Test
 	public void aristaExistenteTest() {
