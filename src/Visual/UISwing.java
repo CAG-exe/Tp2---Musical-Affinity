@@ -28,6 +28,7 @@ public class UISwing extends JFrame {
 	private PanelGrafo panelGrafo;
 	private PanelUsuarios panelUsuario;
 	private CrearUsuario panelCrearUsuario;
+	private String nombrePanelActual;
 
 	public UISwing(Controlador controlador, AfinidadMusical afinidadMusical) {
 		this.panelUsuario = new PanelUsuarios();
@@ -36,6 +37,7 @@ public class UISwing extends JFrame {
 		setMinimumSize(new Dimension(1050, 720));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1050, 720);
+		setLocationRelativeTo(null);
 		background = new JPanel();
 		background.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(background);
@@ -137,6 +139,7 @@ public class UISwing extends JFrame {
 	public void mostrarPanel(String nombre) {
         CardLayout cl = (CardLayout) Contenedor.getLayout();
         cl.show(Contenedor, nombre);
+        nombrePanelActual = nombre;
     }
 	
 	public void cambiarTituloDePaginaEstadisticas() {
@@ -168,5 +171,12 @@ public class UISwing extends JFrame {
     
     public PanelUsuarios getPanelUsuarios() {
         return this.panelUsuario;
+    }
+    
+    public boolean panelActualEs(String panel) {
+    	if(nombrePanelActual == panel) {
+    		return true;
+    	}
+    	return false;
     }
 }

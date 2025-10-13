@@ -3,14 +3,20 @@ package Controlador;
 import Modelo.AfinidadMusical;
 import Modelo.EstadisticasGrupo;
 import Visual.CrearUsuario;
+import Visual.MensajeDePocosUsuarios;
 import Visual.NuevoUsuarioDatos;
 import Visual.UISwing;
+
+import java.awt.Window;
 import java.util.Collection;
+
+import javax.swing.JDialog;
 
 public class Controlador {
 	private UISwing visual;
 	private AfinidadMusical modelo;
 	private CrearUsuario crearUsuario;
+	private MensajeDePocosUsuarios mensajeDePocosUsuarios;
 	
 	public Controlador() {
 	}
@@ -21,9 +27,18 @@ public class Controlador {
 	}
 
 	public void mostrarPanelEstadisticas() {
-		if (modelo.getCantidadDeUsuarios() < 2) {
-			// Opcional: podrías usar un JOptionPane para mostrar un error en la UI.
+		if(visual.panelActualEs("Estadisticas")){
 			return;
+		}
+		guardarCantidadDeGruposActual();
+		
+		if(modelo.getCantidadDeUsuarios()<2) {
+			mostrarDialogoDeError();
+			return;
+		 }
+		
+		if(cantidadDeUsuariosBaja()) {
+			mostrarDialogoDeError();
 		}
 
 		try {
@@ -51,13 +66,23 @@ public class Controlador {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
 	public void mostrarPanelGrafo() {
+		if(visual.panelActualEs("Grafo")){
+			return;
+		}
+		
 		guardarCantidadDeGruposActual();
+		
+		if(cantidadDeUsuariosBaja()) {
+			mostrarDialogoDeError();
+		}
 		
 		visual.mostrarPanel("Grafo");
 		visual.recargarGrafo();
 		visual.cambiarTituloDePaginaGrafo();
+
 	}
 	
 	private void guardarCantidadDeGruposActual() {
@@ -66,11 +91,22 @@ public class Controlador {
 		modelo.setCantidadDeGrupos(cantidadDeGrupos);
 	}
 
+	public boolean cantidadDeUsuariosBaja() {
+		int cantUsuarios = modelo.getCantidadDeUsuarios();
+		int cantGrupos = modelo.getCantidadDeGrupos();
+		return cantGrupos > cantUsuarios;
+	}
+	
 	public void mostrarPanelMenu() {
+		if(visual.panelActualEs("CrearUsuario")){
+			return;
+		}
 		visual.mostrarPanel("CrearUsuario");
 		visual.cambiarTituloDePaginaCrearUsuario();
 		crearUsuario.recargarTextoEnTextFieldNombre();
 	}
+	
+
 	
 	public void añadirMenuAlControlador(CrearUsuario CrearUsuario) {
 		this.crearUsuario = CrearUsuario;
@@ -130,5 +166,14 @@ public class Controlador {
 			return new String[0][0];
 		}
 		return modelo.getMatrizGrupos(getComboBoxCantidadGrupos());
+	}
+	
+	public void mostrarDialogoDeError() {
+		mensajeDePocosUsuarios = new MensajeDePocosUsuarios(this);
+		mensajeDePocosUsuarios.setVisible(true);
+	}
+
+	public void cerrarDialog() {
+		mensajeDePocosUsuarios.dispose();
 	}
 }

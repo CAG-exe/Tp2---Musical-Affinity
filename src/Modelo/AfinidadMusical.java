@@ -101,6 +101,10 @@ public class AfinidadMusical {
 	public void setCantidadDeGrupos(int cant) {
 		cantidadDeGrupos = cant;
 	}
+	
+	public int getCantidadDeGrupos() {
+		return cantidadDeGrupos;
+	}
 
 	public int[][] getLimitadaMatrizDeUsuarios() {
 		return matrizRelacion.getLimitadaMatrizDeUsuarios(getCantidadDeUsuarios());

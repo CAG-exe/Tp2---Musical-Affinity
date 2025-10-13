@@ -6,8 +6,8 @@ public class UnionFind {
 	private int[] rango;
 	
 	public UnionFind(int vertices) {
-		if(vertices <= 0) {
-			throw new IllegalArgumentException("La cantidad de vertices debe ser mayor a 0.");
+		if(vertices < 0) {
+			throw new IllegalArgumentException("La cantidad de vertices debe ser mayor o igual a 0.");
 		}
 		padre = new int[vertices];
 		rango = new int[vertices];

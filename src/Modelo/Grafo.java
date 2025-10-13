@@ -9,6 +9,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
+import org.bouncycastle.crypto.RuntimeCryptoException;
+
 public class Grafo {
 
 	private HashMap<Integer, Usuario> usuarios;
@@ -196,10 +198,6 @@ public class Grafo {
 	}
 	
 	public List<Arista> eliminarAristaMayorPeso(List<Arista> listaDeAristas, int cantGrupos) {
-		if(cantGrupos > listaDeAristas.size() + 1) { // Lógica corregida
-			System.out.println("LA CANTIDAD DE GRUPOS CONEXOS SUPERAN LA CANTIDAD DE ARISTAS. SE ESTABLECERÁ GRUPOS = 2.");
-			cantGrupos = 2;
-		}
 		
 		for(int i = 1; i < cantGrupos; i++) {
 			if (listaDeAristas.isEmpty()) break; // Si no hay más aristas, paramos
