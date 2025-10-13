@@ -18,8 +18,21 @@ public class PanelUsuarios extends JPanel implements Scrollable {
     private static final long serialVersionUID = 1L;
     private List<EstadisticasGrupo> estadisticas;
     
+    // --- CONSTANTES AJUSTADAS PARA UN CÁLCULO PRECISO ---
+
     private final int MARGEN_SUPERIOR = 50;
-    private final int ALTURA_POR_GRUPO = 350;
+    
+    /**
+     * Esta es una constante importante, determina la altura de cada grupo
+     * Se realiza un cálculo que separa con un margen los distintos tipos de grupos.
+     * * El cálculo se basa en el método dibujarEstadisticasDeUnGrupo:
+     * 35 (título) + 25 (miembros) + 40 (afinidad) + 30 (título gráfico) + 
+     * 150 (alto del gráfico) + 40 (margen post-gráfico) = 320px (altura del bloque)
+     * * Este margen se aplica en el bucle de paintComponent:
+     * 60px (margen entre grupos)
+     * * Total = 320 + 60 = 380px.
+     */
+    private final int ALTURA_TOTAL_POR_GRUPO = 380; 
 
     public PanelUsuarios() {
         setBackground(new Color(220, 225, 195));
@@ -29,6 +42,8 @@ public class PanelUsuarios extends JPanel implements Scrollable {
     public void mostrarEstadisticas(Collection<EstadisticasGrupo> stats) {
         this.estadisticas = new ArrayList<>(stats);
         this.estadisticas.sort(Comparator.comparingInt(EstadisticasGrupo::getIdGrupo));
+        
+        // Avisa al JScrollPane que el tamaño del contenido ha cambiado
         this.revalidate();
         this.repaint();
     }
@@ -36,20 +51,23 @@ public class PanelUsuarios extends JPanel implements Scrollable {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         if (estadisticas == null || estadisticas.isEmpty()) {
             g.setColor(Color.DARK_GRAY);
             g.setFont(new Font("Tahoma", Font.BOLD, 18));
             g.drawString("No hay estadísticas para mostrar. Genera un grafo primero.", 50, 100);
             return;
         }
+
         int y_posicion = MARGEN_SUPERIOR;
         for (EstadisticasGrupo grupo : estadisticas) {
             y_posicion = dibujarEstadisticasDeUnGrupo(g, grupo, y_posicion);
-            y_posicion += 60; 
+            y_posicion += 60; // Margen entre este grupo y el siguiente
         }
     }
     
     private int dibujarEstadisticasDeUnGrupo(Graphics g, EstadisticasGrupo grupo, int y_actual) {
+        // (Este método no necesita cambios, está perfecto)
         g.setColor(new Color(0, 80, 85));
         g.setFont(new Font("Tahoma", Font.BOLD, 20));
         g.drawString("Análisis del Grupo " + (grupo.getIdGrupo() + 1), 50, y_actual);
@@ -102,12 +120,16 @@ public class PanelUsuarios extends JPanel implements Scrollable {
         return y_actual + alturaMaxGrafico + 40;
     }
 
+    // --- MÉTODOS DE LA INTERFAZ SCROLLABLE ---
+
     @Override
     public Dimension getPreferredSize() {
         int alturaPreferida = MARGEN_SUPERIOR;
         if (estadisticas != null && !estadisticas.isEmpty()) {
-            alturaPreferida = (estadisticas.size() * ALTURA_POR_GRUPO) + MARGEN_SUPERIOR;
+            // Se usa la nueva constante para un cálculo exacto.
+            alturaPreferida = (estadisticas.size() * ALTURA_TOTAL_POR_GRUPO) + MARGEN_SUPERIOR;
         }
+        // Usamos 800 como un ancho predeterminado razonable
         return new Dimension(800, alturaPreferida);
     }
     
@@ -118,21 +140,21 @@ public class PanelUsuarios extends JPanel implements Scrollable {
 
     @Override
     public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
-        return 20;
+        return 20; // Scroll lento (flechas del teclado)
     }
 
     @Override
     public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
-        return 100;
+        return 100; // Scroll rápido (clic en la barra)
     }
 
     @Override
     public boolean getScrollableTracksViewportWidth() {
-        return true;
+        return true; // No queremos scroll horizontal
     }
 
     @Override
     public boolean getScrollableTracksViewportHeight() {
-        return false;
+        return false; // Sí queremos scroll vertical
     }
 }
