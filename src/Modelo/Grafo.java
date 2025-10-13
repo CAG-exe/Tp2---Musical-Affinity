@@ -22,13 +22,17 @@ public class Grafo {
 			throw new IllegalArgumentException("El tamaño de la matriz es invalido");
 		}
 		matriz = new int[tamanio][tamanio];
-		for (int fila = 0; fila < matriz.length; fila++) {
-			for (int columna = 0; columna < matriz.length; columna++) {
-				matriz[fila][columna] = valorInvalido;
-			}
-		}
+		rellenarMatrizConValorInvalido(matriz);
 		listaAristas = new ArrayList<Arista>();
 		usuarios = new HashMap<Integer, Usuario>();
+	}
+
+	private void rellenarMatrizConValorInvalido(int[][] mat) {
+		for (int fila = 0; fila < mat.length; fila++) {
+			for (int columna = 0; columna < mat.length; columna++) {
+				mat[fila][columna] = valorInvalido;
+			}
+		}
 	}
 
 	public boolean tieneValorInvalido(int i, int c) {
@@ -175,7 +179,7 @@ public class Grafo {
         
 		aristasOrdenadas = (ArrayList<Arista>) aristasOrdenadas;
 		UnionFind uf = new UnionFind(usuarios.size());
-		while(e<usuarios.size()-1 && i < aristasOrdenadas.size()) { // Control para evitar IndexOutOfBounds
+		while(e<usuarios.size()-1 && i < aristasOrdenadas.size()) { 
 			Arista arista = aristasOrdenadas.get(i++);
 			
 			int V1 = uf.find(arista.getOrigen());
@@ -220,21 +224,28 @@ public class Grafo {
 	}
 	
 	public void removerUsuario(Usuario usuario) {
-		//Si el usuario no existe en el grafo, no se hace nada.
 		if (!existeUsuario(usuario)) {
 			return;
 		}
 
-		//Se crea una lista con todos los usuarios actuales, excepto el que se va a eliminar.
+		List<Usuario> usuariosRestantes = crearListaDeUsuariosActualSinUnUsuario(usuario);
+		
+		recontruirGrafoSegunUnaListaDeUsuarios(usuariosRestantes);
+	}
+
+	private List<Usuario> crearListaDeUsuariosActualSinUnUsuario(Usuario usuario) {
 		List<Usuario> usuariosRestantes = new ArrayList<>();
 		for (Usuario usuarioActual : usuarios.values()) {
 			if (!usuarioActual.equals(usuario)) {
 				usuariosRestantes.add(usuarioActual);
 			}
 		}
+		return usuariosRestantes;
+	}
+	
+	private void recontruirGrafoSegunUnaListaDeUsuarios(List<Usuario> usuariosRestantes) {
 		listaAristas = new ArrayList<Arista>();
 		usuarios = new HashMap<Integer, Usuario>(); 
-		//Se reconstruye el grafo desde cero con los usuarios restantes.
 		for (Usuario usuarioRestante : usuariosRestantes) {
 			agregarUsuario(usuarioRestante);
 		}
@@ -263,14 +274,18 @@ public class Grafo {
 		}
 		
 		ArrayList<Arista>listaAriastaKruskal = (ArrayList<Arista>) extraerGruposDeArbol(cantGrupos);
+		rellenarMatrizConDatosDelArbol(matrizString, listaAriastaKruskal);
+		return matrizString;
+		
+	}
+
+	private void rellenarMatrizConDatosDelArbol(String[][] matrizString, ArrayList<Arista> listaAriastaKruskal) {
 		for(Arista arista: listaAriastaKruskal) {
 			int i = arista.getOrigen();
 			int j = arista.getDestino();
 			matrizString[i][j] = Integer.toString(arista.getPeso());
 			matrizString[j][i] = Integer.toString(arista.getPeso());
 			}
-		return matrizString;
-		
 	}
 
 	public int[][] getLimitadaMatrizDeUsuarios(int cantidadDeUsuarios) {
@@ -345,9 +360,7 @@ public class Grafo {
 
         int n = usuarios.size();
         int[][] matrizTemporal = new int[n][n];
-        for (int[] fila : matrizTemporal) {
-            Arrays.fill(fila, valorInvalido);
-        }
+        rellenarMatrizConValorInvalido(matrizTemporal);
         for (Arista ar : aristasDelGrafoAgrupado) {
             matrizTemporal[ar.getOrigen()][ar.getDestino()] = ar.getPeso();
             matrizTemporal[ar.getDestino()][ar.getOrigen()] = ar.getPeso();

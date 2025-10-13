@@ -47,11 +47,11 @@ public class AfinidadMusical {
 	}
 
 	public void generarMatrizDeRelacionDeUsuarios() {
-		matrizRelacion = new Grafo(16); // Genera y guarda la matriz que contendra la relaciones de
-														// intereses entre usuarios
+		matrizRelacion = new Grafo(16); 
+														
 	}
 	
-	// Guarda el usuario nuevo en el mapa de usuarios registrados. Si el nombre del usuario ya existe, lanza excepsion.
+	
 	public void registrarUsuario(String nombre, int tango, int folclore, int rock, int urbano) {
 		if(usuariosRegistrados.containsKey(nombre)) {
 			throw new IllegalArgumentException("El nombre de usuario ya esta registrado, prueba con otro.");

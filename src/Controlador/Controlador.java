@@ -117,6 +117,7 @@ public class Controlador {
 			modelo.eliminarUsuario(nombreUsuario);
 		}
 	}
+	
 	public String getComboBoxCantidadGrupos() {
 		if(visual == null) {
 			return "2"; // Valor por defecto o manejo de error
