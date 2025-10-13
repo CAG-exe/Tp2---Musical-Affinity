@@ -6,6 +6,9 @@ public class UnionFind {
 	private int[] rango;
 	
 	public UnionFind(int vertices) {
+		if(vertices <= 0) {
+			throw new IllegalArgumentException("La cantidad de vertices debe ser mayor a 0.");
+		}
 		padre = new int[vertices];
 		rango = new int[vertices];
 		
@@ -16,6 +19,10 @@ public class UnionFind {
 	}
 	
 	public boolean Union(int a, int b){
+		if(a< 0 || b < 0) {
+			throw new IllegalArgumentException("Los vertices ingresados son negativos.");
+		}
+		
 		int raizA = find(a);
 		int raizB = find(b);
 		
@@ -34,6 +41,10 @@ public class UnionFind {
 	}
 
 	public int find(int a) {
+		if(a > padre.length-1 || a<0) {
+			throw new IllegalArgumentException("El indice del vertice es invalido.");
+		}
+		
 		if(padre[a] != a) {
 			padre[a] = find(padre[a]);
 		}

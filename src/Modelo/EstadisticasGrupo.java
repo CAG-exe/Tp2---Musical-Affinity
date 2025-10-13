@@ -13,6 +13,9 @@ public class EstadisticasGrupo {
     private double afinidadPromedio = 0; // Promedio del peso de las aristas
 
     public EstadisticasGrupo(int id) {
+    	if(id <0) {
+    		throw new IllegalArgumentException("El id no puede ser negativo.");
+    	}
         this.idGrupo = id;
     }
     

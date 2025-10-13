@@ -23,7 +23,7 @@ public class Arista {
    }
    @Override
 	public String toString() {
-		return "origen" + origen + ",destino=" + destino + ",peso=" + peso + "]";
+		return "["+ "origen" + "=" + origen + ",destino=" + destino + ",peso=" + peso + "]";
 	}
 
 }
