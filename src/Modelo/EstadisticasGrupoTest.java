@@ -25,6 +25,11 @@ public class EstadisticasGrupoTest {
     public void testConstructorConIdNegativo() {
 		estadisticas = new EstadisticasGrupo(-12);
     }
+    @Test
+    public void testConstructorIdCero() {
+        EstadisticasGrupo grupo = new EstadisticasGrupo(0);
+        assertEquals(0, grupo.getIdGrupo());
+    }
 	
 	@Test
 	public void testAgregarMiembro_AumentaCantidadYLoContieneEnLaLista() {
@@ -86,5 +91,22 @@ public class EstadisticasGrupoTest {
         assertEquals(3, estadisticas.getPromedioFolclore(),0.001);
         assertEquals(4, estadisticas.getPromedioRock(),0.001);
         assertEquals(2, estadisticas.getPromedioUrbano(),0.001);
+    }
+    @Test
+    public void testListaNoEsNula() {
+        assertNotNull(estadisticas.getMiembros());
+    }
+    @Test
+    public void testAgregarMiembro_MultiplesMiembros() {
+        Usuario usuario = new Usuario("Diego",2,3,2,3);
+        estadisticas.agregarMiembro(usuario);
+        
+        Usuario usuario2 = new Usuario("Juan",4,5,5,1);
+        estadisticas.agregarMiembro(usuario2);
+        
+        Usuario usuario3 = new Usuario("Pedro",3,1,5,2);
+        estadisticas.agregarMiembro(usuario3);
+        
+        assertEquals(3, estadisticas.getCantidadMiembros());
     }
 }
