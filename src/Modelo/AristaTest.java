@@ -66,4 +66,11 @@ public class AristaTest {
 		 assertEquals(-5, arista.getDestino());
 		 assertEquals(-100, arista.getPeso());
 	 }
+	 @Test
+	 public void testValoresMismoOrigenYDestino() {
+		 Arista arista = new Arista(4,4,10);
+		 assertEquals(4,arista.getOrigen());
+		 assertEquals(4,arista.getDestino());
+		 assertEquals(10,arista.getPeso());
+	 }
 }
