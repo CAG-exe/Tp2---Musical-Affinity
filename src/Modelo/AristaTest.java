@@ -11,6 +11,7 @@ public class AristaTest {
 		 int origen = 1;
 		 int destino = 2;
 		 int peso = 2;
+		 @SuppressWarnings("unused")
 		 Arista arista = new Arista(origen, destino, peso);
 	 }
 	 

@@ -9,8 +9,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
-import org.bouncycastle.crypto.RuntimeCryptoException;
-
 public class Grafo {
 
 	private HashMap<Integer, Usuario> usuarios;

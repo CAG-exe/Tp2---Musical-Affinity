@@ -12,11 +12,13 @@ public class grafoTest {
 	}
 	@Test(expected = IllegalArgumentException.class)
 	public void crearMatrizFueraDeRangoTest() {
+		@SuppressWarnings("unused")
 		Grafo matriz = new Grafo(-1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void crearMatrizTamaño0Test() {
+		@SuppressWarnings("unused")
 		Grafo matriz = new Grafo(0);
 	}	
 	

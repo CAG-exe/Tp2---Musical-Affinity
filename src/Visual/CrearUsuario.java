@@ -1,38 +1,21 @@
 package Visual;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
-import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
-
-import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
-
 import Controlador.Controlador;
 import Modelo.AfinidadMusical;
 
-import javax.swing.event.ChangeListener;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import Visual.CrearUsuario;
@@ -42,6 +25,7 @@ import java.util.Map;
 import Modelo.Usuario;
 
 public class CrearUsuario extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JSlider tango;
 	private JSlider folclore;
 	private JSlider rock;
@@ -50,10 +34,10 @@ public class CrearUsuario extends JPanel {
 	private JLabel aviso;
 	private JTable tabla;
 	private DefaultTableModel modeloDeTabla;
+	@SuppressWarnings("unused")
 	private AfinidadMusical afinidadMusical;
 	private Controlador controlador;
-	private JComboBox comboBoxGrupos;
-	private UISwing uiswing;
+	private JComboBox<String[]> comboBoxGrupos;
 
 
 	public CrearUsuario(AfinidadMusical afinidadMusical, Controlador controlador) {
@@ -62,6 +46,7 @@ public class CrearUsuario extends JPanel {
 		inicializar();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void inicializar() {
 
 		this.setLayout(null);
@@ -220,7 +205,7 @@ public class CrearUsuario extends JPanel {
 		separator.setBounds(20, 71, 379, 9);
 		add(separator);
 		
-		comboBoxGrupos = new JComboBox();
+		comboBoxGrupos = new JComboBox<String[]>();
 		comboBoxGrupos.setBounds(686, 391, 51, 28);
 		add(comboBoxGrupos);
 		comboBoxGrupos.setModel(new DefaultComboBoxModel(new String[] {"2","3","4","5"}));

@@ -7,13 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
-
 import Controlador.Controlador;
-
-import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionListener;

@@ -12,8 +12,7 @@ public class GraficoGrafo {
 	public GraficoGrafo(String[][] matriz) {
 
 		generarGrafo(matriz);
-        Viewer viewer = grafo.display();
-        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER); 
+
 		
 	}
 
@@ -46,6 +45,12 @@ public class GraficoGrafo {
         Nuevo_grafo.setAttribute("ui.antialias");
 
         this.grafo = Nuevo_grafo;
+	}
+
+	public void mostrar() {
+        Viewer viewer = grafo.display();
+        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER); 
+		
 	}
 
 }

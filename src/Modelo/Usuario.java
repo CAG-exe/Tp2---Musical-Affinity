@@ -1,7 +1,5 @@
 package Modelo;
 
-import java.util.ArrayList;
-
 public class Usuario {
 	private String nombre;
 	private int interesTango;

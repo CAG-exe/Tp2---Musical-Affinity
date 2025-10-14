@@ -30,7 +30,6 @@ public class PanelGrafo extends JPanel {
 	private JScrollPane scrollPane , scrollGrupos;
 	private JScrollPane scrollMatrizAdyacencia;
 	private JButton btnMostrarGraficoGrafo;
-	private GraficoGrafo graficoGrafo;
 	private AfinidadMusical afinidadMusical;
 	private Controlador controlador;
 	private JButton btnMostrarMatrizAdyacencia;
@@ -155,7 +154,8 @@ public class PanelGrafo extends JPanel {
 	public void mostrarGraficoGrafo() {
 		int cantidadDeUsuarios = afinidadMusical.getCantidadDeUsuarios();
 		String[][] matrizUsuarios= afinidadMusical.getGrafoMatrizString(cantidadDeUsuarios);
-		graficoGrafo = new GraficoGrafo(matrizUsuarios);
+		GraficoGrafo graficoGrafo = new GraficoGrafo(matrizUsuarios);
+		graficoGrafo.mostrar();
 	}
 
 

@@ -6,11 +6,7 @@ import Visual.CrearUsuario;
 import Visual.MensajeDePocosUsuarios;
 import Visual.NuevoUsuarioDatos;
 import Visual.UISwing;
-
-import java.awt.Window;
 import java.util.Collection;
-
-import javax.swing.JDialog;
 
 public class Controlador {
 	private UISwing visual;
