@@ -44,20 +44,7 @@ public class grafoTest {
 		assertFalse( grafo.existeArista( 1, 4 ) );
 	}
 	
-	@Test
-	public void EliminarAristaExistenteTest() {
-		Grafo grafo = new Grafo( 5 );
-		grafo.agregarArista( 2, 4, 5 );
-		grafo.eliminarArista( 2, 4 );
-		assertFalse( grafo.existeArista( 2, 4 ) );
-	}
 	
-	@Test
-	public void EliminarAristaInexistenteTest() {
-		Grafo grafo = new Grafo( 5 );
-		grafo.eliminarArista( 2, 4 );
-		assertFalse( grafo.existeArista( 2, 4 ) );
-	}
 	@Test
 	public void AgregarAristaDosVecesTest() {
 		Grafo grafo = new Grafo( 5 );
@@ -77,11 +64,12 @@ public class grafoTest {
 	    assertTrue(grafo.existeUsuario(u2));
 	}
 	@Test
-	public void ExisteUsuarioPorNombreTest() {
+	public void ExisteUsuario() {
 	    Grafo grafo = new Grafo(5);
 	    Usuario u1 = new Usuario("Ana",1,2,3,4);
+	    Usuario u2 = new Usuario("Fede",1,2,3,4);
 	    grafo.agregarUsuario(u1);
-	    assertTrue(grafo.existeUsuarioPorNombre("ana"));
-	    assertFalse(grafo.existeUsuarioPorNombre("Pedro"));
+	    assertTrue(grafo.existeUsuario(u1));
+	    assertFalse(grafo.existeUsuario(u2));
 	}
 }

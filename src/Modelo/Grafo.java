@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class Grafo {
 
 	private HashMap<Integer, Usuario> usuarios;
-	protected int[][] matriz;
+	private int[][] matriz;
 	private ArrayList<Arista> listaAristas;
 	
 	private int valorInvalido = -1;
@@ -33,10 +33,6 @@ public class Grafo {
 				mat[fila][columna] = valorInvalido;
 			}
 		}
-	}
-
-	public boolean tieneValorInvalido(int i, int c) {
-		return matriz[i][c] == valorInvalido;
 	}
 	
 	public void agregarUsuario(Usuario u) {
@@ -89,69 +85,6 @@ public class Grafo {
 	    return indiceDeUsuario(u) != -1;
 	}
 
-	public boolean existeUsuarioPorNombre(String nombre) {
-	    if (nombre == null) return false;
-	    for (Usuario val : usuarios.values()) {
-	        if (val != null && nombre.equalsIgnoreCase(val.getNombre())) return true;
-	    }
-	    return false;
-	}
-
-	public int[] componentesConexos() {
-	    int n = usuarios.size();
-	    int[] comp = new int[n];
-	    Arrays.fill(comp, -1);
-	    int id = 0;
-	    for (int i = 0; i < n; i++) {
-	        if (comp[i] == -1) {
-	            dfsComponentes(i, id, comp);
-	            id++;
-	        }
-	    }
-	    return comp;
-	}
-
-	private void dfsComponentes(int v, int id, int[] comp) {
-	    comp[v] = id;
-	    int n = usuarios.size();
-	    for (int u = 0; u < n; u++) {
-	        if (u != v && matriz[v][u] != valorInvalido && comp[u] == -1) {
-	            dfsComponentes(u, id, comp);
-	        }
-	    }
-	}
-
-	public boolean pertenecenMismoGrupo(Usuario a, Usuario b) {
-	    int ia = indiceDeUsuario(a);
-	    int ib = indiceDeUsuario(b);
-	    if (ia == -1 || ib == -1) return false;
-	    int[] comp = componentesConexos();
-	    return comp[ia] == comp[ib];
-	}
-
-	private int[] componentesDesdeMatriz(int[][] mat) {
-	    int n = mat.length;
-	    int[] comp = new int[n];
-	    Arrays.fill(comp, -1);
-	    int id = 0;
-	    for (int i = 0; i < n; i++) {
-	        if (comp[i] == -1) {
-	            dfsComponentesMatriz(i, id, comp, mat);
-	            id++;
-	        }
-	    }
-	    return comp;
-	}
-
-	private void dfsComponentesMatriz(int v, int id, int[] comp, int[][] mat) {
-	    comp[v] = id;
-	    int n = mat.length;
-	    for (int u = 0; u < n; u++) {
-	        if (u != v && mat[v][u] != valorInvalido && comp[u] == -1) {
-	            dfsComponentesMatriz(u, id, comp, mat);
-	        }
-	    }
-	}
 
 
 	private void verificarVertice(int i) {
@@ -162,7 +95,7 @@ public class Grafo {
 			redimensionMatriz();
 	}
 
-	// Verifica que i y j sean distintos
+
 	private void verificarDistintos(int i, int j) {
 		if (i == j)
 			throw new IllegalArgumentException("No se permiten loops: (" + i + ", " + j + ")");
@@ -209,15 +142,6 @@ public class Grafo {
 		return listaDeAristas;
 	}
 	
-	public void eliminarArista( int i, int j ) 
-	{
-		verificarVertice( i );
-		verificarVertice( j );
-		verificarDistintos( i, j );
-
-		matriz[ i ][ j ] = -1;  
-		matriz[ j ][ i ] = -1;
-	}
 	
 	public void removerUsuario(Usuario usuario) {
 		if (!existeUsuario(usuario)) {
@@ -284,46 +208,41 @@ public class Grafo {
 			matrizString[j][i] = Integer.toString(arista.getPeso());
 			}
 	}
+	
+	
 
-	public int[][] getLimitadaMatrizDeUsuarios(int cantidadDeUsuarios) {
-		int[][] limitadaMatriz = new int[cantidadDeUsuarios][cantidadDeUsuarios];
-		for(int fila=0;fila<cantidadDeUsuarios;fila++) {
-			for(int columna=0;columna<cantidadDeUsuarios;columna++) {
-				limitadaMatriz[fila][columna] = matriz[fila][columna];
-			}
-		}
-		return limitadaMatriz;
-	}
-    
-    // --- NUEVO MÉTODO ---
+
     public Collection<EstadisticasGrupo> calcularEstadisticasPorGrupo(int cantGrupos) {
-        // 1. Generamos el grafo con la cantidad de grupos deseada
+
         ArrayList<Arista> aristasDelGrafoAgrupado = (ArrayList<Arista>)extraerGruposDeArbol(cantGrupos);
 
         int[] componentes = componentesConexasDeGrupos(cantGrupos);
  
-        
-        // 4. Usamos un Map para organizar las estadísticas por ID de grupo
         Map<Integer, EstadisticasGrupo> estadisticasMap = new HashMap<>();
 
-        // 5. Agrupamos usuarios en sus respectivos grupos
-        for (int i = 0; i < componentes.length; i++) {
-            int idGrupo = componentes[i];
-            Usuario usuario = usuarios.get(i);
+        agruparUsuariosEnGrupos(componentes, estadisticasMap);
 
-            estadisticasMap.putIfAbsent(idGrupo, new EstadisticasGrupo(idGrupo));
-            estadisticasMap.get(idGrupo).agregarMiembro(usuario);
+        calcularAfinidadPromedioDeCadaGrupo(aristasDelGrafoAgrupado, estadisticasMap);
+
+        calcularPromediosDeInteresParaCadaGrupo(estadisticasMap);
+        
+        return estadisticasMap.values();
+    }
+
+	private void calcularPromediosDeInteresParaCadaGrupo(Map<Integer, EstadisticasGrupo> estadisticasMap) {
+		for (EstadisticasGrupo stats : estadisticasMap.values()) {
+            stats.calcularPromediosDeIntereses();
         }
+	}
 
-        // 6. Calculamos la afinidad promedio para cada grupo
-        for (EstadisticasGrupo stats : estadisticasMap.values()) {
+	private void calcularAfinidadPromedioDeCadaGrupo(ArrayList<Arista> aristasDelGrafoAgrupado,
+			Map<Integer, EstadisticasGrupo> estadisticasMap) {
+		for (EstadisticasGrupo stats : estadisticasMap.values()) {
             double sumaPesos = 0;
             int cantidadAristasInternas = 0;
             List<Usuario> miembros = stats.getMiembros();
             
-            // Recorremos las aristas del grafo agrupado
             for (Arista arista : aristasDelGrafoAgrupado) {
-                // Verificamos si ambos extremos de la arista pertenecen a este grupo
                 Usuario origen = usuarios.get(arista.getOrigen());
                 Usuario destino = usuarios.get(arista.getDestino());
                 if (miembros.contains(origen) && miembros.contains(destino)) {
@@ -336,54 +255,99 @@ public class Grafo {
                 stats.setAfinidadPromedio(sumaPesos / cantidadAristasInternas);
             }
         }
-
-        // 7. Calculamos los promedios de intereses para cada grupo
-        for (EstadisticasGrupo stats : estadisticasMap.values()) {
-            stats.calcularPromediosDeIntereses();
-        }
-        
-        // 8. Devolvemos la colección de estadísticas
-        return estadisticasMap.values();
-    }
-
-	private List<Arista> extraerGruposDeArbol(int cantGrupos) {
-		ArrayList<Arista> aristasDelGrafoAgrupado = Kruskal();
-        aristasDelGrafoAgrupado = (ArrayList<Arista>) eliminarAristaMayorPeso(aristasDelGrafoAgrupado, cantGrupos);
-		return aristasDelGrafoAgrupado;
 	}
 
+	private void agruparUsuariosEnGrupos(int[] componentes, Map<Integer, EstadisticasGrupo> estadisticasMap) {
+		for (int i = 0; i < componentes.length; i++) {
+            int idGrupo = componentes[i];
+            Usuario usuario = usuarios.get(i);
+
+            estadisticasMap.putIfAbsent(idGrupo, new EstadisticasGrupo(idGrupo));
+            estadisticasMap.get(idGrupo).agregarMiembro(usuario);
+        }
+	}
+
+
+
+
+	
+	public String[][] getListaDeGrupo(int cantGrupos) {
+		int[] componentes = componentesConexasDeGrupos(cantGrupos);
+	    Map<Integer, List<Integer>> grupos = new HashMap<>();
+
+	    agruparUsuariosPorComponente(componentes, grupos);
+
+	    String[][] ListaDeGrupos = calcularCantidadMaximaDeFilas(cantGrupos, grupos);
+
+	    rellenarMatrizPorGrupo(grupos, ListaDeGrupos);
+	    
+		return ListaDeGrupos;
+	}
+	
 	private int[] componentesConexasDeGrupos(int cantGrupos) {
 		ArrayList<Arista> aristasDelGrafoAgrupado = (ArrayList<Arista>) extraerGruposDeArbol(cantGrupos);
 
         int n = usuarios.size();
         int[][] matrizTemporal = new int[n][n];
         rellenarMatrizConValorInvalido(matrizTemporal);
-        for (Arista ar : aristasDelGrafoAgrupado) {
-            matrizTemporal[ar.getOrigen()][ar.getDestino()] = ar.getPeso();
-            matrizTemporal[ar.getDestino()][ar.getOrigen()] = ar.getPeso();
-        }
+        rellenarMatrizConDatosDelArbol(aristasDelGrafoAgrupado, matrizTemporal);
 
-        // 3. Obtenemos los componentes conexos de esta matriz temporal
-        int[] componentes = componentesDesdeMatriz(matrizTemporal);
+        int[] componentes = getComponentesDeLaMatriz(matrizTemporal);
 		return componentes;
 	}
 	
-	public String[][] getListaDeGrupo(int cantGrupos) {
-		int[] componentes = componentesConexasDeGrupos(cantGrupos);
-	    Map<Integer, List<Integer>> grupos = new HashMap<>();
+	private List<Arista> extraerGruposDeArbol(int cantGrupos) {
+		ArrayList<Arista> aristasDelGrafoAgrupado = Kruskal();
+        aristasDelGrafoAgrupado = (ArrayList<Arista>) eliminarAristaMayorPeso(aristasDelGrafoAgrupado, cantGrupos);
+		return aristasDelGrafoAgrupado;
+	}
+	
+	private int[] getComponentesDeLaMatriz(int[][] mat) {
+	    int n = mat.length;
+	    int[] comp = new int[n];
+	    Arrays.fill(comp, -1);
+	    int id = 0;
+	    for (int i = 0; i < n; i++) {
+	        if (comp[i] == -1) {
+	            dfsComponentesMatriz(i, id, comp, mat);
+	            id++;
+	        }
+	    }
+	    return comp;
+	}
 
-	    // Agrupar usuarios por componente
-	    for (int i = 0; i < componentes.length; i++) {
+	private void dfsComponentesMatriz(int v, int id, int[] comp, int[][] mat) {
+	    comp[v] = id;
+	    int n = mat.length;
+	    for (int u = 0; u < n; u++) {
+	        if (u != v && mat[v][u] != valorInvalido && comp[u] == -1) {
+	            dfsComponentesMatriz(u, id, comp, mat);
+	        }
+	    }
+	}
+	
+	private void rellenarMatrizConDatosDelArbol(ArrayList<Arista> aristasDelGrafoAgrupado, int[][] matrizTemporal) {
+		for (Arista ar : aristasDelGrafoAgrupado) {
+            matrizTemporal[ar.getOrigen()][ar.getDestino()] = ar.getPeso();
+            matrizTemporal[ar.getDestino()][ar.getOrigen()] = ar.getPeso();
+        }
+	}
+	
+	private void agruparUsuariosPorComponente(int[] componentes, Map<Integer, List<Integer>> grupos) {
+		for (int i = 0; i < componentes.length; i++) {
 	        grupos.putIfAbsent(componentes[i], new ArrayList<>());
 	        grupos.get(componentes[i]).add(i);
 	    }
-
-	    // Calcular cantidad máxima de filas necesarias
-	    int maxFilas = grupos.values().stream().mapToInt(List::size).max().orElse(0);
+	}
+	
+	private String[][] calcularCantidadMaximaDeFilas(int cantGrupos, Map<Integer, List<Integer>> grupos) {
+		int maxFilas = grupos.values().stream().mapToInt(List::size).max().orElse(0);
 	    String[][] ListaDeGrupos = new String[maxFilas][cantGrupos * 2];
-
-	    // Rellenar la matriz por grupo
-	    for (Map.Entry<Integer, List<Integer>> entry : grupos.entrySet()) {
+		return ListaDeGrupos;
+	}
+	
+	private void rellenarMatrizPorGrupo(Map<Integer, List<Integer>> grupos, String[][] ListaDeGrupos) {
+		for (Map.Entry<Integer, List<Integer>> entry : grupos.entrySet()) {
 	        int grupo = entry.getKey();
 	        int col = grupo * 2;
 	        List<Integer> indices = entry.getValue();
@@ -394,6 +358,5 @@ public class Grafo {
 	            ListaDeGrupos[fila][col + 1] = usuarios.get(i).getNombre();
 	        }
 	    }
-		return ListaDeGrupos;
 	}
 }

@@ -106,10 +106,7 @@ public class AfinidadMusical {
 		return cantidadDeGrupos;
 	}
 
-	public int[][] getLimitadaMatrizDeUsuarios() {
-		return matrizRelacion.getLimitadaMatrizDeUsuarios(getCantidadDeUsuarios());
-	}
-    
+
     // --- NUEVO MÉTODO ---
     public Collection<EstadisticasGrupo> calcularEstadisticas(int cantGrupos) {
         if (matrizRelacion != null) {

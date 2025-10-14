@@ -52,69 +52,15 @@ public class CrearUsuario extends JPanel {
 		this.setLayout(null);
 		this.setBackground(new Color(220, 225, 195));
 
-		JLabel ingreseNombre = new JLabel("Usuario");
-		ingreseNombre.setFont(new Font("Arial", Font.BOLD, 19));
-		ingreseNombre.setForeground(Color.black);
-		ingreseNombre.setBounds(20, 11, 150, 33);
-		this.add(ingreseNombre);
+		textoDeIngreseNombre();
 
-		nombre = new JTextField();
-		nombre.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				controlador.clicEnTextFieldNombre();
-			}
-		});
-		nombre.setForeground(Color.GRAY);
-		nombre.setText("Ingrese su nombre de usuario");
-		nombre.setBackground(new Color(220, 225, 195));
-		nombre.setBorder(null);
-		nombre.setFont(new Font("Arial", Font.BOLD, 14));
-		nombre.setBounds(20, 49, 379, 22);
-		this.add(nombre);
+		crearTextFieldParaIngresarNombreDeUsuario();
 
-		aviso = new JLabel("");
-		aviso.setForeground(Color.BLUE);
-		aviso.setFont(new Font("Arial", Font.BOLD, 12));
-		aviso.setBounds(67, 91, 310, 18);
-		this.add(aviso);
+		crearTextoDeAvisoDeNombreInvalido();
 
-		JLabel Tango = new JLabel("Tango");
-		Tango.setFont(new Font("Arial", Font.BOLD, 13));
-		Tango.setForeground(Color.black);
-		Tango.setBounds(21, 124, 70, 22);
-		this.add(Tango);
+		crearBarraDeInteresDeTango();
 
-		tango = new JSlider();
-		tango.setBackground(Color.WHITE);
-		tango.setFont(new Font("Arial", Font.BOLD, 12));
-		tango.setBounds(110, 124, 200, 60);
-		tango.setValue(1);
-		tango.setMinimum(1);
-		tango.setMaximum(5);
-		tango.setForeground(Color.black);
-		tango.setPaintLabels(true);
-		tango.setPaintTicks(true);
-		tango.setMajorTickSpacing(1);
-		this.add(tango);
-
-		JLabel Folclore = new JLabel("Folclore");
-		Folclore.setFont(new Font("Arial", Font.BOLD, 13));
-		Folclore.setBounds(21, 214, 70, 22);
-		Folclore.setForeground(Color.black);
-		this.add(Folclore);
-
-		folclore = new JSlider();
-		folclore.setBackground(Color.WHITE);
-		folclore.setFont(new Font("Arial", Font.BOLD, 12));
-		folclore.setBounds(110, 214, 200, 60);
-		folclore.setValue(1);
-		folclore.setMinimum(1);
-		folclore.setMaximum(5);
-		folclore.setForeground(Color.black);
-		folclore.setPaintLabels(true);
-		folclore.setPaintTicks(true);
-		folclore.setMajorTickSpacing(1);
-		this.add(folclore);
+		crearBarraDeInteresDeFolclore();
 
 		JLabel Rock = new JLabel("Rock");
 		Rock.setFont(new Font("Arial", Font.BOLD, 13));
@@ -216,6 +162,80 @@ public class CrearUsuario extends JPanel {
 		textCantidadGrupos.setForeground(Color.black);
 		add(textCantidadGrupos);
         cargarUsuariosDeLaBaseDeDatos();
+	}
+
+	private void crearBarraDeInteresDeFolclore() {
+		JLabel Folclore = new JLabel("Folclore");
+		Folclore.setFont(new Font("Arial", Font.BOLD, 13));
+		Folclore.setBounds(21, 214, 70, 22);
+		Folclore.setForeground(Color.black);
+		this.add(Folclore);
+
+		folclore = new JSlider();
+		folclore.setBackground(Color.WHITE);
+		folclore.setFont(new Font("Arial", Font.BOLD, 12));
+		folclore.setBounds(110, 214, 200, 60);
+		folclore.setValue(1);
+		folclore.setMinimum(1);
+		folclore.setMaximum(5);
+		folclore.setForeground(Color.black);
+		folclore.setPaintLabels(true);
+		folclore.setPaintTicks(true);
+		folclore.setMajorTickSpacing(1);
+		this.add(folclore);
+	}
+
+	private void crearBarraDeInteresDeTango() {
+		JLabel Tango = new JLabel("Tango");
+		Tango.setFont(new Font("Arial", Font.BOLD, 13));
+		Tango.setForeground(Color.black);
+		Tango.setBounds(21, 124, 70, 22);
+		this.add(Tango);
+
+		tango = new JSlider();
+		tango.setBackground(Color.WHITE);
+		tango.setFont(new Font("Arial", Font.BOLD, 12));
+		tango.setBounds(110, 124, 200, 60);
+		tango.setValue(1);
+		tango.setMinimum(1);
+		tango.setMaximum(5);
+		tango.setForeground(Color.black);
+		tango.setPaintLabels(true);
+		tango.setPaintTicks(true);
+		tango.setMajorTickSpacing(1);
+		this.add(tango);
+	}
+
+	private void crearTextoDeAvisoDeNombreInvalido() {
+		aviso = new JLabel("");
+		aviso.setForeground(Color.BLUE);
+		aviso.setFont(new Font("Arial", Font.BOLD, 12));
+		aviso.setBounds(67, 91, 310, 18);
+		this.add(aviso);
+	}
+
+	private void crearTextFieldParaIngresarNombreDeUsuario() {
+		nombre = new JTextField();
+		nombre.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				controlador.clicEnTextFieldNombre();
+			}
+		});
+		nombre.setForeground(Color.GRAY);
+		nombre.setText("Ingrese su nombre de usuario");
+		nombre.setBackground(new Color(220, 225, 195));
+		nombre.setBorder(null);
+		nombre.setFont(new Font("Arial", Font.BOLD, 14));
+		nombre.setBounds(20, 49, 379, 22);
+		this.add(nombre);
+	}
+
+	private void textoDeIngreseNombre() {
+		JLabel ingreseNombre = new JLabel("Usuario");
+		ingreseNombre.setFont(new Font("Arial", Font.BOLD, 19));
+		ingreseNombre.setForeground(Color.black);
+		ingreseNombre.setBounds(20, 11, 150, 33);
+		this.add(ingreseNombre);
 	}
 	
 	public void cargarUsuariosDeLaBaseDeDatos() {

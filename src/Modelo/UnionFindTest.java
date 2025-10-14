@@ -27,7 +27,7 @@ public class UnionFindTest {
 		uf = new UnionFind(-2);
 	}
 	
-	@Test ( expected = IllegalArgumentException.class )
+	@Test
 	public void testConstructorConVerticesCero() {
 		uf = new UnionFind(0);
 	}

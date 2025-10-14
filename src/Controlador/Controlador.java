@@ -127,9 +127,6 @@ public class Controlador {
 		habilitarBotonGrafo();
 	}
 
-	public int[][] getMatrizDeUsuarios() {
-		return modelo.getLimitadaMatrizDeUsuarios();
-	}
 
 	public void habilitarBotonGrafo() {
 		if(modelo.getCantidadDeUsuarios() > 2) {
