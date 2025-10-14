@@ -257,8 +257,9 @@ public class Grafo {
 		matriz = nuevaMatriz;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Map<Integer,Usuario> getUsuarios() {
-		return usuarios;
+		return (Map<Integer, Usuario>) usuarios.clone();
 	}
 	
 	public String[][] matrizString(int cantidadDeUsuarios, int cantGrupos){
