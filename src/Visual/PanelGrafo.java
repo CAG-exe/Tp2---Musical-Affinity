@@ -33,6 +33,7 @@ public class PanelGrafo extends JPanel {
 	private GraficoGrafo graficoGrafo;
 	private AfinidadMusical afinidadMusical;
 	private Controlador controlador;
+	private JButton btnMostrarMatrizAdyacencia;
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -48,16 +49,22 @@ public class PanelGrafo extends JPanel {
 		add(scrollPane,BorderLayout.WEST);
 		scrollPane.setVisible(false);
 		
+		JPanel PanelSurBotones = new JPanel(new GridLayout(2, 1));
+
 		btnMostrarGraficoGrafo = new JButton("Mostrar Gráfico del Grafo");	
-		btnMostrarGraficoGrafo.setEnabled(true);
+		btnMostrarGraficoGrafo.setEnabled(false);
+		btnMostrarMatrizAdyacencia = new JButton("Mostrar Matriz Adyacencia");
+		
 		configuracionDelBoton();
-		add(btnMostrarGraficoGrafo,BorderLayout.SOUTH);
 		generarListaUsuariosVisual();
 		
+		PanelSurBotones.add(btnMostrarGraficoGrafo);
+		PanelSurBotones.add(btnMostrarMatrizAdyacencia);
+		add(PanelSurBotones,BorderLayout.SOUTH);
 		
 		scrollMatrizAdyacencia = new JScrollPane();
-		add(scrollMatrizAdyacencia,BorderLayout.CENTER);
-		scrollMatrizAdyacencia.setVisible(true);
+		add(scrollMatrizAdyacencia,BorderLayout.EAST);
+		scrollMatrizAdyacencia.setVisible(false);
 		generarMatrizGrafoVisual();
 		
 		scrollGrupos = new JScrollPane();
@@ -100,11 +107,9 @@ public class PanelGrafo extends JPanel {
 
 	private void configuracionDelBoton()	{
 
-		btnMostrarGraficoGrafo.setContentAreaFilled(true);
-		btnMostrarGraficoGrafo.setOpaque(true);
-		btnMostrarGraficoGrafo.setBackground(new Color(9, 61, 39));
-		btnMostrarGraficoGrafo.setPreferredSize(new Dimension(200,40));
-		btnMostrarGraficoGrafo.setForeground(new Color(255, 255, 255));
+		makeUpBotones(btnMostrarGraficoGrafo);
+		makeUpBotones(btnMostrarMatrizAdyacencia);
+		
 		btnMostrarGraficoGrafo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -114,8 +119,37 @@ public class PanelGrafo extends JPanel {
 			}
 			
 		});
-			
-		
+		btnMostrarMatrizAdyacencia.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(btnMostrarMatrizAdyacencia.isEnabled()) {
+					if(scrollGrupos.isVisible()) {
+						scrollGrupos.setVisible(false);
+						scrollMatrizAdyacencia.setVisible(true);
+						scrollPane.setVisible(true);
+						revalidate();
+						repaint();
+					}
+					else {
+						scrollMatrizAdyacencia.setVisible(false);
+						scrollPane.setVisible(false);
+						scrollGrupos.setVisible(true);
+						revalidate();
+						repaint();
+
+					}
+				}
+			}
+		});
+	}
+
+
+	private void makeUpBotones(JButton boton) {
+		boton.setContentAreaFilled(true);
+		boton.setOpaque(true);
+		boton.setBackground(new Color(9, 61, 39));
+		boton.setPreferredSize(new Dimension(200,40));
+		boton.setForeground(new Color(255, 255, 255));
 	}
 	
 	public void mostrarGraficoGrafo() {
@@ -140,7 +174,7 @@ public class PanelGrafo extends JPanel {
 		JTable MatrizAdyacenciaTabla = new JTable(MatrizModel);
 		MatrizAdyacenciaTabla.setRowHeight(30);
 		scrollMatrizAdyacencia.setViewportView(MatrizAdyacenciaTabla);
-		scrollMatrizAdyacencia.setPreferredSize(new Dimension(500,0));
+		scrollMatrizAdyacencia.setPreferredSize(new Dimension(565,0));
 		
 		
 		JList<String> rowHeader = new JList<>(columnas);

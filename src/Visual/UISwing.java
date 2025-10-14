@@ -30,10 +30,11 @@ public class UISwing extends JFrame {
 	private CrearUsuario panelCrearUsuario;
 	private String nombrePanelActual;
 
+
 	public UISwing(Controlador controlador, AfinidadMusical afinidadMusical) {
 		this.panelUsuario = new PanelUsuarios();
 		this.panelGrafo = new PanelGrafo(afinidadMusical, controlador);
-		
+
 		setMinimumSize(new Dimension(1050, 720));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1050, 720);
