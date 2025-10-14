@@ -53,7 +53,60 @@ public class UnionFindTest {
 	@Test ( expected = IllegalArgumentException.class )
 	public void testUnionConVerticesInvalidos() {
 		uf.Union(-1, 2);
+	}
+	
+	@Test ( expected = IllegalArgumentException.class )
+	public void testUnionConVerticesBInvalidos() {
 		uf.Union(1, -2);
+	}
+	
+	@Test ( expected = IllegalArgumentException.class )
+	public void testUnionConVerticesAmbosInvalidos() {
+
 		uf.Union(-1, -2);
+	}
+	@Test
+	public void testUnionDeElementosYaUnidos() {
+	    UnionFind uf = new UnionFind(5);
+	    uf.Union(0, 1);
+	    boolean resultado = uf.Union(0, 1);
+
+	    assertTrue(resultado);
+	    assertEquals(uf.find(0), uf.find(1)); 
+	}
+	
+	@Test
+	public void testUnionPorRango() {
+	    UnionFind uf = new UnionFind(5);
+	    uf.getRango()[0] = 2;
+	    uf.getRango()[1] = 1;
+
+	    uf.Union(0, 1);
+
+	    assertEquals(0, uf.find(1)); 
+	}
+	
+	@Test
+	public void testRangoSeActualiza() {
+	    UnionFind uf = new UnionFind(5);
+	    uf.Union(0, 1);
+	    assertEquals(1, uf.getRango()[uf.find(0)]);
+	}
+	
+	@Test
+	public void testUnionPorRangoMenor() {
+	    UnionFind uf = new UnionFind(5);
+
+	    uf.getPadre()[0] = 0;
+	    uf.getPadre()[1] = 1; 
+
+	    uf.getRango()[0] = 1;
+	    uf.getRango()[1] = 2;
+
+	    uf.Union(0, 1);
+
+	    assertEquals(1, uf.getPadre()[0]);
+	    assertEquals(1, uf.find(0));
+	    assertEquals(1, uf.find(1));
 	}
 }

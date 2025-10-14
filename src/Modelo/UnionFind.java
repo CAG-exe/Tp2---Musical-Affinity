@@ -2,9 +2,17 @@ package Modelo;
 
 public class UnionFind {
 
-	private int [] padre;
+	private int[] padre;
 	private int[] rango;
 	
+	public int[] getPadre() {
+		return padre;
+	}
+
+	public int[] getRango() {
+		return rango;
+	}
+
 	public UnionFind(int vertices) {
 		if(vertices < 0) {
 			throw new IllegalArgumentException("La cantidad de vertices debe ser mayor o igual a 0.");
@@ -50,5 +58,7 @@ public class UnionFind {
 		}
 		return padre[a];
 	}
+	
+	
 	
 }

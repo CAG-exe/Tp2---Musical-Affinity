@@ -53,4 +53,29 @@ public class UsuarioTest {
 	{
 		usuario = new Usuario(" ",2, 1, 5, 2);
 	}
+	
+	@Test
+	public void pruebaToString(){
+		Usuario u = new Usuario("Mario",1,1,1,1);
+		String textoObjetivo = new String("Persona [nombre=Mario]");
+		assertEquals(textoObjetivo,u.toString());
+	}
+	
+	@Test
+	public void interesesIguales() {
+		Usuario u = new Usuario("Mario",1,1,1,1);
+		Usuario u1 = new Usuario("Mario",1,1,1,1);
+		int interes = u.compararIntereses(u1);
+		
+		assertEquals(0,interes);
+	}
+	
+	@Test
+	public void interesesMuyDistintos() {
+		Usuario u = new Usuario("Mario",1,1,1,1);
+		Usuario u1 = new Usuario("Mario",5,5,5,5);
+		
+		int interes = u.compararIntereses(u1);
+		assertEquals(16,interes);
+	}
 }
