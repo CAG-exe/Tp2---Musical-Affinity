@@ -187,6 +187,12 @@ public class Grafo {
 	}
 	
 	public String[][] matrizString(int cantidadDeUsuarios, int cantGrupos){
+		if(cantGrupos <0) {
+			throw new IllegalArgumentException("La cantidad de grupos es negativa");
+		}
+		if(cantidadDeUsuarios < 0) {
+			throw new IllegalArgumentException("La cantidad de usuarios es negativa");
+		}
 		String[][] matrizString = new String[cantidadDeUsuarios][cantidadDeUsuarios];
 		for (int fila = 0; fila < matrizString.length; fila++) {
 			for (int columna = 0; columna < matrizString.length; columna++) {
