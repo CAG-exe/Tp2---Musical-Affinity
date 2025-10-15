@@ -47,6 +47,11 @@ public class EstadisticasGrupoTest {
         
         assertEquals(2.5, estadisticas.getAfinidadPromedio(), 0.001);
     }
+    @Test
+    public void testAfinidadPromedioInicializadaEnCero() {
+        assertEquals(0, estadisticas.getAfinidadPromedio(), 0.001);
+    }
+    
 
     @Test
     public void testCalcularPromediosConGrupoVacio() {
@@ -108,5 +113,25 @@ public class EstadisticasGrupoTest {
         estadisticas.agregarMiembro(usuario3);
         
         assertEquals(3, estadisticas.getCantidadMiembros());
+    }
+    @Test
+    public void testCantidadMiembrosInicialCero() {
+        assertEquals(0, estadisticas.getCantidadMiembros());
+        assertTrue(estadisticas.getMiembros().isEmpty());
+    }
+    @Test
+    public void testCalcularPromediosFraccionarios() {
+        Usuario u1 = new Usuario("Ana", 5, 2, 4, 2);
+        Usuario u2 = new Usuario("Beto", 4, 5, 1, 5);
+        
+        estadisticas.agregarMiembro(u1);
+        estadisticas.agregarMiembro(u2);
+        
+        estadisticas.calcularPromediosDeIntereses();
+        
+        assertEquals(4.5, estadisticas.getPromedioTango(), 0.001);
+        assertEquals(3.5, estadisticas.getPromedioFolclore(), 0.001);
+        assertEquals(2.5, estadisticas.getPromedioRock(), 0.001);
+        assertEquals(3.5, estadisticas.getPromedioUrbano(), 0.001);
     }
 }
