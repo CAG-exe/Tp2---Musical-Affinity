@@ -14,7 +14,6 @@ public class grafoTest {
 	}
 	@Test(expected = IllegalArgumentException.class)
 	public void crearMatrizFueraDeRangoTest() {
-		@SuppressWarnings("unused")
 		Grafo matriz = new Grafo(-1);
 	}
 
@@ -22,7 +21,13 @@ public class grafoTest {
 	public void crearMatrizTamaño0Test() {
 		@SuppressWarnings("unused")
 		Grafo matriz = new Grafo(0);
-	}	
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void agregarAristaConUsuarioRepetido() {
+		Grafo matriz = new Grafo(5);
+		matriz.agregarArista(1, 1, 2);
+	}
 	
 	@Test
 	public void aristaExistenteTest() {
@@ -46,7 +51,23 @@ public class grafoTest {
 		assertFalse( grafo.existeArista( 1, 4 ) );
 	}
 	
+	@Test
+	public void removerUsuarioTest() {
+		Grafo grafo = new Grafo(5);
+	    Usuario u2 = new Usuario("Luis",2,3,4,5);
+	    grafo.agregarUsuario(u2);
+	    grafo.removerUsuario(u2);
+	    assertFalse(grafo.existeUsuario(u2));
+	}
 	
+	@Test
+	public void removerUsuarioSinIngresarTest() {
+		Grafo grafo = new Grafo(5);
+	    Usuario u2 = new Usuario("Luis",2,3,4,5);
+	    grafo.removerUsuario(u2);
+	    assertFalse(grafo.existeUsuario(u2));
+	}
+
 	@Test
 	public void AgregarAristaDosVecesTest() {
 		Grafo grafo = new Grafo( 5 );
